@@ -13,6 +13,7 @@
 # Thanks for using Simvisage open source!
 #
 #-------------------------------------------------------------------------------
+
 import os
 import platform
 import numpy as np

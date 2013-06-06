@@ -7,7 +7,7 @@
 #
 # This software is provided without warranty under the terms of the BSD
 # license included in the Spirrid top directory "licence.txt" and may be
-# redistributed only under the conditions described http://mail.centrum.cz/http://mail.centrum.cz/n the aforementioned
+# redistributed only under the conditions described in the aforementioned
 # license.
 #
 # Thanks for using Simvisage open source!
@@ -15,29 +15,11 @@
 #-------------------------------------------------------------------------------
 
 from etsproxy.traits.api import \
-    HasTraits, Float, Property, cached_property, Int, Directory, Array, Bool, \
-    Str, Trait, List, Enum, on_trait_change, Instance, DelegatesTo, Tuple
+    HasTraits, Instance
 
-from etsproxy.traits.ui.api import Handler, UItem, \
-    View, Item, Group, VGroup, HGroup, HSplit, VSplit, Tabbed, ModelView, Controller, EnumEditor
-
-import matplotlib
-# We want matplotlib to use a wxPython backend
-matplotlib.use('WXAgg')
-import matplotlib.pyplot as plt
-
-import numpy as np
-import numpy.ma as ma
-import etsproxy.mayavi.mlab as m
-
-from matresdev.db.simdb import \
-    SimDB
+from etsproxy.traits.ui.api import UItem, View
 
 import os
-
-import os.path
-import string
-import re
 
 import platform
 import time
