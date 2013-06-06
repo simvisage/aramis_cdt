@@ -59,16 +59,29 @@ class AramisView2D(HasTraits):
                  color='magenta', linewidth=2)
 
         plt.subplot(2, 2, 4)
+        pass
+
+        plt.suptitle(aramis_cdt.aramis_info.basename + '%d' % aramis_cdt.evaluated_step)
+
+        plt.show(block=False)
+
+    plot_crack_hist = Button
+    def _plot_crack_hist_fired(self):
+        import matplotlib.pyplot as plt
+        aramis_cdt = self.aramis_cdt
+        plt.figure()
+
         plt.hist(aramis_cdt.crack_arr, bins=40, normed=True)
         plt.twinx()
         plt.hist(aramis_cdt.crack_arr, normed=True,
                  histtype='step', color='black',
                  cumulative=True, bins=40)
 
-        plt.suptitle(aramis_cdt.aramis_info.basename + '%d' % aramis_cdt.evaluated_step)
+        plt.title(aramis_cdt.aramis_info.basename + '%d' % aramis_cdt.evaluated_step)
 
         plt.show(block=False)
 
     view = View(
                 UItem('plot2d'),
+                UItem('plot_crack_hist'),
                 )

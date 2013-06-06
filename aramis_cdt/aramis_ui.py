@@ -34,6 +34,8 @@ from aramis_view2d import AramisView2D
 from aramis_view3d import AramisView3D
 
 class AramisView(HasTraits):
+    '''User interface 
+    '''
     aramis_info = Instance(AramisInfo)
 
     aramis_cdt = Instance(AramisCDT)

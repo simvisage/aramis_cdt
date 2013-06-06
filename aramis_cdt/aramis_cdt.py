@@ -21,6 +21,7 @@ from etsproxy.traits.api import \
 from etsproxy.traits.ui.api import View, Item, HGroup, EnumEditor
 
 import numpy as np
+from scipy import stats
 import os
 
 import platform
@@ -264,86 +265,52 @@ class AramisCDT(HasTraits):
     @cached_property
     def _get_data_array(self):
         if self.transform_data:
-            # Coordinate transformation:
-            # derive transformation direction from the first time step (t = 0)
-            daf_new = self.input_array
-            # TODO: the selected facets have to exist; create selector to set facets
-            # that should be used for transformation
-            idx_x_0 = 10  # self.x_idx_init.min()
-            idx_y_0 = 10  # self.y_idx_init.min()
-            idx_x_1 = self.x_idx_init.max()
-            idx_y_1 = self.y_idx_init.max()
-            x_vec_ = (self.input_array[:3, idx_y_0, idx_x_1] -
-                      self.input_array[:3, idx_y_0, idx_x_0])
 
-            y_vec_ = x_vec_[[1, 0, 2]]
-            y_vec_[1] *= -1
-#             y_vec_ = (self.input_array[:3, idx_y_1, idx_x_0] -
-#                       self.input_array[:3, idx_y_0, idx_x_0])
+            data_arr = self.input_array
+            mask = ~self.data_array_init_mask[0, :, :]
+            shape = data_arr.shape
 
-    #        x_vec_ = daf_0[-1, 10, :3] - daf_0[0, 10, :3]
-    #        y_vec_ = daf_0[10, -1, :3] - daf_0[10, 0, :3]
+            # rotate counterclockwise about the axis z
+            linreg = stats.linregress(self.data_array_init[0, :, :][mask].ravel(),
+                                      self.data_array_init[1, :, :][mask].ravel())
+            alpha = np.arctan(-linreg[0])
+            rot_z = np.array([[np.cos(alpha), -np.sin(alpha), 0],
+                            [np.sin(alpha), np.cos(alpha), 0],
+                            [0, 0, 1]])
 
-            # base vectors (normed) of the local coordinate system x_, y_, z_
-            #
-            x_ = x_vec_ / np.math.sqrt(np.dot(x_vec_, x_vec_))
-            y_ = y_vec_ / np.math.sqrt(np.dot(y_vec_, y_vec_))
-            z_ = np.cross(x_, y_)
+            # rotate counterclockwise about the axis y
+            linreg = stats.linregress(self.data_array_init[0, :, :][mask].ravel(),
+                                      self.data_array_init[2, :, :][mask].ravel())
+            alpha = np.arctan(-linreg[0])
+            rot_y = np.array([[np.cos(alpha), 0, -np.sin(alpha)],
+                              [0, 1, 0],
+                              [np.sin(alpha), 0, np.cos(alpha)]])
+            shape = data_arr.shape
 
-            # base vectors (normed) of the global carthesian coordinate system
-            #
-            x = np.array([1, 0, 0])
-            y = np.array([0, 1, 0])
-            z = np.array([0, 0, 1])
+            # rotate counterclockwise about the axis x
+            linreg = stats.linregress(self.data_array_init[1, :, :][mask].ravel(),
+                                      self.data_array_init[2, :, :][mask].ravel())
+            alpha = np.arctan(-linreg[0])
+            rot_x = np.array([[1, 0, 0],
+                            [0, np.cos(alpha), -np.sin(alpha)],
+                            [0, np.sin(alpha), np.cos(alpha)]])
+            shape = data_arr.shape
 
-            # get the direction cosines:
-            #
-            cos_xx_ = np.dot(x_, x)
-            cos_yx_ = np.dot(x_, y)
-            cos_zx_ = np.dot(x_, z)
-            cos_xy_ = np.dot(y_, x)
-            cos_yy_ = np.dot(y_, y)
-            cos_zy_ = np.dot(y_, z)
-            cos_xz_ = np.dot(z_, x)
-            cos_yz_ = np.dot(z_, y)
-            cos_zz_ = np.dot(z_, z)
+            # rotate coordinates
+            tmp = np.dot(rot_z, data_arr[:3, :, :].ravel().reshape(3, shape[1] * shape[2]))
+            tmp = np.dot(rot_y, tmp)
+            data_arr[:3, :, :] = np.dot(rot_x, tmp).reshape(3, shape[1], shape[2])
 
-            # rotation using transformation matrix T_mtx
-            # (cf. Zienkiewicz, 6th edition, p.192, (6.18):
-            # T_mtx = np.array([[cos_xx_, cos_yx_, cos_zx_],
-            #                   [cos_xy_, cos_yy_, cos_zy_],
-            #                   [cos_xz_, cos_yz_, cos_zz_]])
-            # notation:
-            # x,y,z = global cartesian coordinates
-            # x_,y_,z_ = rotated coordinate system
-            # cos_xz_ = direction cosine between axis 'x' and 'z_'
+            # rotate displacements
+            tmp = np.dot(rot_z, data_arr[3:, :, :].ravel().reshape(3, shape[1] * shape[2]))
+            tmp = np.dot(rot_y, tmp)
+            data_arr[3:, :, :] = np.dot(rot_x, tmp).reshape(3, shape[1], shape[2])
 
-            # rotate the coordinate values (x,y,z)
-            #
-            daf_new[0, :, :] = daf_new[0, :, :] * cos_xx_ + daf_new[1, :, :] * cos_yx_ + daf_new[2, :, :] * cos_zx_
-            daf_new[1, :, :] = daf_new[0, :, :] * cos_xy_ + daf_new[1, :, :] * cos_yy_ + daf_new[2, :, :] * cos_zy_
-            daf_new[2, :, :] = daf_new[0, :, :] * cos_xz_ + daf_new[1, :, :] * cos_yz_ + daf_new[2, :, :] * cos_zz_
+            # translation
+            data_arr[:3, :, :] -= np.nanmin(np.nanmin(data_arr[:3, :, :], axis=1),
+                                            axis=1)[:, np.newaxis, np.newaxis]
 
-            # rotate the displacement values (ux,uy,uz)
-            #
-            daf_new[3, :, :] = daf_new[3, :, :] * cos_xx_ + daf_new[4, :, :] * cos_yx_ + daf_new[5, :, :] * cos_zx_
-            daf_new[4, :, :] = daf_new[3, :, :] * cos_xy_ + daf_new[4, :, :] * cos_yy_ + daf_new[5, :, :] * cos_zy_
-            daf_new[5, :, :] = daf_new[3, :, :] * cos_xz_ + daf_new[4, :, :] * cos_yz_ + daf_new[5, :, :] * cos_zz_
-
-            # translation of the coordinates into the origin:
-            # 'x_0_vec' derived from the first time step
-            # = distance between origin and the position of the first facette
-            # @todo: make sure that facette (0,0) is non-zero due to lost facette!
-            #
-            x_0_vec = self.input_array[:3, 0, 0]
-
-    #        daf_new[:,:,:,0] = daf_new[:,:,:,0] - x_0_vec[0]
-    #        daf_new[:,:,:,1] = daf_new[:,:,:,1] - x_0_vec[1]
-    #        daf_new[:,:,:,2] = daf_new[:,:,:,2] - x_0_vec[2]
-
-            daf_new[:3, :, :] = daf_new[:3, :, :] - x_0_vec[:, np.newaxis, np.newaxis]
-
-            return daf_new
+            return data_arr
         else:
             return self.input_array
 
@@ -519,6 +486,10 @@ class AramisCDT(HasTraits):
         cf_w = np.zeros_like(self.d_ux_arr)
         cf_w[np.where(self.crack_filter)] = self.crack_arr
         return cf_w
+
+    #===========================================================================
+    # Crack detection in time
+    #===========================================================================
 
     #===========================================================================
     # Methods

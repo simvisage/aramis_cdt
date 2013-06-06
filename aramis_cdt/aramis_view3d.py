@@ -71,7 +71,7 @@ class AramisView3D(HasTraits):
                    mode='cube',
                    scale_mode='none', scale_factor=1)
         m.view(0, 0)
-
+        scene.scene.parallel_projection = True
         scene.scene.disable_render = False
 
         if self.plot_title:
@@ -80,7 +80,7 @@ class AramisView3D(HasTraits):
         m.scalarbar(orientation='horizontal', title=self.plot3d_var_)
 
         # plot axes
-        # m.axes()
+        m.axes()
 
         m.show()
 
@@ -159,7 +159,7 @@ class AramisView3D(HasTraits):
 
         # plot axes
         #
-        # m.axes()
+        m.axes()
 
         m.show()
 
