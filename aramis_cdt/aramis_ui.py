@@ -34,7 +34,8 @@ from aramis_view2d import AramisView2D
 from aramis_view3d import AramisView3D
 
 class AramisView(HasTraits):
-    '''User interface 
+    '''This class is managing all the parts of the CDT and enable to create
+    simple user interface.
     '''
     aramis_info = Instance(AramisInfo)
 
@@ -42,7 +43,8 @@ class AramisView(HasTraits):
 
     aramis_view2d = Instance(AramisView2D)
     def _aramis_view2d_default(self):
-        return AramisView2D(aramis_cdt=self.aramis_cdt)
+        return AramisView2D(aramis_info=self.aramis_info,
+                            aramis_cdt=self.aramis_cdt)
 
     aramis_view3d = Instance(AramisView3D)
     def _aramis_view3d_default(self):
@@ -52,7 +54,8 @@ class AramisView(HasTraits):
                 UItem('aramis_info@'),
                 UItem('aramis_cdt@'),
                 UItem('aramis_view2d@'),
-                UItem('aramis_view3d@')
+                UItem('aramis_view3d@'),
+                title='Aramis CDT'
                 )
 
 

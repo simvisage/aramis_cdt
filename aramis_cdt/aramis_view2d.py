@@ -26,11 +26,16 @@ if platform.system() == 'Linux':
 elif platform.system() == 'Windows':
     sysclock = time.clock
 
+import numpy as np
+
 from aramis_cdt import AramisCDT
+from aramis_info import AramisInfo
 
 class AramisView2D(HasTraits):
     '''This class manages 2D views for AramisCDT variables
     '''
+
+    aramis_info = Instance(AramisInfo)
 
     aramis_cdt = Instance(AramisCDT)
 
@@ -81,7 +86,41 @@ class AramisView2D(HasTraits):
 
         plt.show(block=False)
 
+    plot_number_of_cracks_t = Button
+    def _plot_number_of_cracks_t_fired(self):
+        import matplotlib.pyplot as plt
+        aramis_cdt = self.aramis_cdt
+        plt.figure()
+
+        plt.plot(self.aramis_info.step_list, aramis_cdt.number_of_cracks_t)
+
+        plt.xlabel('step')
+        plt.ylabel('number of cracks')
+        plt.title('cracks in time')
+
+        plt.show(block=False)
+
+    plot_ad_channels = Button
+    def _plot_ad_channels_fired(self):
+        import matplotlib.pyplot as plt
+        aramis_cdt = self.aramis_cdt
+        plt.figure()
+
+        y = aramis_cdt.ad_channels_arr[:, :, 2] - aramis_cdt.ad_channels_arr[:, :, 1]
+        plt.plot(self.aramis_info.step_list, y)
+
+        plt.figure()
+        plt.plot(self.aramis_info.step_list, np.cumsum(y, axis=1))
+
+        plt.xlabel('step')
+        plt.ylabel('number of cracks')
+        plt.title('cracks in time')
+
+        plt.show(block=False)
+
     view = View(
                 UItem('plot2d'),
                 UItem('plot_crack_hist'),
+                UItem('plot_number_of_cracks_t'),
+                UItem('plot_ad_channels')
                 )

@@ -65,13 +65,20 @@ class AramisInfo(HasTraits):
         for f in file_list:
             m = re.match(pat, f)
             step_list.append(int(m.groupdict()['step']))
-        step_list.sort()
         # sort filenames by the step number
         file_arr = np.array(file_list, dtype=str)
         idx = np.argsort(step_list)
+        step_list.sort()
 
         self.file_list = file_arr[idx].tolist()
         self.step_list = step_list
+
+    number_of_steps = Int
+    '''Number of time steps
+    '''
+    @on_trait_change('data_dir')
+    def _number_of_steps_update(self):
+        self.number_of_steps = len(self.step_list)
 
     basename = Str
     '''String with the base part of the file name "basename<step>.txt".
@@ -103,6 +110,7 @@ class AramisInfo(HasTraits):
                 Item('basename', style='readonly'),
                 Item('first_step', style='readonly'),
                 Item('last_step', style='readonly'),
+                Item('number_of_steps', style='readonly'),
 #                 HGroup(
 #                        Item('step_selected', editor=EnumEditor(name='step_list'),
 #                             springy=True),

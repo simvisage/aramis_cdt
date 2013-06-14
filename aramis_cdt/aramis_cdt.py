@@ -16,13 +16,14 @@
 
 from etsproxy.traits.api import \
     HasTraits, Float, Property, cached_property, Int, Array, Bool, \
-    Instance, DelegatesTo, Tuple
+    Instance, DelegatesTo, Tuple, Button, List
 
-from etsproxy.traits.ui.api import View, Item, HGroup, EnumEditor
+from etsproxy.traits.ui.api import View, Item, HGroup, EnumEditor, Group, UItem
 
 import numpy as np
 from scipy import stats
 import os
+import re
 
 import platform
 import time
@@ -315,6 +316,60 @@ class AramisCDT(HasTraits):
             return self.input_array
 
     #===========================================================================
+    # Data preparation methods
+    #===========================================================================
+    def _load_step_data(self, step):
+        '''Load data for the specified step from *.npy file. If file *.npy does 
+        not exist the data is load from *.txt and saved as *.npy. 
+        (improve speed of loading)
+        '''
+        fname = '%s%d' % (self.aramis_info.basename, step)
+        print 'loading', fname, '...'
+
+        start_t = sysclock()
+        dir_npy = os.path.join(self.aramis_info.data_dir, 'npy/')
+        if os.path.exists(dir_npy) == False:
+            os.mkdir(dir_npy)
+        fname_npy = os.path.join(dir_npy, fname + '.npy')
+        fname_txt = os.path.join(self.aramis_info.data_dir, fname + '.txt')
+        if os.path.exists(fname_npy):
+            data_arr = np.load(fname_npy)
+        else:
+            data_arr = np.loadtxt(fname_txt,
+                               skiprows=14,  # not necessary
+                               usecols=[0, 1, 2, 3, 4, 8, 9, 10])
+            data_arr = self._prepare_data_structure(data_arr)
+
+            np.save(fname_npy, data_arr)
+        print 'loading time =', sysclock() - start_t
+        print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
+        return data_arr
+
+    def _prepare_data_structure(self, input_arr):
+        data_arr = np.empty((self.n_x_init * self.n_y_init,
+                                 self.input_array_init.shape[1] - 2), dtype=float)
+        data_arr.fill(np.nan)
+
+        # input indices (columns 1 and 2)
+        in_indices = input_arr[:, :2].astype(int)
+        in_indices[:, 0] -= self.x_idx_min_init
+        in_indices[:, 1] -= self.y_idx_min_init
+        in_indices = in_indices.view([('', in_indices.dtype)] * in_indices.shape[1])
+
+        # undeformed state indices
+        un_indices = np.hstack((self.x_idx_init.ravel()[:, np.newaxis],
+                               self.y_idx_init.ravel()[:, np.newaxis])).astype(int)
+        un_indices = un_indices.view([('', un_indices.dtype)] * un_indices.shape[1])
+
+        # data for higher steps have the same order of rows as
+        # undeformed one but missing values
+        mask = np.in1d(un_indices, in_indices, assume_unique=True)
+        data_arr[mask] = input_arr[:, 2:]
+
+        data_arr = data_arr.T.reshape(self.data_array_init_shape)
+        return data_arr
+
+    #===========================================================================
     # Geometry arrays
     #===========================================================================
     x_arr = Property(Array, depends_on='aramis_info.data_dir, +params_changed')
@@ -490,60 +545,45 @@ class AramisCDT(HasTraits):
     #===========================================================================
     # Crack detection in time
     #===========================================================================
+    number_of_cracks_t = Array
+    '''Number of cracks in time
+    '''
 
-    #===========================================================================
-    # Methods
-    #===========================================================================
-    def _load_step_data(self, step):
-        '''Load data for the specified step from *.npy file. If file *.npy does 
-        not exist the data is load from *.txt and saved as *.npy. 
-        (improve speed of loading)
-        '''
-        fname = '%s%d' % (self.aramis_info.basename, step)
-        print 'loading', fname, '...'
+    ad_channels_lst = List
 
-        start_t = sysclock()
-        dir_npy = os.path.join(self.aramis_info.data_dir, 'npy/')
-        if os.path.exists(dir_npy) == False:
-            os.mkdir(dir_npy)
-        fname_npy = os.path.join(dir_npy, fname + '.npy')
-        fname_txt = os.path.join(self.aramis_info.data_dir, fname + '.txt')
-        if os.path.exists(fname_npy):
-            data_arr = np.load(fname_npy)
-        else:
-            data_arr = np.loadtxt(fname_txt,
-                               skiprows=14,  # not necessary
-                               usecols=[0, 1, 2, 3, 4, 8, 9, 10])
-            data_arr = self._prepare_data_structure(data_arr)
+    ad_channels_arr = Property(Array)
+    def _get_ad_channels_arr(self):
+        return np.array(self.ad_channels_lst, dtype=float)
 
-            np.save(fname_npy, data_arr)
-        print 'loading time =', sysclock() - start_t
-        print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
-        return data_arr
+    ad_channels_read = Bool(True)
 
-    def _prepare_data_structure(self, input_arr):
-        data_arr = np.empty((self.n_x_init * self.n_y_init,
-                                 self.input_array_init.shape[1] - 2), dtype=float)
-        data_arr.fill(np.nan)
+    number_of_cracks_t_analyse = Bool(True)
 
-        # input indices (columns 1 and 2)
-        in_indices = input_arr[:, :2].astype(int)
-        in_indices[:, 0] -= self.x_idx_min_init
-        in_indices[:, 1] -= self.y_idx_min_init
-        in_indices = in_indices.view([('', in_indices.dtype)] * in_indices.shape[1])
+    def __number_of_cracks_t(self):
+        self.number_of_cracks_t = np.append(self.number_of_cracks_t,
+                                           np.sum(self.crack_filter_avg))
 
-        # undeformed state indices
-        un_indices = np.hstack((self.x_idx_init.ravel()[:, np.newaxis],
-                               self.y_idx_init.ravel()[:, np.newaxis])).astype(int)
-        un_indices = un_indices.view([('', un_indices.dtype)] * un_indices.shape[1])
+    def __decompile_ad_channels(self):
+        fname = '%s%d.txt' % (self.aramis_info.basename, self.evaluated_step)
+        ad_channels = []
+        with open(os.path.join(self.aramis_info.data_dir, fname)) as infile:
+            for i in range(30):
+                line = infile.readline()
+                m = re.match(r'#\s+AD-(\d+):\s+([-+]?\d+\.\d+)\s+([-+]?\d+\.\d+)', line)
+                if m:
+                    ad_channels.append(m.groups())
+        self.ad_channels_lst.append(ad_channels)
 
-        # data for higher steps have the same order of rows as
-        # undeformed one but missing values
-        mask = np.in1d(un_indices, in_indices, assume_unique=True)
-        data_arr[mask] = input_arr[:, 2:]
-
-        data_arr = data_arr.T.reshape(self.data_array_init_shape)
-        return data_arr
+    run_t = Button('Run in time')
+    '''Run analysis of all steps in time
+    '''
+    def _run_t_fired(self):
+        for step, step_file in zip(self.aramis_info.step_list, self.aramis_info.file_list):
+            self.evaluated_step = step
+            if self.ad_channels_read:
+                self.__decompile_ad_channels()
+            if self.number_of_cracks_t_analyse:
+                self.__number_of_cracks_t()
 
     view = View(
                 HGroup(
@@ -560,7 +600,12 @@ class AramisCDT(HasTraits):
                 Item('n_px_facette_distance_y'),
                 Item('w_detect_step'),
                 Item('integ_radius'),
-                'transform_data'
+                'transform_data',
+                Group(
+                      'number_of_cracks_t_analyse',
+                      'ad_channels_read',
+                      UItem('run_t'),
+                      ),
                 )
 
 
