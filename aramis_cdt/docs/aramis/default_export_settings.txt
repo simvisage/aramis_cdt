@@ -1,0 +1,33 @@
+EXPORT_CONFIG_FILE
+Version: 0.1
+Name: Exp.1: all Displ.+ Strain + index + ad-channels
+Extension: .txt
+Point mode: Node
+Point invalid mode: Invisible
+Point limiter: "\n"
+Line limiter: "\n"
+Floatpoint limiter: "."
+HEADER_START
+# this is a demo-export
+#
+# Stage :   $(point_stage-undeformed)  -  $(point_stage-deformed) 
+# AD-Channels:  undeformt    deformt   Unit
+#     AD-0:     $(analog_in_0-undeformed)    $(analog_in_0-deformed)    $(analog_unit_0)
+#     AD-1:     $(analog_in_1-undeformed)    $(analog_in_1-deformed)    $(analog_unit_1)
+#
+# Time  :  undeformt: $(time_in-undeformed)     [seconds since 01.01.1970]
+#            deformt: $(time_in-deformed)     [seconds since 01.01.1970]
+#
+#
+# Index_x, Index_y, Coordinate-undef (x,y,z), Coord-def (x,y,z), Displ(x,y,z), Strain (x,y,Major, Minor, Thicknessreduction), AD-Channel 1 + 2
+#
+#  
+HEADER_END
+POINT_START
+$(index_x:4.0) $(index_y:4.0) 
+$(coord_x-undeformed-mm) $(coord_y-undeformed-mm) $(coord_z-undeformed-mm)   
+$(coord_x-deformed-mm) $(coord_y-deformed-mm) $(coord_z-deformed-mm)   
+$(disp_x--mm) $(disp_y--mm) $(disp_z--mm)   
+$(strain_x-technical-%) $(strain_y-technical-%)
+$(strain_p1-technical-%) $(strain_p2-technical-%) $(strain_p3-technical-%)
+POINT_END

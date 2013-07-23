@@ -1,0 +1,29 @@
+EXPORT_CONFIG_FILE
+Version: 0.1
+Name: Exp.1: all Displ.+ Strain + index + ad-channels
+Extension: .txt
+Point mode: Node
+Point invalid mode: Invisible
+Point limiter: "\n"
+Line limiter: "\n"
+Floatpoint limiter: "."
+HEADER_START
+# Export displacement of facets
+#
+# Stage :   $(point_stage-undeformed)  -  $(point_stage-deformed) 
+# AD-Channels:  undeformt    deformt   Unit
+#     AD-0:     $(analog_in_0-undeformed)    $(analog_in_0-deformed)    $(analog_unit_0)
+#     AD-1:     $(analog_in_1-undeformed)    $(analog_in_1-deformed)    $(analog_unit_1)
+#
+# Time  :  undeformt: $(time_in-undeformed)     [seconds since 01.01.1970]
+#            deformt: $(time_in-deformed)     [seconds since 01.01.1970]
+#
+#
+# Index_x, Index_y, Displ(x,y,z)
+#
+#  
+HEADER_END
+POINT_START
+$(index_x:4.0) $(index_y:4.0) 
+$(disp_x--mm) $(disp_y--mm) $(disp_z--mm)   
+POINT_END
