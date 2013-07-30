@@ -13,11 +13,13 @@
 # Thanks for using Simvisage open source!
 #
 #-------------------------------------------------------------------------------
+# from traits.etsconfig.api import ETSConfig
+# ETSConfig.toolkit = 'qt4'
 
 from etsproxy.traits.api import \
     HasTraits, Instance
 
-from etsproxy.traits.ui.api import UItem, View
+from etsproxy.traits.ui.api import UItem, View, Tabbed
 
 import os
 
@@ -33,7 +35,7 @@ from aramis_cdt import AramisCDT
 from aramis_view2d import AramisView2D
 from aramis_view3d import AramisView3D
 
-class AramisView(HasTraits):
+class AramisUI(HasTraits):
     '''This class is managing all the parts of the CDT and enable to create
     simple user interface.
     '''
@@ -52,23 +54,29 @@ class AramisView(HasTraits):
 
     view = View(
                 UItem('aramis_info@'),
-                UItem('aramis_cdt@'),
-                UItem('aramis_view2d@'),
-                UItem('aramis_view3d@'),
+                Tabbed(
+                       UItem('aramis_cdt@'),
+                       UItem('aramis_view2d@'),
+                       UItem('aramis_view3d@'),
+                       ),
                 title='Aramis CDT'
                 )
 
 
 if __name__ == '__main__':
-    if platform.system() == 'Linux':
-        aramis_dir = os.path.join(r'/media/data/_linux_data/aachen/ARAMIS_data_IMB/01_ARAMIS_Daten/')
-    elif platform.system() == 'Windows':
-        aramis_dir = os.path.join(r'E:\_linux_data\aachen\ARAMIS_data_IMB\01_ARAMIS_Daten')
 
-    data_dir = os.path.join(aramis_dir, 'Probe-1-Ausschnitt-Xf15a1-Yf5a4')
+    if platform.system() == 'Linux':
+        data_dir = r'/media/data/_linux_data/aachen/Aramis_07_2013/TT-4c-V1-Xf19a15-Yf19a15'
+    elif platform.system() == 'Windows':
+        data_dir = r'E:\_linux_data\aachen/Aramis_07_2013/TT-4c-V1-Xf19a15-Yf19a15'
+
     AI = AramisInfo(data_dir=data_dir)
     AC = AramisCDT(aramis_info=AI,
-                  evaluated_step=400)
-    AV = AramisView(aramis_info=AI,
+                  integ_radius=1,
+                  evaluated_step=203,
+                  w_detect_step=203,
+                  transform_data=True)
+    AUI = AramisUI(aramis_info=AI,
                     aramis_cdt=AC)
-    AV.configure_traits()
+    AUI.configure_traits()
+
