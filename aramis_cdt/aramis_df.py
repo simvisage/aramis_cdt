@@ -49,21 +49,21 @@ class CrackTracer(HasTraits):
     #
     evaluated_time_step = Int(0)
 
-    # size of a facette in x-direction defined in numbers of pixels
+    # size of a facet in x-direction defined in numbers of pixels
     #
-    n_px_facette_size_x = Int(19)
+    n_px_facet_size_x = Int(19)
 
-    # distance between the mid-points of two facettes in x-direction
+    # distance between the mid-points of two facets in x-direction
     #
-    n_px_facette_distance_x = Int(15)
+    n_px_facet_distance_x = Int(15)
 
-    # size of a facette in y-direction defined in numbers of pixels
+    # size of a facet in y-direction defined in numbers of pixels
     #
-    n_px_facette_size_y = Int(19)
+    n_px_facet_size_y = Int(19)
 
-    # distance between the mid-points of two facettes in y-direction
+    # distance between the mid-points of two facets in y-direction
     #
-    n_px_facette_distance_y = Int(15)
+    n_px_facet_distance_y = Int(15)
 
     # size of the steps between the evaluated time steps
     # all time steps found in the read in directory are taken starting
@@ -77,7 +77,7 @@ class CrackTracer(HasTraits):
     w_detect_step = Int(-1)
 
     # integration radius for the non-local average of the measured strain
-    # defined as integer value of the number of facettes (or elements)
+    # defined as integer value of the number of facets (or elements)
     #
     # the value should correspond to
 #    def _integ_radius_default(self):
@@ -253,7 +253,7 @@ class CrackTracer(HasTraits):
     grid_mask_w = Property
     def _get_grid_mask_w(self):
         grid_mask_w = self.grid_mask_t[self.w_detect_step, :, :]
-        print 'number of missing facettes at crack_detect_step: ', np.sum(grid_mask_w)
+        print 'number of missing facets at crack_detect_step: ', np.sum(grid_mask_w)
         return 1.0 * grid_mask_w
 
     txy_idx = Property
@@ -297,29 +297,29 @@ class CrackTracer(HasTraits):
         grid_mask[:, :] = True
         grid_mask[(x_idx, y_idx)] = False
 
-#        # length of the meassured field in x-direction, pixel size, facette size, facette distance
+#        # length of the meassured field in x-direction, pixel size, facet size, facet distance
 #        #
 #        l_x = self.x_arr[0,0] - self.x_arr[-1,0]
-#        px_size_x = l_x / n_x / self.n_px_facette_distance_x
-#        facette_size_x = self.n_px_facette_size_x * px_size_x
-#        facette_distance_x = self.n_px_facette_distance_x * px_size_x
+#        px_size_x = l_x / n_x / self.n_px_facet_distance_x
+#        facet_size_x = self.n_px_facet_size_x * px_size_x
+#        facet_distance_x = self.n_px_facet_distance_x * px_size_x
 #        print 'l_x',l_x
 #        print 'self.x_arr[0,0]',self.x_arr[0,0]
 # #        print 'self.x_arr[0,-1]',np.average(self.x_arr[-1,0]
 #        print 'n_x',n_x
 #        print 'px_size_x',px_size_x
-#        print 'facette_size_x',facette_size_x
-#        print 'facette_distance_x',facette_distance_x
+#        print 'facet_size_x',facet_size_x
+#        print 'facet_distance_x',facet_distance_x
 #
 #        l_y = self.y_arr[0,0] - self.y_arr[0,-1]
-#        px_size_y = l_y / n_y / self.n_px_facette_distance_y
-#        facette_size_y = self.n_px_facette_size_y * px_size_y
-#        facette_distance_y = self.n_px_facette_distance_y * px_size_y
+#        px_size_y = l_y / n_y / self.n_px_facet_distance_y
+#        facet_size_y = self.n_px_facet_size_y * px_size_y
+#        facet_distance_y = self.n_px_facet_distance_y * px_size_y
 #        print 'l_y',l_y
 #        print 'n_y',n_y
 #        print 'px_size_y',px_size_y
-#        print 'facette_size_y',facette_size_y
-#        print 'facette_distance_y',facette_distance_y
+#        print 'facet_size_y',facet_size_y
+#        print 'facet_distance_y',facet_distance_y
 
         return grid_mask, x_idx, y_idx, n_x, n_y
 
@@ -372,8 +372,8 @@ class CrackTracer(HasTraits):
             daf = self.data_t_orig
             daf_new = np.copy(daf)
 
-            # @todo: select a facette with none-zero coordinate values
-            # e.g. select a facette from the last middle axis and in a list of the first 10 or last 10 facettes
+            # @todo: select a facet with none-zero coordinate values
+            # e.g. select a facet from the last middle axis and in a list of the first 10 or last 10 facets
             #
     #        n_x = self.idx_maps[3]
     #        n_y = self.idx_maps[4]
@@ -444,8 +444,8 @@ class CrackTracer(HasTraits):
 
             # translation of the coordinates into the origin:
             # 'x_0_vec' derived from the first time step
-            # = distance between origin and the position of the first facette
-            # @todo: make sure that facette (0,0) is non-zero due to lost facette!
+            # = distance between origin and the position of the first facet
+            # @todo: make sure that facet (0,0) is non-zero due to lost facet!
             #
             x_0_vec = daf[0, 0, 0, :3]
             print 'x_0_vec', x_0_vec
@@ -760,8 +760,8 @@ class CrackTracer(HasTraits):
         #
         m.figure(fgcolor=(0, 0, 0), bgcolor=(1, 1, 1), size=(900, 600))
 
-        # NOTE: the missing facettes have all the coordinate position (0,0,0);
-        # the missing facettes therefore are displayed in points3d as missing elements (gaps)
+        # NOTE: the missing facets have all the coordinate position (0,0,0);
+        # the missing facets therefore are displayed in points3d as missing elements (gaps)
 
         plot3d_var = getattr(self, self.plot3d_var_[0])
         vmax = self.plot3d_var_[1]
@@ -924,7 +924,7 @@ class CrackTracer(HasTraits):
         m.show()
 
 
-    # variable to reduce plot to non-missing facettes (mask)
+    # variable to reduce plot to non-missing facets (mask)
     #
     use_mask = 'false'
 

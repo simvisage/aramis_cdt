@@ -16,7 +16,7 @@
 
 from etsproxy.traits.api import \
     HasTraits, Float, Property, cached_property, Int, Array, Bool, \
-    Instance, DelegatesTo, Tuple, Button, List
+    Instance, DelegatesTo, Tuple, Button, List, Str
 
 from etsproxy.traits.ui.api import View, Item, HGroup, EnumEditor, Group, UItem
 
@@ -99,10 +99,15 @@ class AramisCDT(HasTraits):
     '''Switch data transformation before analysis
     '''
 
+    evaluated_step_filename = Property(Str, depends_on='+params_changed')
+    '''Filename for the evaluated step 
+    '''
+    def _get_evaluated_step_filename(self):
+        return '%s%d' % (self.aramis_info.basename, self.evaluated_step)
+
     #===========================================================================
     # Undeformed state parameters
     #===========================================================================
-
     input_array_init = Property(Array, depends_on='aramis_info.data_dir')
     '''Array of values for undeformed state in the first step.
     '''
@@ -322,7 +327,7 @@ class AramisCDT(HasTraits):
         not exist the data is load from *.txt and saved as *.npy. 
         (improve speed of loading)
         '''
-        fname = '%s%d' % (self.aramis_info.basename, step)
+        fname = self.evaluated_step_filename
         print 'loading', fname, '...'
 
         start_t = sysclock()
@@ -657,7 +662,7 @@ class AramisCDT(HasTraits):
         self.ad_channels_lst = []
         self.number_of_missing_facets_t = []
         self.control_strain_t = np.array([])
-        print self.ux_arr.shape
+
         for step, step_file in zip(self.aramis_info.step_list, self.aramis_info.file_list):
             self.evaluated_step = step
             if self.ad_channels_read:
@@ -668,7 +673,6 @@ class AramisCDT(HasTraits):
                                             (self.ux_arr[20, -10] - self.ux_arr[20, 10]) /
                                             (self.x_arr[20, -10] - self.x_arr[20, 10]))
             self.number_of_missing_facets_t.append(np.sum(np.isnan(self.data_array).astype(int)))
-        print 'control_strain_t', self.control_strain_t
 #         import matplotlib.pyplot as plt
 #         plt.figure()
 #         plt.plot(self.control_strain_t)
@@ -699,7 +703,7 @@ class AramisCDT(HasTraits):
     def _run_back_fired(self):
         # todo: better
         x = self.x_arr[20, :]
-        print x
+
         # import matplotlib.pyplot as plt
         # plt.rc('font', size=25)
         step = self.step_list[self.w_detect_step]
@@ -713,7 +717,7 @@ class AramisCDT(HasTraits):
 
         self.crack_width_t = np.zeros((np.sum(self.w_detect_mask),
                                        len(self.aramis_info.step_list)))
-        print 'fasdf', self.crack_width_t.shape
+
         self.crack_stress_t = np.zeros((np.sum(self.w_detect_mask_avg),
                                        len(self.aramis_info.step_list)))
         # plt.figure()

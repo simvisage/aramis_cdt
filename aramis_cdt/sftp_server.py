@@ -14,8 +14,12 @@
 #
 #-------------------------------------------------------------------------------
 
-import paramiko
 import os
+import sys
+try:
+    import paramiko
+except ImportError, e:
+    print "Install package >>paramiko<<.\n%s" % e
 
 class Server(object):
     """
@@ -50,6 +54,8 @@ class Server(object):
 
     def _printTotals(self, transferred, toBeTransferred):
         print "Transferred: {0}\tStill to send: {1}\tProcent: {2}".format(transferred, toBeTransferred, transferred / float(toBeTransferred) * 100)
+        # sys.stdout.write("\r" + "Downloading... %3f%%" % percent)
+        # sys.stdout.flush()
 
     # with-statement support
     def __enter__(self):
@@ -57,3 +63,4 @@ class Server(object):
 
     def __exit__(self, type, value, tb):
         self.close()
+

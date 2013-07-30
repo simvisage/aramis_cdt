@@ -26,6 +26,8 @@ if platform.system() == 'Linux':
 elif platform.system() == 'Windows':
     sysclock = time.clock
 
+import os
+
 import numpy as np
 
 from aramis_cdt import AramisCDT
@@ -377,7 +379,7 @@ class AramisView2D(HasTraits):
         fig = self.test_figure
         fig.clf()
 
-        fig.suptitle(aramis_cdt.aramis_info.basename + '%d' % aramis_cdt.evaluated_step)
+        fig.suptitle(aramis_cdt.aramis_info.basename + '%d' % aramis_cdt.evaluated_step, y=1)
 
         ax_diag = plt.subplot2grid((2, 3), (0, 0))
         ax_hist = plt.subplot2grid((2, 3), (1, 0))
@@ -415,25 +417,25 @@ class AramisView2D(HasTraits):
 
         CS = ax_area.contourf(aramis_cdt.x_arr,
                          aramis_cdt.y_arr,
-                         plot3d_var, 256, cmap=plt.get_cmap('binary'))
+                         plot3d_var, 2, cmap=plt.get_cmap('binary'))
+        ax_area.plot(aramis_cdt.x_arr, aramis_cdt.y_arr, 'ko')
 
         ax_area.plot(aramis_cdt.x_arr[aramis_cdt.crack_filter],
                  aramis_cdt.y_arr[aramis_cdt.crack_filter], linestyle='None',
-                 marker='.', color='magenta')
+                 marker='.', color='white')
 
-        ax_area.vlines(aramis_cdt.x_arr[10, :-1][aramis_cdt.crack_filter_avg],
-                   [0], np.nanmax(aramis_cdt.y_arr),
-                   color='white', zorder=100, linewidth=2)
+#         ax_area.vlines(aramis_cdt.x_arr[10, :-1][aramis_cdt.crack_filter_avg],
+#                    [0], np.nanmax(aramis_cdt.y_arr),
+#                    color='red', zorder=100, linewidth=1)
 
-        # ax_area.axis('equal')
         ax_area.set_xlabel('x [mm]')
         ax_area.set_ylabel('y [mm]')
 
         # ax_area.set_colorbar(CS, orientation='horizontal')
         fig.tight_layout()
 
-        cbar_ax = fig.add_axes([0.45, 0.15, 0.5, 0.03])
-        fig.colorbar(CS, cax=cbar_ax, orientation='horizontal')
+#         cbar_ax = fig.add_axes([0.45, 0.15, 0.5, 0.03])
+#         fig.colorbar(CS, cax=cbar_ax, orientation='horizontal')
 
         fig.canvas.draw()
 
@@ -455,6 +457,12 @@ class AramisView2D(HasTraits):
             self.aramis_cdt.evaluated_step = step
             self.plot_test = True
         self.save_plot = False
+        try:
+            os.system('ffmpeg -framerate 3 -i /tmp/TT-4c-V1-Xf19a15-Yf19a15-Stage-0-%04d.png -vcodec ffv1 -sameq TT-4c-V1.avi')
+            os.system('convert -verbose -delay 25 /tmp/TT-4c-V1* TT-4c-V1.gif')
+        except:
+            print 'It\'s not possible to create animation'
+
 
     view = View(
                 UItem('plot2d'),
