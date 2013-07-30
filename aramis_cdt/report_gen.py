@@ -17,27 +17,32 @@
 import numpy as np
 import os
 
-def report_gen(AV):
-    AV.aramis_view2d.save_plot = True
-    AV.aramis_view2d.show_plot = False
+def report_gen(AUI):
+    AUI.aramis_view2d.save_plot = True
+    AUI.aramis_view2d.show_plot = False
 
-    number_of_cracks_avg = AV.aramis_cdt.number_of_cracks_avg
-    crack_spacing_avg = AV.aramis_cdt.crack_spacing_avg
+    number_of_cracks_avg = AUI.aramis_cdt.number_of_cracks_avg
+    crack_spacing_avg = AUI.aramis_cdt.crack_spacing_avg
 
-    AV.aramis_view2d.plot_strain_crack_avg = True
-    AV.aramis_view2d.plot_crack_filter_crack_avg = True
-    AV.aramis_view2d.plot_crack_hist = True
+    AUI.aramis_view2d.plot_strain_crack_avg = True
+    AUI.aramis_view2d.plot_crack_filter_crack_avg = True
+    AUI.aramis_view2d.plot_crack_hist = True
 
-    AV.aramis_cdt.run_t = True
-    AV.aramis_view2d.plot_force_step = True
-    AV.aramis_view2d.plot_stress_strain = True
+    AUI.aramis_cdt.run_t = True
+    AUI.aramis_view2d.plot_force_t_step = True
+    AUI.aramis_view2d.plot_number_of_missing_facets = True
+    AUI.aramis_view2d.plot_stress_strain = True
+
+    AUI.aramis_cdt.run_back = True
+    AUI.aramis_view2d.plot_crack_init = True
+    AUI.aramis_view2d.plot_stress_strain_init = True
 
     report_source = '''
 ======================================
 Specimen %s
 ======================================
 
-    ''' % os.path.split(AV.aramis_info.data_dir)[-1]
+    ''' % os.path.split(AUI.aramis_info.data_dir)[-1]
 
     report_source += '''
 AramisCDT settings
@@ -60,35 +65,43 @@ AramisCDT settings
  ddd_ux_avg_threshold                  %.6f
 ====================================  ==============
 
-Numerical values
-^^^^^^^^^^^^^^^^
+Numerical results
+^^^^^^^^^^^^^^^^^
 
 ====================================  ==============
- max force [kN]                        %.3f
+ max force_t [kN]                      %.3f
  max stress [MPa]                      %.3f
  number of cracks [-]                  %d
  average crack spacing [mm]            %.3f
+ first avg crack in step [-]           %d
 ====================================  ==============
 
-    ''' % (AV.aramis_cdt.n_px_facet_size_x,
-           AV.aramis_cdt.n_px_facet_size_y,
-           AV.aramis_cdt.n_px_facet_distance_x,
-           AV.aramis_cdt.n_px_facet_distance_y,
-           AV.aramis_cdt.integ_radius,
-           AV.aramis_cdt.w_detect_step,
-           AV.aramis_cdt.transform_data,
-           AV.aramis_cdt.d_ux_threshold,
-           AV.aramis_cdt.dd_ux_threshold,
-           AV.aramis_cdt.dd_ux_avg_threshold,
-           AV.aramis_cdt.ddd_ux_threshold,
-           AV.aramis_cdt.ddd_ux_avg_threshold,
-           np.nanmax(AV.aramis_cdt.force),
-           np.nanmax(AV.aramis_cdt.stress),
+    ''' % (AUI.aramis_cdt.n_px_facet_size_x,
+           AUI.aramis_cdt.n_px_facet_size_y,
+           AUI.aramis_cdt.n_px_facet_distance_x,
+           AUI.aramis_cdt.n_px_facet_distance_y,
+           AUI.aramis_cdt.integ_radius,
+           AUI.aramis_cdt.w_detect_step,
+           AUI.aramis_cdt.transform_data,
+           AUI.aramis_cdt.d_ux_threshold,
+           AUI.aramis_cdt.dd_ux_threshold,
+           AUI.aramis_cdt.dd_ux_avg_threshold,
+           AUI.aramis_cdt.ddd_ux_threshold,
+           AUI.aramis_cdt.ddd_ux_avg_threshold,
+           np.nanmax(AUI.aramis_cdt.force_t),
+           np.nanmax(AUI.aramis_cdt.stress_t),
            number_of_cracks_avg,
-           crack_spacing_avg
+           crack_spacing_avg,
+           np.min(AUI.aramis_cdt.init_step_avg_lst)
            )
 
     report_source += '''
+Check facet field
+^^^^^^^^^^^^^^^^^
+
+.. image:: number_of_missing_facets.png
+    :width: 500px
+    
 Crack field at the crack detect step
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -100,8 +113,11 @@ Crack field at the crack detect step
 |     :width: 500px                      |     :width: 500px                      |
 +----------------------------------------+----------------------------------------+
 
-Histogram of cracks width at the crack detect step
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: crack_init.png
+    :width: 500px
+
+Histogram of sub-cracks width at the crack detect step
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. image:: crack_hist.png
     :width: 500px
@@ -113,6 +129,9 @@ Plots
 | .. image:: force_time.png      | .. image:: stress_strain.png   |
 |     :width: 500px              |     :width: 500px              |
 +--------------------------------+--------------------------------+
+
+.. image:: stress_strain_init.png
+    :width: 500px
 
     '''
 
