@@ -4,8 +4,19 @@ Aramis
 
 .. todo::
     describe Aramis
+    
+Facet field can be ``rectangular`` or ``quadrangle``. These options are available
+in ``Project Mode`` in ``Project >> Project Parameter``.
+    
++-----------------------------------------+----------------------------------------------+------------------------------------------+
+|  Rectangular facet field                |  Masked rectangular facet field              |   Quadrangle facet field                 |
++-----------------------------------------+----------------------------------------------+------------------------------------------+
+| .. image:: facet_field_rectangular.png  | .. image:: facet_field_rectangular_mask.png  |  .. image:: facet_field_quadrangle.png   | 
+|    :width: 300px                        |    :width: 300px                             |     :width: 300px                        |
+|                                         |                                              |                                          |
++-----------------------------------------+----------------------------------------------+------------------------------------------+
 
-Add (edit) AD channel values additionally
+Add (Edit) AD channel values additionally
 -----------------------------------------
 
 AD channels can be added or edited after experiment. The following information

@@ -42,7 +42,7 @@ class GenDoc(HasTraits):
                      'global' : BUILD_DIR }
         return build_dir[self.build_mode]
 
-    html_server = None  # 'root@mordred.imb.rwth-aachen.de:/var/www/docs/oricrete'
+    html_server = 'kelidas@ws_cheetah.stm.fce.vutbr.cz:/var/www/aramis_cdt'  # 'root@mordred.imb.rwth-aachen.de:/var/www/docs/aramis_cdt'
 
     method_dispatcher = {'all' : 'generate_examples' }
 
