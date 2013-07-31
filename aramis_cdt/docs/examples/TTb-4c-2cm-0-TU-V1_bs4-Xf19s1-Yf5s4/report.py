@@ -32,7 +32,7 @@ elif platform.system() == 'Windows':
 
 from aramis_cdt.aramis_info import AramisInfo
 from aramis_cdt.aramis_cdt import AramisCDT
-from aramis_cdt.aramis_view2d import AramisView2D
+from aramis_cdt.aramis_view2d import AramisPlot2D
 from aramis_cdt.aramis_view3d import AramisView3D
 from aramis_cdt.aramis_ui import AramisUI
 
@@ -42,17 +42,13 @@ aramis_dir = '/media/data/_linux_data/aachen/Aramis_07_2013/'
 
 specimen_name = os.path.split(os.getcwd())[-1]
 
-data_dir = os.path.join(aramis_dir, specimen_name + '-Xf19a15-Yf19a15')
+data_dir = os.path.join(aramis_dir, specimen_name)
 
 AI = AramisInfo(data_dir=data_dir)
 AC = AramisCDT(aramis_info=AI,
-               n_px_facet_size_x=19,
-               n_px_facet_size_y=19,
-               n_px_facet_distance_x=15,
-               n_px_facet_distance_y=15,
-               integ_radius=1,
-               evaluated_step=282,
-               w_detect_step=282,
+               integ_radius=14,
+               evaluated_step_idx=203,
+               crack_detect_idx=203,
                transform_data=True)
 
 AUI = AramisUI(aramis_info=AI,
