@@ -21,7 +21,7 @@ try:
 except ImportError, e:
     print "Install package >>paramiko<<.\n%s" % e
 
-class Server(object):
+class SFTPServer(object):
     """
     Wraps paramiko for super-simple SFTP uploading and downloading.
     """

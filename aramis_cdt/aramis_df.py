@@ -74,7 +74,7 @@ class CrackTracer(HasTraits):
 
     # time step used to determine the crack pattern
     #
-    w_detect_step = Int(-1)
+    crack_detect_idx = Int(-1)
 
     # integration radius for the non-local average of the measured strain
     # defined as integer value of the number of facets (or elements)
@@ -252,8 +252,8 @@ class CrackTracer(HasTraits):
 
     grid_mask_w = Property
     def _get_grid_mask_w(self):
-        grid_mask_w = self.grid_mask_t[self.w_detect_step, :, :]
-        print 'number of missing facets at crack_detect_step: ', np.sum(grid_mask_w)
+        grid_mask_w = self.grid_mask_t[self.crack_detect_idx, :, :]
+        print 'number of missing facets at crack_detect_idx: ', np.sum(grid_mask_w)
         return 1.0 * grid_mask_w
 
     txy_idx = Property
@@ -466,14 +466,14 @@ class CrackTracer(HasTraits):
     x_arr = Property
     @cached_property
     def _get_x_arr(self):
-        # take the x-coords from the w_detect_step time step
-        return self.data_t[self.w_detect_step, :, :, 0]
+        # take the x-coords from the crack_detect_idx time step
+        return self.data_t[self.crack_detect_idx, :, :, 0]
 
     x_arr_avg = Property
     @cached_property
     def _get_x_arr_avg(self):
         # use average to eliminate errors in measuring of single points (yields a 1d-array)
-        return np.average(self.data_t[self.w_detect_step, :, :, 0], axis=1)
+        return np.average(self.data_t[self.crack_detect_idx, :, :, 0], axis=1)
 
     x_idx_arr = Property
     @cached_property
@@ -483,14 +483,14 @@ class CrackTracer(HasTraits):
     y_arr = Property
     @cached_property
     def _get_y_arr(self):
-        # take the y-coords derived from the w_detect_step time step
-        return self.data_t[self.w_detect_step, :, :, 1]
+        # take the y-coords derived from the crack_detect_idx time step
+        return self.data_t[self.crack_detect_idx, :, :, 1]
 
     y_arr_avg = Property
     @cached_property
     def _get_y_arr_avg(self):
         # use average to eliminate errors in measuring of single points (yields a 1d-array)
-        return np.ones(self.n_y_t) * np.average(self.data_t[self.w_detect_step, :, :, 1], axis=0)
+        return np.ones(self.n_y_t) * np.average(self.data_t[self.crack_detect_idx, :, :, 1], axis=0)
 
     y_idx_arr = Property
     @cached_property
@@ -563,7 +563,7 @@ class CrackTracer(HasTraits):
     @cached_property
     def _get_ux_w(self):
         # generate the elem_node_map
-        return self.ux_t[self.w_detect_step]
+        return self.ux_t[self.crack_detect_idx]
 
     ux_w_avg = Property
     @cached_property
@@ -1057,7 +1057,7 @@ if __name__ == '__main__':
 #    ct = CrackTracer(data_dir = os.path.join(aramis_dir, 'V1_kurz','f5a3'),
 #                     evaluated_time_step = 22,
 #                     integ_radius = 1,
-#                     w_detect_step = -1,
+#                     crack_detect_idx = -1,
 #                     transform_data = 'false',
 #                     plot3d_var = plot3d_var,
 #                     plot_title = plot_title,
@@ -1070,7 +1070,7 @@ if __name__ == '__main__':
 #    ct = CrackTracer(data_dir = os.path.join(aramis_dir, 'V1_kurz','f7a3'),
 #                     evaluated_time_step = 3,
 #                     integ_radius = 2,
-#                     w_detect_step = -1,
+#                     crack_detect_idx = -1,
 #                     transform_data = 'false',
 #                     plot3d_var = plot3d_var,
 #                     plot_title = plot_title,
@@ -1083,7 +1083,7 @@ if __name__ == '__main__':
 #    ct = CrackTracer(data_dir = os.path.join(aramis_dir, 'V1_kurz','f8a4'),
 #                     evaluated_time_step = 3,
 #                     integ_radius = 2,
-#                     w_detect_step = -1,
+#                     crack_detect_idx = -1,
 #                     transform_data = 'false',
 #                     plot3d_var = plot3d_var,
 #                     plot_title = plot_title,
@@ -1096,7 +1096,7 @@ if __name__ == '__main__':
 #     ct = CrackTracer(data_dir=os.path.join(aramis_dir, 'V3'),
 #                      evaluated_time_step=3,
 #                      integ_radius=3,
-#                      w_detect_step= -1,
+#                      crack_detect_idx= -1,
 #                      transform_data='true',
 #                      plot3d_var=plot3d_var,
 #                      plot_title=plot_title,
@@ -1112,7 +1112,7 @@ if __name__ == '__main__':
 #    ct = CrackTracer(data_dir = os.path.join(aramis_dir, 'V1_kurz','f15a13'),
 #                     evaluated_time_step = 3,
 #                     integ_radius = 2,
-#                     w_detect_step = -1,
+#                     crack_detect_idx = -1,
 #                     transform_data = 'false',
 #                     plot3d_var = plot3d_var,
 #                     plot_title = plot_title,
@@ -1129,7 +1129,7 @@ if __name__ == '__main__':
 #    ct = CrackTracer(data_dir = os.path.join(aramis_dir, 'V1_kurz','Xf15a1-Yf5a3'),
 #                     evaluated_time_step = 3,
 #                     integ_radius = 8,
-#                     w_detect_step = -1,
+#                     crack_detect_idx = -1,
 #                     transform_data = 'false',
 #                     plot3d_var = plot3d_var,
 #                     plot_title = plot_title,
@@ -1142,7 +1142,7 @@ if __name__ == '__main__':
 #    ct = CrackTracer(data_dir = os.path.join(aramis_dir, 'V1_kurz','Xf15a1-Yf5a4'),
 #                     evaluated_time_step = 3,
 #                     integ_radius = 8,
-#                     w_detect_step = -1,
+#                     crack_detect_idx = -1,
 #                     transform_data = 'false',
 #                     plot3d_var = plot3d_var,
 #                     plot_title = plot_title,
@@ -1160,7 +1160,7 @@ if __name__ == '__main__':
 #    ct = CrackTracer(data_dir = os.path.join(aramis_dir, 'Probe-1-Ausschnitt-Xf15a1-Yf5a4'),
 #                     evaluated_time_step = 432,
 #                     integ_radius = 8,
-#                     w_detect_step = -1,
+#                     crack_detect_idx = -1,
 #                     transform_data = 'false',
 #                     plot3d_var = plot3d_var,
 #                     plot_title = plot_title,
@@ -1181,7 +1181,7 @@ if __name__ == '__main__':
 #    ct = CrackTracer(data_dir = os.path.join(aramis_dir, 'V1'),
 #                     evaluated_time_step = 430,
 #                     integ_radius = 1,
-#                     w_detect_step = -1,
+#                     crack_detect_idx = -1,
 #                     transform_data = 'true',
 #                     plot3d_var = plot3d_var,
 #                     plot_title = plot_title,
@@ -1194,7 +1194,7 @@ if __name__ == '__main__':
 #    ct = CrackTracer(data_dir = os.path.join(aramis_dir, 'V2'),
 #                     evaluated_time_step = 430,
 #                     integ_radius = 1,
-#                     w_detect_step = -1,
+#                     crack_detect_idx = -1,
 #                     transform_data = 'false',
 #                     plot3d_var = plot3d_var,
 #                     plot_title = plot_title,
@@ -1208,7 +1208,7 @@ if __name__ == '__main__':
                      evaluated_time_step=400,
                      time_step_size=5,
                      integ_radius=11,
-                     w_detect_step= -1,
+                     crack_detect_idx= -1,
                      transform_data=True,
                      plot3d_var=plot3d_var,
                      plot_title=plot_title,
