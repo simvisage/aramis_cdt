@@ -21,7 +21,7 @@ try:
 except ImportError, e:
     print "Install package >>paramiko<<.\n%s" % e
 
-class Server(object):
+class SFTPServer(object):
     """
     Wraps paramiko for super-simple SFTP uploading and downloading.
     """
@@ -31,11 +31,15 @@ class Server(object):
         self.transport = paramiko.Transport((host, port))
         privatekeyfile = os.path.expanduser('~/.ssh/id_rsa')
         mykey = paramiko.RSAKey.from_private_key_file(privatekeyfile)
-        if password == '':
-            self.transport.connect(username=username, pkey=mykey)
-        else:
-            self.transport.connect(username=username, password=password)
-        self.sftp = paramiko.SFTPClient.from_transport(self.transport)
+        try:
+            if password == '':
+                self.transport.connect(username=username, pkey=mykey)
+            else:
+                self.transport.connect(username=username, password=password)
+            self.sftp = paramiko.SFTPClient.from_transport(self.transport)
+        except paramiko.ssh_exception.AuthenticationException, e:
+            print e
+            print 'Check if you have access to remote server over ssh-key'
 
     def upload(self, local, remote):
         self.sftp.put(local, remote, self._printTotals)

@@ -17,11 +17,12 @@
 # ETSConfig.toolkit = 'qt4'
 
 from etsproxy.traits.api import \
-    HasTraits, Instance
+    HasTraits, Instance, on_trait_change
 
 from etsproxy.traits.ui.api import UItem, View, Tabbed
 
 import os
+import sys
 
 import platform
 import time
@@ -32,8 +33,9 @@ elif platform.system() == 'Windows':
 
 from aramis_info import AramisInfo
 from aramis_cdt import AramisCDT
-from aramis_view2d import AramisView2D
+from aramis_view2d import AramisPlot2D
 from aramis_view3d import AramisView3D
+from aramis_remote import AramisRemote
 
 class AramisUI(HasTraits):
     '''This class is managing all the parts of the CDT and enable to create
@@ -41,11 +43,15 @@ class AramisUI(HasTraits):
     '''
     aramis_info = Instance(AramisInfo)
 
+    aramis_remote = Instance(AramisRemote)
+    def _aramis_remote_default(self):
+        return AramisRemote(aramis_info=self.aramis_info)
+
     aramis_cdt = Instance(AramisCDT)
 
-    aramis_view2d = Instance(AramisView2D)
+    aramis_view2d = Instance(AramisPlot2D)
     def _aramis_view2d_default(self):
-        return AramisView2D(aramis_info=self.aramis_info,
+        return AramisPlot2D(aramis_info=self.aramis_info,
                             aramis_cdt=self.aramis_cdt)
 
     aramis_view3d = Instance(AramisView3D)
@@ -53,6 +59,7 @@ class AramisUI(HasTraits):
         return AramisView3D(aramis_cdt=self.aramis_cdt)
 
     view = View(
+                UItem('aramis_remote'),
                 UItem('aramis_info@'),
                 Tabbed(
                        UItem('aramis_cdt@'),
@@ -66,15 +73,15 @@ class AramisUI(HasTraits):
 if __name__ == '__main__':
 
     if platform.system() == 'Linux':
-        data_dir = r'/media/data/_linux_data/aachen/Aramis_07_2013/TT-4c-V1-Xf19a15-Yf19a15'
+        data_dir = r'/media/data/_linux_data/aachen/Aramis_07_2013/TTb-4c-2cm-0-TU-V2_bs4-Xf19s15-Yf19s15'
     elif platform.system() == 'Windows':
-        data_dir = r'E:\_linux_data\aachen/Aramis_07_2013/TT-4c-V1-Xf19a15-Yf19a15'
+        data_dir = r'E:\_linux_data\aachen/Aramis_07_2013/TTb-4c-2cm-0-TU-V2_bs4-Xf19s15-Yf19s15'
 
     AI = AramisInfo(data_dir=data_dir)
     AC = AramisCDT(aramis_info=AI,
                   integ_radius=1,
-                  evaluated_step=203,
-                  w_detect_step=203,
+                  evaluated_step_idx=129,
+                  crack_detect_idx=129,
                   transform_data=True)
     AUI = AramisUI(aramis_info=AI,
                     aramis_cdt=AC)

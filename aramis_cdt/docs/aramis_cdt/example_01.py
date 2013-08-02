@@ -32,7 +32,7 @@ elif platform.system() == 'Windows':
 
 from aramis_cdt.aramis_info import AramisInfo
 from aramis_cdt.aramis_cdt import AramisCDT
-from aramis_cdt.aramis_view2d import AramisView2D
+from aramis_cdt.aramis_view2d import AramisPlot2D
 from aramis_cdt.aramis_view3d import AramisView3D
 from aramis_cdt.aramis_ui import AramisUI
 
@@ -42,17 +42,13 @@ aramis_dir = '/media/data/_linux_data/aachen/Aramis_07_2013/'
 
 specimen_name = os.path.split(os.getcwd())[-1]
 
-data_dir = os.path.join(aramis_dir, 'TT-4c-V1-Xf19a15-Yf19a15')
+data_dir = os.path.join(aramis_dir, 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15')
 
 AI = AramisInfo(data_dir=data_dir)
 AC = AramisCDT(aramis_info=AI,
-               n_px_facet_size_x=19,
-               n_px_facet_size_y=19,
-               n_px_facet_distance_x=15,
-               n_px_facet_distance_y=15,
                integ_radius=1,
-               evaluated_step=203,
-               w_detect_step=203,
+               evaluated_step_idx=203,
+               crack_detect_idx=203,
                transform_data=True)
 
 AUI = AramisUI(aramis_info=AI,
@@ -63,7 +59,7 @@ AUI.aramis_view2d.show_plot = True
 
 AUI.aramis_view2d.plot_crack_filter_crack_avg = True
 
-x = AUI.aramis_cdt.x_arr[10, :]
+x = AUI.aramis_cdt.x_arr_undeformed[10, :]
 ux = AUI.aramis_cdt.ux_arr[10, :]
 d_ux = AUI.aramis_cdt.d_ux_arr[10, :]
 dd_ux = AUI.aramis_cdt.dd_ux_arr[10, :]
@@ -95,7 +91,7 @@ plt.show()
 #
 #===============================================================================
 
-data_dir = os.path.join(aramis_dir, 'TT-4c-V1-Xf19a1-Yf19a4')
+data_dir = os.path.join(aramis_dir, 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s1-Yf19s4')
 
 AI = AramisInfo(data_dir=data_dir)
 AC = AramisCDT(aramis_info=AI,
@@ -104,8 +100,8 @@ AC = AramisCDT(aramis_info=AI,
                n_px_facet_distance_x=15,
                n_px_facet_distance_y=15,
                integ_radius=4,
-               evaluated_step=203,
-               w_detect_step=203,
+               evaluated_step_idx=203,
+               crack_detect_idx=203,
                transform_data=True)
 
 AUI = AramisUI(aramis_info=AI,
@@ -116,7 +112,7 @@ AUI.aramis_view2d.show_plot = True
 
 AUI.aramis_view2d.plot_crack_filter_crack_avg = True
 
-x = AUI.aramis_cdt.x_arr[40, :]
+x = AUI.aramis_cdt.x_arr_undeformed[40, :]
 ux = AUI.aramis_cdt.ux_arr[40, :]
 d_ux = AUI.aramis_cdt.d_ux_arr[40, :]
 dd_ux = AUI.aramis_cdt.dd_ux_arr[40, :]

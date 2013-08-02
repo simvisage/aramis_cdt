@@ -62,7 +62,7 @@ class AramisView3D(HasTraits):
         plot3d_var = getattr(aramis_cdt, self.plot3d_var_)
 
         mask = np.logical_or(np.isnan(aramis_cdt.x_arr),
-                             aramis_cdt.data_array_init_mask[0, :, :])
+                             aramis_cdt.data_array_undeformed_mask[0, :, :])
         mask = None
         m.points3d(aramis_cdt.x_arr[mask],
                    aramis_cdt.y_arr[mask],
@@ -75,7 +75,7 @@ class AramisView3D(HasTraits):
         scene.scene.disable_render = False
 
         if self.plot_title:
-            m.title('step no. %d' % aramis_cdt.evaluated_step, size=0.3)
+            m.title('step no. %d' % aramis_cdt.evaluated_step_idx, size=0.3)
 
         m.scalarbar(orientation='horizontal', title=self.plot3d_var_)
 
@@ -153,7 +153,7 @@ class AramisView3D(HasTraits):
         scene.scene.disable_render = False
 
         if self.plot_title:
-            m.title('step no. %d' % aramis_cdt.evaluated_step, size=0.3)
+            m.title('step no. %d' % aramis_cdt.evaluated_step_idx, size=0.3)
 
         m.scalarbar(orientation='horizontal', title=self.plot3d_var_)
 
@@ -226,7 +226,7 @@ class AramisView3D(HasTraits):
         scene.scene.disable_render = False
 
         if self.plot_title:
-            m.title('step no. %d' % aramis_cdt.evaluated_step, size=0.3)
+            m.title('step no. %d' % aramis_cdt.evaluated_step_idx, size=0.3)
 
         m.scalarbar(orientation='horizontal', title='crack_field')
 

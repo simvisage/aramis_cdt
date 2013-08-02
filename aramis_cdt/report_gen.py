@@ -17,7 +17,7 @@
 import numpy as np
 import os
 
-def report_gen(AUI):
+def report_gen(AUI, animation=False):
     AUI.aramis_view2d.save_plot = True
     AUI.aramis_view2d.show_plot = False
 
@@ -29,7 +29,7 @@ def report_gen(AUI):
     AUI.aramis_view2d.plot_crack_hist = True
 
     AUI.aramis_cdt.run_t = True
-    AUI.aramis_view2d.plot_force_t_step = True
+    AUI.aramis_view2d.plot_force_step = True
     AUI.aramis_view2d.plot_number_of_missing_facets = True
     AUI.aramis_view2d.plot_stress_strain = True
 
@@ -37,10 +37,13 @@ def report_gen(AUI):
     AUI.aramis_view2d.plot_crack_init = True
     AUI.aramis_view2d.plot_stress_strain_init = True
 
+    if animation:
+        AUI.aramis_view2d.create_animation = True
+
     report_source = '''
-======================================
+================================================================================
 Specimen %s
-======================================
+================================================================================
 
     ''' % os.path.split(AUI.aramis_info.data_dir)[-1]
 
@@ -76,12 +79,12 @@ Numerical results
  first avg crack in step [-]           %d
 ====================================  ==============
 
-    ''' % (AUI.aramis_cdt.n_px_facet_size_x,
-           AUI.aramis_cdt.n_px_facet_size_y,
-           AUI.aramis_cdt.n_px_facet_distance_x,
-           AUI.aramis_cdt.n_px_facet_distance_y,
+    ''' % (AUI.aramis_info.n_px_facet_size_x,
+           AUI.aramis_info.n_px_facet_size_y,
+           AUI.aramis_info.n_px_facet_step_x,
+           AUI.aramis_info.n_px_facet_step_y,
            AUI.aramis_cdt.integ_radius,
-           AUI.aramis_cdt.w_detect_step,
+           AUI.aramis_cdt.crack_detect_idx,
            AUI.aramis_cdt.transform_data,
            AUI.aramis_cdt.d_ux_threshold,
            AUI.aramis_cdt.dd_ux_threshold,
@@ -133,7 +136,15 @@ Plots
 .. image:: stress_strain_init.png
     :width: 500px
 
-    '''
+'''
+
+
+    report_source += '''
+.. image:: %s.gif
+    :width: 800px
+    
+:download:`Download <%s.avi>` video in avi.
+''' % (AUI.aramis_info.specimen_name, AUI.aramis_info.specimen_name)
 
     with open('report.rst', 'w') as f:
         f.write(report_source)

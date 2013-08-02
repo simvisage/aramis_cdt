@@ -39,20 +39,11 @@ way is to record script and modify it. The following script creates variable
 Export data for AramisCDT
 -------------------------
     
-Default settings for export data from Aramis
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. literalinclude:: default_export_settings.txt
-    :encoding: latin-1
-  
 Export undeformed coordinates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. todo::
-	not implemented yet
-
 Undeformed coordinates should be exported only for stage number 0 as file with  
-name ``coord_ProjectName-AutomaticPart.txt`` (e.g. coord_TT-4c-V1-Stage-0-0.txt). 
+name ``coord_ProjectName-AutomaticPart.txt`` (e.g. undeformed_coords-Stage-0-0.txt). 
 
 .. literalinclude:: coord_export_settings.txt
     :encoding: latin-1
@@ -60,11 +51,8 @@ name ``coord_ProjectName-AutomaticPart.txt`` (e.g. coord_TT-4c-V1-Stage-0-0.txt)
 Export displacements
 ^^^^^^^^^^^^^^^^^^^^
 
-.. todo::
-	not implemented yet
-
 Displacement have to be exported for all stages as file with  
-name ``displ_ProjectName-AutomaticPart.txt`` (e.g. displ_TT-4c-V1-Stage-0-i.txt).
+name ``displ_ProjectName-AutomaticPart.txt`` (e.g. displ-Stage-0-i.txt).
 
 .. literalinclude:: displ_export_settings.txt
     :encoding: latin-1
