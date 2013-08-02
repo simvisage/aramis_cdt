@@ -14,6 +14,54 @@
 #
 #-------------------------------------------------------------------------------
 
+import ConfigParser
+from traits.api import HasTraits, Button, Instance
+from traitsui.api import View, Handler
+
+
+class B(HasTraits):
+    c = Button
+    def _c_fired(self):
+        print 'B fired'
+
+    view = View('c')
+
+class H(Handler):
+    def close(self, info, is_ok):
+        print is_ok
+        return True
+
+class A(HasTraits):
+    bb = Instance(B, ())
+
+    b = Button
+    def _b_fired(self):
+        print 'A fired'
+        b = self.bb
+        b.configure_traits()
+
+    view = View(
+                'b',
+                buttons=['OK', 'Cancel'],
+                handler=H
+                )
+
+
+aa = A()
+aa.configure_traits()
+
+
+
+
+
+
+
+
+exit()
+
+#===============================================================================
+# Animation
+#===============================================================================
 from numpy import sin, cos, pi, array
 import numpy as np
 import matplotlib.pyplot as plt

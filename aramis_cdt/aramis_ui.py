@@ -17,7 +17,7 @@
 # ETSConfig.toolkit = 'qt4'
 
 from etsproxy.traits.api import \
-    HasTraits, Instance
+    HasTraits, Instance, on_trait_change
 
 from etsproxy.traits.ui.api import UItem, View, Tabbed
 
@@ -35,12 +35,17 @@ from aramis_info import AramisInfo
 from aramis_cdt import AramisCDT
 from aramis_view2d import AramisPlot2D
 from aramis_view3d import AramisView3D
+from aramis_remote import AramisRemote
 
 class AramisUI(HasTraits):
     '''This class is managing all the parts of the CDT and enable to create
     simple user interface.
     '''
     aramis_info = Instance(AramisInfo)
+
+    aramis_remote = Instance(AramisRemote)
+    def _aramis_remote_default(self):
+        return AramisRemote(aramis_info=self.aramis_info)
 
     aramis_cdt = Instance(AramisCDT)
 
@@ -54,6 +59,7 @@ class AramisUI(HasTraits):
         return AramisView3D(aramis_cdt=self.aramis_cdt)
 
     view = View(
+                UItem('aramis_remote'),
                 UItem('aramis_info@'),
                 Tabbed(
                        UItem('aramis_cdt@'),

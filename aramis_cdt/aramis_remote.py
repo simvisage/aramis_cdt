@@ -37,9 +37,11 @@ if platform.system() == 'Linux':
 elif platform.system() == 'Windows':
     sysclock = time.clock
 
-
+from aramis_info import AramisInfo
 
 class AramisRemote(HasTraits):
+
+    aramis_info = Instance(AramisInfo)
 
     simdb = Instance(SimDB, ())
 
@@ -136,6 +138,10 @@ class AramisRemote(HasTraits):
         zf.close()
         print 'FILE %s DECOMPRESSED' % self.aramis_file_selected
 
+    set_dir = Button
+    def _set_dir_fired(self):
+        self.aramis_info.data_dir = os.path.join(self.local_dir, self.aramis_file_selected)
+
     view = View(
                 Item('experiment_dir'),
                 Item('server_username', style='readonly'),
@@ -144,7 +150,8 @@ class AramisRemote(HasTraits):
                 Item('aramis_file_selected', editor=EnumEditor(name='aramis_files'),
                      label='Available Aramis files'),
                 UItem('download'),
-                UItem('decompress')
+                UItem('decompress'),
+                UItem('set_dir')
                 )
 
 

@@ -469,15 +469,20 @@ class AramisPlot2D(HasTraits):
             self.plot_test = True
             self.test_figure.savefig(os.path.join(self.temp_dir, fname_pattern
                                      % (aramis_cdt.aramis_info.specimen_name, aramis_cdt.evaluated_step_idx)))
+
         try:
             os.system('ffmpeg -framerate 3 -i %s.png -vcodec ffv1 -sameq %s.avi' %
                       (os.path.join(self.temp_dir, fname_pattern.replace('%s', aramis_cdt.aramis_info.specimen_name)),
                        os.path.join(self.save_dir, aramis_cdt.aramis_info.specimen_name)))
+        except:
+            print 'Cannot create video in avi format. Check if you have "ffmpeg" in in yourt system path.'
+
+        try:
             os.system('convert -verbose -delay 25 %s* %s.gif' %
                       (os.path.join(self.temp_dir, aramis_cdt.aramis_info.specimen_name),
                        os.path.join(self.save_dir, aramis_cdt.aramis_info.specimen_name)))
         except:
-            print 'It\'s not possible to create animation'
+            print 'Cannot create animated gif. Check if you have "convert" in in yourt system path.'
 
         self.save_plot = save_plot
         self.show_plot = show_plot
@@ -486,7 +491,7 @@ class AramisPlot2D(HasTraits):
     view = View(
                 Item('object.aramis_cdt.evaluated_step_idx',
                      editor=RangeEditor(low=0, high_name='object.aramis_cdt.step_idx_max',
-                                        auto_set=False, enter_set=True, mode='slider'),
+                                        mode='slider'),
                                         springy=True),
                 UItem('plot2d'),
                 UItem('plot_crack_hist'),

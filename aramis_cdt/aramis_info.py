@@ -60,9 +60,12 @@ class AramisInfo(HasTraits):
     def _file_step_list_update(self):
         '''Update values of file_list and step_list. Sorted by the step number.
         '''
-        file_list = [v for v in os.listdir(self.data_dir) if os.path.splitext(v)[1] == ".txt"]
+        if os.path.exists(self.npy_dir):
+            file_list = [v for v in os.listdir(self.npy_dir) if os.path.splitext(v)[1] == ".npy"]
+        else:
+            file_list = [v for v in os.listdir(self.data_dir) if os.path.splitext(v)[1] == ".txt"]
         step_list = []
-        pat = r'displ.*-(?P<step>\d+).txt'
+        pat = r'displ.*-(?P<step>\d+).*'
         for f in file_list:
             m = re.match(pat, f)
             if m:

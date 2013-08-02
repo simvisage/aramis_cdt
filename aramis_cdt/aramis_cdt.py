@@ -416,6 +416,7 @@ class AramisCDT(HasTraits):
 
         y_idx_zeros, x_idx_zeros = np.where(np.isnan(ux_arr))
         ux_arr[y_idx_zeros, x_idx_zeros] = ux_avg[x_idx_zeros]
+        ux_arr[ux_arr < 0.01] = 0
         return ux_arr
 
     ux_arr_avg = Property(Array, depends_on='aramis_info.data_dir, +params_changed')
@@ -782,8 +783,7 @@ class AramisCDT(HasTraits):
 
     view = View(
                 Item('evaluated_step_idx',
-                     editor=RangeEditor(low=0, high_name='step_idx_max',
-                                        auto_set=False, enter_set=True, mode='slider'),
+                     editor=RangeEditor(low=0, high_name='step_idx_max', mode='slider'),
                                         springy=True),
                 Item('data_array_undeformed_shape', label='data shape', style='readonly'),
                 Item('crack_detect_idx'),
