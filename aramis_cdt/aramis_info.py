@@ -1,12 +1,12 @@
 #-------------------------------------------------------------------------------
 #
-# Copyright (c) 2012
+# Copyright (c) 2013
 # IMB, RWTH Aachen University,
 # ISM, Brno University of Technology
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in the Spirrid top directory "licence.txt" and may be
+# license included in the AramisCDT top directory "licence.txt" and may be
 # redistributed only under the conditions described in the aforementioned
 # license.
 #
@@ -108,7 +108,7 @@ class AramisInfo(HasTraits):
     '''
     @on_trait_change('specimen_name')
     def _facet_params_dict_update(self):
-        pat = r'.*Xf(?P<fsz_x>\d+)s(?P<fst_x>\d+)-Yf(?P<fsz_y>\d+)s(?P<fst_y>\d+)'
+        pat = r'.*Xf(?P<fsz_x>\d+)s(?P<fst_x>\d+)-Yf(?P<fsz_y>\d+)s(?P<fst_y>\d+).*'
         m = re.match(pat, self.specimen_name)
         self.facet_params_dict = m.groupdict()
 

@@ -1,12 +1,12 @@
 #-------------------------------------------------------------------------------
 #
-# Copyright (c) 2012
+# Copyright (c) 2013
 # IMB, RWTH Aachen University,
 # ISM, Brno University of Technology
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in the Spirrid top directory "licence.txt" and may be
+# license included in the AramisCDT top directory "licence.txt" and may be
 # redistributed only under the conditions described in the aforementioned
 # license.
 #
@@ -23,6 +23,8 @@ def report_gen(AUI, animation=False):
 
     number_of_cracks_avg = AUI.aramis_cdt.number_of_cracks_avg
     crack_spacing_avg = AUI.aramis_cdt.crack_spacing_avg
+    subcrack_width_mean = AUI.aramis_cdt.crack_arr_mean
+    subcrack_width_std = AUI.aramis_cdt.crack_arr_std
 
     AUI.aramis_view2d.plot_strain_crack_avg = True
     AUI.aramis_view2d.plot_crack_filter_crack_avg = True
@@ -77,6 +79,8 @@ Numerical results
  number of cracks [-]                  %d
  average crack spacing [mm]            %.3f
  first avg crack in step [-]           %d
+ subcrack width mean [mm]              %.3f
+ subcrack width std  [mm]              %.3f
 ====================================  ==============
 
     ''' % (AUI.aramis_info.n_px_facet_size_x,
@@ -95,7 +99,9 @@ Numerical results
            np.nanmax(AUI.aramis_cdt.stress_t),
            number_of_cracks_avg,
            crack_spacing_avg,
-           np.min(AUI.aramis_cdt.init_step_avg_lst)
+           np.min(AUI.aramis_cdt.init_step_avg_lst),
+           subcrack_width_mean,
+           subcrack_width_std
            )
 
     report_source += '''

@@ -35,18 +35,21 @@ from aramis_cdt.aramis_cdt import AramisCDT
 from aramis_cdt.aramis_view2d import AramisPlot2D
 from aramis_cdt.aramis_view3d import AramisView3D
 from aramis_cdt.aramis_ui import AramisUI
+from aramis_cdt.aramis_remote import AramisRemote
 
 from aramis_cdt.report_gen import report_gen
+from matresdev.db.simdb import SimDB
 
-aramis_dir = '/media/data/_linux_data/aachen/Aramis_07_2013/'
+simdb = SimDB()
 
-specimen_name = os.path.split(os.getcwd())[-1]
+experiment_dir = os.path.join(simdb.exdata_dir, 'tensile_tests', 'buttstrap_clamping',
+                              '2013-07-09_TTb-4c-2cm-0-TU_bs4-Aramis3d')
 
-data_dir = os.path.join(aramis_dir, specimen_name)
-
-AI = AramisInfo(data_dir=data_dir)
+AI = AramisInfo()
+AR = AramisRemote(aramis_info=AI,
+                  experiment_dir=experiment_dir)
 AC = AramisCDT(aramis_info=AI,
-               integ_radius=19,
+               integ_radius=1,
                evaluated_step_idx=203,
                crack_detect_idx=203,
                transform_data=True)

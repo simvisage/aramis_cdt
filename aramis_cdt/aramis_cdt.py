@@ -1,12 +1,12 @@
 #-------------------------------------------------------------------------------
 #
-# Copyright (c) 2012
+# Copyright (c) 2013
 # IMB, RWTH Aachen University,
 # ISM, Brno University of Technology
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in the Spirrid top directory "licence.txt" and may be
+# license included in the AramisCDT top directory "licence.txt" and may be
 # redistributed only under the conditions described in the aforementioned
 # license.
 #
@@ -416,7 +416,7 @@ class AramisCDT(HasTraits):
 
         y_idx_zeros, x_idx_zeros = np.where(np.isnan(ux_arr))
         ux_arr[y_idx_zeros, x_idx_zeros] = ux_avg[x_idx_zeros]
-        ux_arr[ux_arr < 0.01] = 0
+        # ux_arr[ux_arr < 0.01] = 0
         return ux_arr
 
     ux_arr_avg = Property(Array, depends_on='aramis_info.data_dir, +params_changed')
@@ -573,6 +573,14 @@ class AramisCDT(HasTraits):
     @cached_property
     def _get_crack_arr(self):
         return self.d_ux_arr[np.where(self.crack_filter)]
+
+    crack_arr_mean = Property(Float, depends_on='aramis_info.data_dir, +params_changed')
+    def _get_crack_arr_mean(self):
+        return self.crack_arr.mean()
+
+    crack_arr_std = Property(Float, depends_on='aramis_info.data_dir, +params_changed')
+    def _get_crack_arr_std(self):
+        return self.crack_arr.std()
 
     crack_avg_arr = Property(Array, depends_on='aramis_info.data_dir, +params_changed')
     @cached_property
@@ -809,6 +817,7 @@ if __name__ == '__main__':
     elif platform.system() == 'Windows':
         data_dir = r'E:\_linux_data\aachen/Aramis_07_2013/TTb-4c-2cm-0-TU-V2_bs4-Xf19s15-Yf19s15'
 
+    data_dir = '/media/data/_linux_data/aachen/Aramis_07_2013/TT-12c-6cm-0-TU-SH4-V1-Xf19s15-Yf19s15'
     AI = AramisInfo(data_dir=data_dir)
     AC = AramisCDT(aramis_info=AI,
                   integ_radius=1,
@@ -817,4 +826,5 @@ if __name__ == '__main__':
                   transform_data=True)
 
 
+    print AC.ux_arr
     AC.configure_traits()

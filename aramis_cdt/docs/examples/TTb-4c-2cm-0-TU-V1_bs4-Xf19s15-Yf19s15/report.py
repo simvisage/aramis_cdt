@@ -1,12 +1,12 @@
 #-------------------------------------------------------------------------------
 #
-# Copyright (c) 2012
+# Copyright (c) 2013
 # IMB, RWTH Aachen University,
 # ISM, Brno University of Technology
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in the Spirrid top directory "licence.txt" and may be
+# license included in the AramisCDT top directory "licence.txt" and may be
 # redistributed only under the conditions described in the aforementioned
 # license.
 #

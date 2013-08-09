@@ -1,12 +1,12 @@
 #-------------------------------------------------------------------------------
 #
-# Copyright (c) 2012
+# Copyright (c) 2013
 # IMB, RWTH Aachen University,
 # ISM, Brno University of Technology
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in the Spirrid top directory "licence.txt" and may be
+# license included in the AramisCDT top directory "licence.txt" and may be
 # redistributed only under the conditions described in the aforementioned
 # license.
 #
@@ -39,9 +39,9 @@ class AramisView3D(HasTraits):
 
     plot_title = Bool(True)
 
-    plot3d_var = Trait('07 d_ux_arr [mm]', {'01 x_arr [mm]':'x_arr',
-                                            '02 y_arr [mm]':'y_arr',
-                                            '03 z_arr [mm]':'z_arr',
+    plot3d_var = Trait('07 d_ux_arr [mm]', {'01 x_arr [mm]':'x_arr_undeformed',
+                                            '02 y_arr [mm]':'y_arr_undeformed',
+                                            '03 z_arr [mm]':'z_arr_undeformed',
                                             '04 ux_arr [mm]':'ux_arr',
                                             '05 uy_arr [mm]':'uy_arr',
                                             '06 uz_arr [mm]':'uz_arr',
@@ -61,12 +61,12 @@ class AramisView3D(HasTraits):
 
         plot3d_var = getattr(aramis_cdt, self.plot3d_var_)
 
-        mask = np.logical_or(np.isnan(aramis_cdt.x_arr),
+        mask = np.logical_or(np.isnan(aramis_cdt.x_arr_undeformed),
                              aramis_cdt.data_array_undeformed_mask[0, :, :])
         mask = None
-        m.points3d(aramis_cdt.x_arr[mask],
-                   aramis_cdt.y_arr[mask],
-                   aramis_cdt.z_arr[mask],
+        m.points3d(aramis_cdt.x_arr_undeformed[mask],
+                   aramis_cdt.y_arr_undeformed[mask],
+                   aramis_cdt.z_arr_undeformed[mask],
                    plot3d_var[mask],
                    mode='cube',
                    scale_mode='none', scale_factor=1)
@@ -107,10 +107,10 @@ class AramisView3D(HasTraits):
         # plot crack width ('crack_field_w')
         #-----------------------------------
 
-        z_arr = np.zeros_like(aramis_cdt.z_arr)
+        z_arr = np.zeros_like(aramis_cdt.z_arr_undeformed)
 
         plot3d_var = getattr(aramis_cdt, self.plot3d_var_)
-        m.points3d(z_arr, aramis_cdt.x_arr, aramis_cdt.y_arr, plot3d_var,
+        m.points3d(z_arr, aramis_cdt.x_arr_undeformed, aramis_cdt.y_arr_undeformed, plot3d_var,
                    mode='cube', colormap="blue-red", scale_mode='scalar', vmax=.2)
 
         # scale glyphs
@@ -126,7 +126,7 @@ class AramisView3D(HasTraits):
         #-----------------------------------
 
         plot3d_var = getattr(aramis_cdt, self.plot3d_var_)
-        m.points3d(z_arr, aramis_cdt.x_arr, aramis_cdt.y_arr, plot3d_var, mode='cube',
+        m.points3d(z_arr, aramis_cdt.x_arr_undeformed, aramis_cdt.y_arr_undeformed, plot3d_var, mode='cube',
                    colormap="blue-red", scale_mode='none')
 
         glyph1 = engine.scenes[0].children[1].children[0].children[0]
@@ -178,11 +178,11 @@ class AramisView3D(HasTraits):
         # plot crack width ('crack_field_w')
         #-----------------------------------
 
-        z_arr = np.zeros_like(aramis_cdt.z_arr)
+        z_arr = np.zeros_like(aramis_cdt.z_arr_undeformed)
 
         plot3d_var = aramis_cdt.crack_field_arr
 #        plot3d_var = getattr(self, 'crack_field_w')
-        m.points3d(z_arr, aramis_cdt.x_arr, aramis_cdt.y_arr, plot3d_var,
+        m.points3d(z_arr, aramis_cdt.x_arr_undeformed, aramis_cdt.y_arr_undeformed, plot3d_var,
                    mode='cube', colormap="blue-red", scale_mode='scalar', vmax=.2)
 
         # scale glyphs
@@ -199,7 +199,7 @@ class AramisView3D(HasTraits):
 
 #        plot3d_var = getattr(self, 'd_ux_w')
         plot3d_var = getattr(aramis_cdt, 'crack_field_arr')
-        m.points3d(z_arr, aramis_cdt.x_arr, aramis_cdt.y_arr, plot3d_var, mode='cube',
+        m.points3d(z_arr, aramis_cdt.x_arr_undeformed, aramis_cdt.y_arr_undeformed, plot3d_var, mode='cube',
                    colormap="blue-red", scale_mode='none')
 
         glyph1 = engine.scenes[0].children[1].children[0].children[0]

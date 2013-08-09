@@ -1,12 +1,12 @@
 #-------------------------------------------------------------------------------
 #
-# Copyright (c) 2012
+# Copyright (c) 2013
 # IMB, RWTH Aachen University,
 # ISM, Brno University of Technology
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in the Spirrid top directory "licence.txt" and may be
+# license included in the AramisCDT top directory "licence.txt" and may be
 # redistributed only under the conditions described in the aforementioned
 # license.
 #
@@ -41,13 +41,13 @@ class AramisUI(HasTraits):
     '''This class is managing all the parts of the CDT and enable to create
     simple user interface.
     '''
-    aramis_info = Instance(AramisInfo)
+    aramis_info = Instance(AramisInfo, ())
 
     aramis_remote = Instance(AramisRemote)
     def _aramis_remote_default(self):
         return AramisRemote(aramis_info=self.aramis_info)
 
-    aramis_cdt = Instance(AramisCDT)
+    aramis_cdt = Instance(AramisCDT, ())
 
     aramis_view2d = Instance(AramisPlot2D)
     def _aramis_view2d_default(self):
@@ -77,6 +77,7 @@ if __name__ == '__main__':
     elif platform.system() == 'Windows':
         data_dir = r'E:\_linux_data\aachen/Aramis_07_2013/TTb-4c-2cm-0-TU-V2_bs4-Xf19s15-Yf19s15'
 
+    data_dir = '/media/data/_linux_data/aachen/Aramis_07_2013/TT-12c-6cm-0-TU-SH4-V1-Xf19s15-Yf19s15'
     AI = AramisInfo(data_dir=data_dir)
     AC = AramisCDT(aramis_info=AI,
                   integ_radius=1,
@@ -85,5 +86,6 @@ if __name__ == '__main__':
                   transform_data=True)
     AUI = AramisUI(aramis_info=AI,
                     aramis_cdt=AC)
+    # AUI = AramisUI()
     AUI.configure_traits()
 

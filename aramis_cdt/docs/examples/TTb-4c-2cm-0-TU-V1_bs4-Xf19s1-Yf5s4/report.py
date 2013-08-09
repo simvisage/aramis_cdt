@@ -1,12 +1,12 @@
 #-------------------------------------------------------------------------------
 #
-# Copyright (c) 2012
+# Copyright (c) 2013
 # IMB, RWTH Aachen University,
 # ISM, Brno University of Technology
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in the Spirrid top directory "licence.txt" and may be
+# license included in the AramisCDT top directory "licence.txt" and may be
 # redistributed only under the conditions described in the aforementioned
 # license.
 #
@@ -46,7 +46,7 @@ data_dir = os.path.join(aramis_dir, specimen_name)
 
 AI = AramisInfo(data_dir=data_dir)
 AC = AramisCDT(aramis_info=AI,
-               integ_radius=14,
+               integ_radius=19,
                evaluated_step_idx=203,
                crack_detect_idx=203,
                transform_data=True)
