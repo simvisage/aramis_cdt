@@ -6,7 +6,7 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in the AramisCDT top directory "licence.txt" and may be
+# license included in the AramisCDT top directory "license.txt" and may be
 # redistributed only under the conditions described in the aforementioned
 # license.
 #
@@ -36,6 +36,7 @@ from aramis_cdt import AramisCDT
 from aramis_view2d import AramisPlot2D
 from aramis_view3d import AramisView3D
 from aramis_remote import AramisRemote
+
 
 class AramisUI(HasTraits):
     '''This class is managing all the parts of the CDT and enable to create
@@ -78,6 +79,7 @@ if __name__ == '__main__':
         data_dir = r'E:\_linux_data\aachen/Aramis_07_2013/TTb-4c-2cm-0-TU-V2_bs4-Xf19s15-Yf19s15'
 
     data_dir = '/media/data/_linux_data/aachen/Aramis_07_2013/TT-12c-6cm-0-TU-SH4-V1-Xf19s15-Yf19s15'
+
     AI = AramisInfo(data_dir=data_dir)
     AC = AramisCDT(aramis_info=AI,
                   integ_radius=1,
@@ -88,4 +90,3 @@ if __name__ == '__main__':
                     aramis_cdt=AC)
     # AUI = AramisUI()
     AUI.configure_traits()
-

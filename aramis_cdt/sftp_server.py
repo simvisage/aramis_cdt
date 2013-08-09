@@ -6,7 +6,7 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in the AramisCDT top directory "licence.txt" and may be
+# license included in the AramisCDT top directory "license.txt" and may be
 # redistributed only under the conditions described in the aforementioned
 # license.
 #
