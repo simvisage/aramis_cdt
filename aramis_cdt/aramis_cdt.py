@@ -108,28 +108,12 @@ class AramisCDT(HasTraits):
 
         start_t = sysclock()
         dir_npy = self.aramis_info.npy_dir
-        if os.path.exists(dir_npy) == False:
-            os.mkdir(dir_npy)
         fname_npy = os.path.join(dir_npy, fname + '.npy')
-        fname_txt = os.path.join(self.aramis_info.data_dir, fname + '.txt')
 
         if os.path.exists(fname_npy):
             data_arr = np.load(fname_npy)
-            self.n_x_undeformed = data_arr.shape[2]
-            self.n_y_undeformed = data_arr.shape[1]
         else:
-            data_arr = np.loadtxt(fname_txt,
-                               # skiprows=14,  # not necessary
-                               usecols=[0, 1, 2, 3, 4])
-            self.x_idx_min_undeformed = int(np.min(data_arr[:, 0]))
-            self.y_idx_min_undeformed = int(np.min(data_arr[:, 1]))
-            self.x_idx_max_undeformed = int(np.max(data_arr[:, 0]))
-            self.y_idx_max_undeformed = int(np.max(data_arr[:, 1]))
-            self.n_x_undeformed = int(self.x_idx_max_undeformed - self.x_idx_min_undeformed + 1)
-            self.n_y_undeformed = int(self.y_idx_max_undeformed - self.y_idx_min_undeformed + 1)
-            data_arr = self._prepare_data_structure(data_arr)
-
-            np.save(fname_npy, data_arr)
+            print '*.npy data does not exist!'
         print 'loading time =', sysclock() - start_t
         print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
         return data_arr
@@ -162,29 +146,17 @@ class AramisCDT(HasTraits):
     def _get_data_array_undeformed_mask(self):
         return np.isnan(self.input_array_undeformed)
 
-    x_idx_min_undeformed = Int
-    '''Minimum value of the indices in the first column of the undeformed state.
-    '''
-
-    y_idx_min_undeformed = Int
-    '''Minimum value of the indices in the second column of the undeformed state.
-    '''
-
-    x_idx_max_undeformed = Int
-    '''Maximum value of the indices in the first column of the undeformed state.
-    '''
-
-    y_idx_max_undeformed = Int
-    '''Maximum value of the indices in the second column of the undeformed state.
-    '''
-
-    n_x_undeformed = Int
+    n_x_undeformed = Property(Int, depends_on='aramis_info.data_dir')
     '''Number of facets in x-direction
     '''
+    def _get_n_x_undeformed(self):
+        return self.input_array_undeformed.shape[2]
 
-    n_y_undeformed = Int
+    n_y_undeformed = Property(Int, depends_on='aramis_info.data_dir')
     '''Number of facets in y-direction
     '''
+    def _get_n_y_undeformed(self):
+        return self.input_array_undeformed.shape[1]
 
     x_idx_undeformed = Property(Int, depends_on='input_array_undeformed')
     '''Indices in the first column of the undeformed state starting with zero.
@@ -270,28 +242,18 @@ class AramisCDT(HasTraits):
     # Data preparation methods
     #===========================================================================
     def _load_step_data(self, step):
-        '''Load data for the specified step from *.npy file. If file *.npy does 
-        not exist the data is load from *.txt and saved as *.npy. 
-        (improve speed of loading)
+        '''Load data for the specified step from *.npy file.
         '''
         fname = self.evaluated_step_idx_filename
         print 'loading', fname, '...'
 
         start_t = sysclock()
         dir_npy = self.aramis_info.npy_dir
-        if os.path.exists(dir_npy) == False:
-            os.mkdir(dir_npy)
         fname_npy = os.path.join(dir_npy, fname + '.npy')
-        fname_txt = os.path.join(self.aramis_info.data_dir, fname + '.txt')
         if os.path.exists(fname_npy):
             data_arr = np.load(fname_npy)
         else:
-            data_arr = np.loadtxt(fname_txt,
-                               # skiprows=14,  # not necessary
-                               usecols=[0, 1, 2, 3, 4])
-            data_arr = self._prepare_data_structure(data_arr)
-
-            np.save(fname_npy, data_arr)
+            print '*.npy data does not exist!'
         print 'loading time =', sysclock() - start_t
         print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
         return data_arr
@@ -601,11 +563,6 @@ class AramisCDT(HasTraits):
     '''Number of cracks in time
     '''
 
-    ad_channels_lst = List
-    '''List of tuples (undeformed, deformed) obtained from AD channels in 
-    aramis file header
-    '''
-
     number_of_missing_facets_t = List
     '''Number of missing facets in time (missing, unidentified, not satisfying
     conditions, destroyed by crack)
@@ -646,9 +603,11 @@ class AramisCDT(HasTraits):
 
     ad_channels_arr = Property(Array)
     def _get_ad_channels_arr(self):
-        return np.array(self.ad_channels_lst, dtype=float)
-
-    ad_channels_read = Bool(True)
+        ad_channels_file = os.path.join(self.aramis_info.npy_dir, 'ad_channels.npy')
+        if os.path.exists(ad_channels_file):
+            return np.load(ad_channels_file)
+        else:
+            print 'File %s does not exists!' % ad_channels_file
 
     number_of_cracks_t_analyse = Bool(True)
 
@@ -691,14 +650,11 @@ class AramisCDT(HasTraits):
     def _run_t_fired(self):
         start_step_idx = self.evaluated_step_idx
         self.number_of_cracks_t = np.array([])
-        self.ad_channels_lst = []
         self.number_of_missing_facets_t = []
         self.control_strain_t = np.array([])
 
         for step_idx in self.aramis_info.step_idx_list:
             self.evaluated_step_idx = step_idx
-            if self.ad_channels_read:
-                self.__decompile_ad_channels()
             if self.number_of_cracks_t_analyse:
                 self.__number_of_cracks_t()
             self.control_strain_t = np.append(self.control_strain_t,
@@ -804,7 +760,6 @@ class AramisCDT(HasTraits):
                 'transform_data',
                 Group(
                       'number_of_cracks_t_analyse',
-                      'ad_channels_read',
                       UItem('run_t'),
                       UItem('run_back'),
                       ),

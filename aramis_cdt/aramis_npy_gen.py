@@ -42,7 +42,8 @@ from aramis_info import AramisInfo
 
 class AramisNPyGen(HasTraits):
     '''Class providing tools for preparation (generation) *.npy data files from
-    Aramis *.txt files for Aramis Crack Detection Tool (AramisCDT).
+    Aramis *.txt files for Aramis Crack Detection Tool (AramisCDT). *.npy files 
+    enable faster loading from disk.
     '''
 
     aramis_info = Instance(AramisInfo)
@@ -113,6 +114,29 @@ class AramisNPyGen(HasTraits):
     aramis file header
     '''
 
+    data_array_undeformed_shape = Property(Tuple, depends_on='input_array_undeformed')
+    '''Shape of undeformed data array.
+    '''
+    @cached_property
+    def _get_data_array_undeformed_shape(self):
+        return (3, self.n_y_undeformed, self.n_x_undeformed)
+
+    x_idx_undeformed = Property(Int, depends_on='input_array_undeformed')
+    '''Indices in the first column of the undeformed state starting with zero.
+    '''
+    @cached_property
+    def _get_x_idx_undeformed(self):
+        return (np.arange(self.n_x_undeformed)[np.newaxis, :] *
+                np.ones(self.n_y_undeformed)[:, np.newaxis]).astype(int)
+
+    y_idx_undeformed = Property(Int, depends_on='input_array_undeformed')
+    '''Indices in the first column of the undeformed state starting with zero.
+    '''
+    @cached_property
+    def _get_y_idx_undeformed(self):
+        return (np.arange(self.n_y_undeformed)[np.newaxis, :] *
+                np.ones(self.n_x_undeformed)[:, np.newaxis]).T
+
     ad_channels_arr = Property(Array)
     def _get_ad_channels_arr(self):
         return np.array(self.ad_channels_lst, dtype=float)
@@ -146,15 +170,15 @@ class AramisNPyGen(HasTraits):
             os.mkdir(dir_npy)
         fname_npy = os.path.join(dir_npy, fname + '.npy')
         fname_txt = os.path.join(self.aramis_info.data_dir, fname + '.txt')
-        if os.path.exists(fname_npy):
-            data_arr = np.load(fname_npy)
-        else:
-            data_arr = np.loadtxt(fname_txt,
-                               # skiprows=14,  # not necessary
-                               usecols=[0, 1, 2, 3, 4])
-            data_arr = self._prepare_data_structure(data_arr)
+#         if os.path.exists(fname_npy):
+#             data_arr = np.load(fname_npy)
+#         else:
+        data_arr = np.loadtxt(fname_txt,
+                           # skiprows=14,  # not necessary
+                           usecols=[0, 1, 2, 3, 4])
+        data_arr = self._prepare_data_structure(data_arr)
 
-            np.save(fname_npy, data_arr)
+        np.save(fname_npy, data_arr)
         print 'loading time =', sysclock() - start_t
         print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
         return data_arr

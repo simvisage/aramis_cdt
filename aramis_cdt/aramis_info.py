@@ -67,6 +67,7 @@ class AramisInfo(HasTraits):
         step_list = []
         pat = r'displ.*-(?P<step>\d+).*'
         for f in file_list:
+            print f
             m = re.match(pat, f)
             if m:
                 step_list.append(int(m.groupdict()['step']))
@@ -77,6 +78,7 @@ class AramisInfo(HasTraits):
 
         # self.file_list = file_arr[idx].tolist()
         self.step_list = step_list
+        print step_list
 
     number_of_steps = Int
     '''Number of time steps
