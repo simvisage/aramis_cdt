@@ -15,20 +15,13 @@
 #-------------------------------------------------------------------------------
 
 from etsproxy.traits.api import \
-    HasTraits, Float, Property, cached_property, Int, Array, Bool, Directory, \
-    Instance, DelegatesTo, Tuple, Button, List, Str, File, Enum, on_trait_change
+    HasTraits, Property, cached_property, Int, Array, Instance, Tuple, Button, List
 
-from etsproxy.traits.ui.api import View, Item, HGroup, EnumEditor, Group, UItem, RangeEditor
+from etsproxy.traits.ui.api import View, UItem
 
 import numpy as np
-from scipy import stats
 import os
 import re
-import ConfigParser
-
-from matresdev.db.simdb import SimDB
-from sftp_server import SFTPServer
-import zipfile
 
 import platform
 import time
@@ -37,7 +30,7 @@ if platform.system() == 'Linux':
 elif platform.system() == 'Windows':
     sysclock = time.clock
 
-from aramis_info import AramisInfo
+from aramis_cdt.aramis_info import AramisInfo
 
 
 class AramisNPyGen(HasTraits):
@@ -151,6 +144,7 @@ class AramisNPyGen(HasTraits):
             self.__decompile_ad_channels(step_idx)
         np.save(os.path.join(self.aramis_info.npy_dir, 'ad_channels.npy'),
                 self.ad_channels_arr)
+        print self.ad_channels_arr
 
     #===========================================================================
     # Data preparation methods
@@ -213,14 +207,16 @@ class AramisNPyGen(HasTraits):
     def __decompile_ad_channels(self, step_idx):
         fname = '%s%d' % (self.aramis_info.displacements_basename,
                          self.aramis_info.step_list[step_idx])
-        ad_channels = []
         with open(os.path.join(self.aramis_info.data_dir, fname + '.txt')) as infile:
             for i in range(30):
                 line = infile.readline()
-                m = re.match(r'#\s+AD-(\d+):\s+([-+]?\d+\.\d+)\s+([-+]?\d+\.\d+)', line)
+                m = re.match(r'#\s+AD-0:\s+([-+]?\d+\.\d+)\s+(?P<force>[-+]?\d+\.\d+)', line)
                 if m:
-                    ad_channels.append(m.groups())
-        self.ad_channels_lst.append(ad_channels)
+                    force = float(m.groups('force')[0])
+                m = re.match(r'#\s+deformt:\s+(?P<time>[-+]?\d+\.\d+)', line)
+                if m:
+                    time = float(m.groups('time')[0])
+        self.ad_channels_lst.append([time, force])
 
     view = View(
                 UItem('generate_npy'),
@@ -228,7 +224,7 @@ class AramisNPyGen(HasTraits):
 
 
 if __name__ == '__main__':
-    data_dir = '/media/data/_linux_data/aachen/Aramis_07_2013/TT-12c-6cm-0-TU-SH4-V1-Xf19s15-Yf19s15'
+    data_dir = '/media/data/_linux_data/aachen/Aramis_07_2013/TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15'
     AI = AramisInfo(data_dir=data_dir)
     AG = AramisNPyGen(aramis_info=AI)
     AG.configure_traits()

@@ -19,7 +19,7 @@ import os
 
 def report_gen(AUI, animation=False):
     AUI.aramis_view2d.save_plot = True
-    AUI.aramis_view2d.show_plot = True
+    AUI.aramis_view2d.show_plot = False
 
     number_of_cracks_avg = AUI.aramis_cdt.number_of_cracks_avg
     crack_spacing_avg = AUI.aramis_cdt.crack_spacing_avg

@@ -78,7 +78,7 @@ if __name__ == '__main__':
     elif platform.system() == 'Windows':
         data_dir = r'E:\_linux_data\aachen/Aramis_07_2013/TTb-4c-2cm-0-TU-V2_bs4-Xf19s15-Yf19s15'
 
-    data_dir = '/media/data/_linux_data/aachen/Aramis_07_2013/TT-12c-6cm-0-TU-SH4-V1-Xf19s15-Yf19s15'
+    # data_dir = '/media/data/_linux_data/aachen/Aramis_07_2013/TTb-4c-2cm-0-TU-V1_bs4-Xf19s1-Yf5s4'
 
     AI = AramisInfo(data_dir=data_dir)
     AC = AramisCDT(aramis_info=AI,
@@ -88,5 +88,5 @@ if __name__ == '__main__':
                   transform_data=True)
     AUI = AramisUI(aramis_info=AI,
                     aramis_cdt=AC)
-    # AUI = AramisUI()
+#     AUI = AramisUI()
     AUI.configure_traits()

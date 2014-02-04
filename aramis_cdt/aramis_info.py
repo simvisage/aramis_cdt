@@ -38,9 +38,10 @@ simdb = SimDB()
 
 
 class AramisInfo(HasTraits):
-    '''Basic informations of Aramis database
+    '''Basic informations of Aramis database obtained from directory name and
+    from files placed in the data directory.
     '''
-    data_dir = Directory
+    data_dir = Directory(auto_set=False, enter_set=True)
     '''Directory of data files (*.txt) exported by Aramis Software.
     '''
 
