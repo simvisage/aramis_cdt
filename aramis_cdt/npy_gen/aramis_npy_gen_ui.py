@@ -43,6 +43,8 @@ class AramisNPyGenUI(HasTraits):
     view = View(
                 UItem('aramis_info@'),
                 UItem('aramis_npy_gen@'),
+                width=0.5,
+                resizable=True,
                 )
 
 
