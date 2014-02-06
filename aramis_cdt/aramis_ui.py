@@ -74,11 +74,9 @@ class AramisUI(HasTraits):
 if __name__ == '__main__':
 
     if platform.system() == 'Linux':
-        data_dir = r'/media/data/_linux_data/aachen/Aramis_07_2013/TTb-4c-2cm-0-TU-V2_bs4-Xf19s15-Yf19s15'
+        data_dir = r'/home/rch/.simdb_cache/exdata/tensile_tests/buttstrap_clamping/2013-07-09_TTb-4c-2cm-0-TU_bs4-Aramis3d/aramis/TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15'
     elif platform.system() == 'Windows':
         data_dir = r'E:\_linux_data\aachen/Aramis_07_2013/TTb-4c-2cm-0-TU-V2_bs4-Xf19s15-Yf19s15'
-
-    data_dir = '/media/data/_linux_data/aachen/Aramis_07_2013/TT-12c-6cm-0-TU-SH4-V1-Xf19s15-Yf19s15'
 
     AI = AramisInfo(data_dir=data_dir)
     AC = AramisCDT(aramis_info=AI,
