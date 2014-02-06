@@ -14,31 +14,20 @@
 #
 #-------------------------------------------------------------------------------
 
-from etsproxy.traits.api import \
-    HasTraits, Float, Property, cached_property, Int, Array, Bool, Directory, \
-    Instance, DelegatesTo, Tuple, Button, List, Str, File, Enum, on_trait_change
-
-from etsproxy.traits.ui.api import View, Item, HGroup, EnumEditor, Group, UItem, RangeEditor
-
-import numpy as np
-from scipy import stats
-import os
-import re
-import ConfigParser
-
-from matresdev.db.simdb import SimDB
-from sftp_server import SFTPServer
-import zipfile
-
 import platform
 import time
+
+from aramis_cdt.aramis_info import AramisInfo
+from aramis_npy_gen import AramisNPyGen
+from etsproxy.traits.api import HasTraits, Instance
+from etsproxy.traits.ui.api import View, UItem
+
+
 if platform.system() == 'Linux':
     sysclock = time.time
 elif platform.system() == 'Windows':
     sysclock = time.clock
 
-from aramis_info import AramisInfo
-from aramis_npy_gen import AramisNPyGen
 
 class AramisNPyGenUI(HasTraits):
     '''This class enables to create simple user interface for *.npy files 
@@ -58,7 +47,7 @@ class AramisNPyGenUI(HasTraits):
 
 
 if __name__ == '__main__':
-    data_dir = '/media/data/_linux_data/aachen/Aramis_07_2013/TT-12c-6cm-0-TU-SH4-V1-Xf19s15-Yf19s15'
+    data_dir = '/media/data/_linux_data/aachen/Aramis_07_2013/TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15'
     AI = AramisInfo(data_dir=data_dir)
     AGUI = AramisNPyGenUI(aramis_info=AI)
     AGUI.configure_traits()

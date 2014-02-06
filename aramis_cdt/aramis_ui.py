@@ -86,5 +86,5 @@ if __name__ == '__main__':
                   transform_data=True)
     AUI = AramisUI(aramis_info=AI,
                     aramis_cdt=AC)
-    # AUI = AramisUI()
+#     AUI = AramisUI()
     AUI.configure_traits()

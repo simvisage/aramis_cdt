@@ -481,7 +481,7 @@ class AramisCDT(HasTraits):
     '''The second derivative of displacement in x-direction threshold
     '''
 
-    ddd_ux_threshold = Float(-0.01)
+    ddd_ux_threshold = Float(-0.005)
     '''The third derivative of displacement in x-direction threshold
     '''
 
@@ -742,7 +742,10 @@ class AramisCDT(HasTraits):
     step_idx_max = Property(Int, depends_on='aramis_info.data_dir')
     @cached_property
     def _get_step_idx_max(self):
-        return self.aramis_info.number_of_steps - 1
+        if hasattr(self.aramis_info, 'number_of_steps'):
+            return self.aramis_info.number_of_steps - 1
+        else:
+            return 1
 
 
     view = View(

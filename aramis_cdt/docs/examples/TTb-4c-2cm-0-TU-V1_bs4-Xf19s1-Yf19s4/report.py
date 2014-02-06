@@ -46,7 +46,7 @@ data_dir = os.path.join(aramis_dir, specimen_name)
 
 AI = AramisInfo(data_dir=data_dir)
 AC = AramisCDT(aramis_info=AI,
-               integ_radius=19,
+               integ_radius=15,
                evaluated_step_idx=203,
                crack_detect_idx=203,
                transform_data=True)

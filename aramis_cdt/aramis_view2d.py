@@ -351,15 +351,23 @@ class AramisPlot2D(HasTraits):
         # plotting filled contour
         CS = ax.contourf(aramis_cdt.x_arr_undeformed,
                          aramis_cdt.y_arr_undeformed,
-                         plot3d_var, 256, cmap=plt.get_cmap('jet'))
+                         plot3d_var, 2, cmap=plt.get_cmap('binary'))
+        ax.plot(aramis_cdt.x_arr_undeformed, aramis_cdt.y_arr_undeformed, 'ko')
 
         ax.plot(aramis_cdt.x_arr_undeformed[aramis_cdt.crack_filter],
-                 aramis_cdt.y_arr_undeformed[aramis_cdt.crack_filter],
-                 'k.')
+                 aramis_cdt.y_arr_undeformed[aramis_cdt.crack_filter], linestyle='None',
+                 marker='.', color='white')
+#         CS = ax.contourf(aramis_cdt.x_arr_undeformed,
+#                          aramis_cdt.y_arr_undeformed,
+#                          plot3d_var, 256, cmap=plt.get_cmap('jet'))
+#
+#         ax.plot(aramis_cdt.x_arr_undeformed[aramis_cdt.crack_filter],
+#                  aramis_cdt.y_arr_undeformed[aramis_cdt.crack_filter],
+#                  'k.')
 
         ax.vlines(aramis_cdt.x_arr_undeformed[0, :][aramis_cdt.crack_filter_avg],
                    [0], np.nanmax(aramis_cdt.y_arr_undeformed[mask]),
-                   color='white', zorder=100, linewidth=2)
+                   color='magenta', zorder=100, linewidth=2)
 
         ax.set_xlabel('x [mm]')
         ax.set_ylabel('y [mm]')

@@ -14,7 +14,6 @@
 #
 #-------------------------------------------------------------------------------
 
-import ConfigParser
 from traits.api import HasTraits, Button, Instance
 from traitsui.api import View, Handler
 
