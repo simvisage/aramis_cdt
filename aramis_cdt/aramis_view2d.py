@@ -17,7 +17,10 @@
 from etsproxy.traits.api import \
     HasTraits, Instance, Button, Bool, Directory
 
-from etsproxy.traits.ui.api import UItem, View, Item, RangeEditor
+from scipy import stats
+
+from etsproxy.traits.ui.api import UItem, View, Item, RangeEditor, VGroup
+from matplotlib.figure import Figure
 
 import platform
 import time
@@ -32,6 +35,7 @@ import numpy as np
 
 from aramis_cdt import AramisCDT
 from aramis_info import AramisInfo
+from aramis_data import AramisData
 
 import matplotlib
 # matplotlib.use('Qt4Agg')
@@ -45,7 +49,11 @@ class AramisPlot2D(HasTraits):
 
     aramis_info = Instance(AramisInfo)
 
+    aramis_data = Instance(AramisData)
+
     aramis_cdt = Instance(AramisCDT)
+
+    figure = Instance(Figure)
 
     save_plot = Bool(False)
 
@@ -61,241 +69,273 @@ class AramisPlot2D(HasTraits):
 
     plot2d = Button
     def _plot2d_fired(self):
+        aramis_data = self.aramis_data
         aramis_cdt = self.aramis_cdt
-        plt.figure()
-        plt.subplot(2, 2, 1)
+        fig = self.figure
+        fig.clf()
+        ax = fig.add_subplot(2, 2, 1)
 
-        plt.plot(aramis_cdt.x_idx_undeformed.T, aramis_cdt.d_ux_arr.T, color='black')
-        plt.plot(aramis_cdt.x_idx_undeformed[0, :], aramis_cdt.d_ux_arr_avg, color='red', linewidth=2)
-        y_max_lim = plt.gca().get_ylim()[-1]
-        plt.vlines(aramis_cdt.x_idx_undeformed[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
+        ax.plot(aramis_data.x_idx_undeformed.T, aramis_cdt.d_ux_arr.T, color='black')
+        ax.plot(aramis_data.x_idx_undeformed[0, :], aramis_cdt.d_ux_arr_avg, color='red', linewidth=2)
+        y_max_lim = ax.get_ylim()[-1]
+        ax.vlines(aramis_data.x_idx_undeformed[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
                  color='magenta', linewidth=1, zorder=10)
 
-        plt.subplot(2, 2, 2)
-        plt.plot(aramis_cdt.x_idx_undeformed.T, aramis_cdt.ux_arr.T, color='green')
-        plt.plot(aramis_cdt.x_idx_undeformed[0, :], aramis_cdt.ux_arr_avg, color='red', linewidth=2)
+        ax2 = fig.add_subplot(2, 2, 2)
+        ax2.plot(aramis_data.x_idx_undeformed.T, aramis_data.ux_arr.T, color='green')
+        ax2.plot(aramis_data.x_idx_undeformed[0, :], aramis_data.ux_arr_avg, color='red', linewidth=2)
 
-        plt.subplot(2, 2, 3)
-        plt.plot(aramis_cdt.x_idx_undeformed[0, :], aramis_cdt.dd_ux_arr_avg, color='black')
-        plt.plot(aramis_cdt.x_idx_undeformed[0, :], aramis_cdt.ddd_ux_arr_avg, color='blue')
-        y_max_lim = plt.gca().get_ylim()[-1]
-        plt.vlines(aramis_cdt.x_idx_undeformed[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
+        ax3 = fig.add_subplot(2, 2, 3)
+        ax3.plot(aramis_data.x_idx_undeformed[0, :], aramis_cdt.dd_ux_arr_avg, color='black')
+        ax3.plot(aramis_data.x_idx_undeformed[0, :], aramis_cdt.ddd_ux_arr_avg, color='blue')
+        y_max_lim = ax3.get_ylim()[-1]
+        ax3.vlines(aramis_data.x_idx_undeformed[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
                  color='magenta', linewidth=1, zorder=10)
 
-        plt.subplot(2, 2, 4)
+        # ax4 = add_subplot(2, 2, 4)
 
-        plt.suptitle(aramis_cdt.aramis_info.specimen_name + ' - %d' % aramis_cdt.evaluated_step_idx)
+        plt.suptitle(self.aramis_info.specimen_name + ' - %d' % aramis_data.evaluated_step_idx)
 
         aramis_cdt.crack_spacing_avg
 
         if self.save_plot:
-            plt.savefig(os.path.join(self.save_dir, 'plot2d.png'))
+            fig.savefig(os.path.join(self.save_dir, 'plot2d.png'))
 
         if self.show_plot:
-            plt.show()
+            fig.canvas.draw()
 
 
     plot_crack_hist = Button
     def _plot_crack_hist_fired(self):
 
         aramis_cdt = self.aramis_cdt
-        plt.figure()
+        fig = self.figure
+        fig.clf()
+        ax = fig.add_subplot(111)
 
-        plt.hist(aramis_cdt.crack_arr, bins=40, normed=True)
+        ax.hist(aramis_cdt.crack_arr, bins=40, normed=True)
 
-        plt.xlabel('crack_width [mm]')
-        plt.ylabel('frequency [-]')
+        ax.set_xlabel('crack_width [mm]')
+        ax.set_ylabel('frequency [-]')
 
-        plt.twinx()
-        plt.hist(aramis_cdt.crack_arr, normed=True,
+        ax2 = ax.twinx()
+        ax2.hist(aramis_cdt.crack_arr, normed=True,
                  histtype='step', color='black',
                  cumulative=True, bins=40, linewidth=2)
-        plt.ylabel('probability [-]')
+        ax2.set_ylabel('probability [-]')
 
-        plt.title(aramis_cdt.aramis_info.specimen_name + ' - %d' % aramis_cdt.evaluated_step_idx)
+        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.evaluated_step_idx)
+
+        mu = aramis_cdt.crack_arr.mean()
+        sigma = aramis_cdt.crack_arr.std()
+        skew = stats.skew(aramis_cdt.crack_arr)
+        textstr = '$\mu=%.3g$\n$\sigma=%.3g$\n$\gamma_1=%.3g$' % (mu, sigma, skew)
+
+        # these are matplotlib.patch.Patch properties
+        props = dict(boxstyle='round', facecolor='wheat', alpha=1)
+
+        # place a text box in upper left in axes coords,
+        ax.text(0.95, 0.95, textstr, transform=ax.transAxes, fontsize=14,
+                verticalalignment='top', horizontalalignment='right', bbox=props)
 
         if self.save_plot:
-            plt.savefig(os.path.join(self.save_dir, 'crack_hist.png'))
+            fig.savefig(os.path.join(self.save_dir, 'crack_hist.png'))
 
         if self.show_plot:
-            plt.show()
+            fig.canvas.draw()
 
     plot_number_of_cracks_t = Button
     def _plot_number_of_cracks_t_fired(self):
 
         aramis_cdt = self.aramis_cdt
-        plt.figure()
+        fig = self.figure
+        fig.clf()
+        ax = fig.add_subplot(111)
 
-        plt.plot(aramis_cdt.control_strain_t, aramis_cdt.number_of_cracks_t)
-        # self.aramis_info.step_idx_list
+        ax.plot(aramis_cdt.control_strain_t, aramis_cdt.number_of_cracks_t)
 
-        plt.xlabel('control strain')  # 'step number'
-        plt.ylabel('number of cracks')
-        # plt.title('cracks in time')
+        ax.set_xlabel('control strain')
+        ax.set_ylabel('number of cracks')
 
         if self.show_plot:
-            plt.show()
+            fig.canvas.draw()
 
     plot_force_step = Button
     def _plot_force_step_fired(self):
 
         aramis_cdt = self.aramis_cdt
-        plt.figure()
+        fig = self.figure
+        fig.clf()
+        ax = fig.add_subplot(111)
 
-        plt.title('')
-        plt.plot(self.aramis_info.step_idx_list, aramis_cdt.force_t)
+        ax.set_title('')
+        ax.plot(self.aramis_info.step_idx_list, self.aramis_data.force)
 
-        plt.xlabel('step')
-        plt.ylabel('force_t [kN]')
+        ax.set_xlabel('step')
+        ax.set_ylabel('force_t [kN]')
 
         if self.save_plot:
-            plt.savefig(os.path.join(self.save_dir, 'force_time.png'))
+            fig.savefig(os.path.join(self.save_dir, 'force_time.png'))
 
         if self.show_plot:
-            plt.show()
+            fig.canvas.draw()
 
     plot_stress_strain = Button
     def _plot_stress_strain_fired(self):
 
         aramis_cdt = self.aramis_cdt
-        plt.figure()
+        fig = self.figure
+        fig.clf()
+        ax = fig.add_subplot(111)
 
-        plt.title('')
-        plt.plot(aramis_cdt.control_strain_t, aramis_cdt.stress_t)
+        ax.set_title('')
+        ax.plot(aramis_cdt.control_strain_t, self.aramis_data.stress)
 
-        plt.xlabel('control strain [-]')
-        plt.ylabel('nominal stress [MPa]')
+        ax.set_xlabel('control strain [-]')
+        ax.set_ylabel('nominal stress [MPa]')
 
         if self.save_plot:
-            plt.savefig(os.path.join(self.save_dir, 'stress_strain.png'))
+            fig.savefig(os.path.join(self.save_dir, 'stress_strain.png'))
 
         if self.show_plot:
-            plt.show()
+            fig.canvas.draw()
 
     plot_w_strain = Button
     def _plot_w_strain_fired(self):
 
         aramis_cdt = self.aramis_cdt
-        plt.figure()
+        fig = self.figure
+        fig.clf()
+        ax = fig.add_subplot(111)
 
-        plt.title('')
+        ax.set_title('')
         plt.plot(aramis_cdt.control_strain_t,
                  aramis_cdt.crack_width_avg_t.T)
 
-        plt.xlabel('control strain [-]')
-        plt.ylabel('crack width [mm]')
+        ax.set_xlabel('control strain [-]')
+        ax.set_ylabel('crack width [mm]')
 
         if self.save_plot:
-            plt.savefig(os.path.join(self.save_dir, 'w_strain.png'))
+            fig.savefig(os.path.join(self.save_dir, 'w_strain.png'))
 
         if self.show_plot:
-            plt.show()
+            fig.canvas.draw()
 
     plot_subw_strain = Button
     def _plot_subw_strain_fired(self):
 
         aramis_cdt = self.aramis_cdt
-        plt.figure()
+        fig = self.figure
+        fig.clf()
+        ax = fig.add_subplot(111)
 
-        plt.title('')
-        plt.plot(aramis_cdt.control_strain_t,
+        ax.set_title('')
+        ax.plot(aramis_cdt.control_strain_t,
                  aramis_cdt.crack_width_t.T)
 
-        plt.xlabel('control strain [-]')
-        plt.ylabel('subcrack width [mm]')
+        ax.set_xlabel('control strain [-]')
+        ax.set_ylabel('subcrack width [mm]')
 
         if self.save_plot:
-            plt.savefig(os.path.join(self.save_dir, 'subw_strain.png'))
+            fig.savefig(os.path.join(self.save_dir, 'subw_strain.png'))
 
         if self.show_plot:
-            plt.show()
+            fig.canvas.draw()
 
     plot_stress_strain_init = Button
     def _plot_stress_strain_init_fired(self):
 
         aramis_cdt = self.aramis_cdt
-        plt.figure()
+        fig = self.figure
+        fig.clf()
+        ax = fig.add_subplot(111)
 
-        plt.title('')
-        plt.plot(aramis_cdt.control_strain_t, aramis_cdt.stress_t)
-        plt.plot(aramis_cdt.control_strain_t[aramis_cdt.init_step_avg_lst],
-                 aramis_cdt.stress_t[aramis_cdt.init_step_avg_lst],
+        ax.set_title('')
+        ax.plot(aramis_cdt.control_strain_t, self.aramis_data.stress)
+        ax.plot(aramis_cdt.control_strain_t[aramis_cdt.init_step_avg_lst],
+                 self.aramis_data.stress[aramis_cdt.init_step_avg_lst],
                  'ro', linewidth=4)
-        plt.plot(aramis_cdt.control_strain_t[aramis_cdt.init_step_lst],
-                 aramis_cdt.stress_t[aramis_cdt.init_step_lst],
+        ax.plot(aramis_cdt.control_strain_t[aramis_cdt.init_step_lst],
+                 self.aramis_data.stress[aramis_cdt.init_step_lst],
                  'kx', linewidth=4)
 
-        plt.xlabel('control strain [-]')
-        plt.ylabel('nominal stress [MPa]')
+        ax.set_xlabel('control strain [-]')
+        ax.set_ylabel('nominal stress [MPa]')
 
         if self.save_plot:
-            plt.savefig(os.path.join(self.save_dir, 'stress_strain_init.png'))
+            fig.savefig(os.path.join(self.save_dir, 'stress_strain_init.png'))
 
         if self.show_plot:
-            plt.show()
+            fig.canvas.draw()
 
     plot_crack_init = Button
     def _plot_crack_init_fired(self):
 
         aramis_cdt = self.aramis_cdt
 
-        plt.figure()
-        plt.title('')
-        plt.vlines(np.arange(len(aramis_cdt.init_step_avg_lst)) + 0.5, [0], aramis_cdt.init_step_avg_lst)
-        plt.xlabel('crack number')
-        plt.ylabel('initiation step')
+        fig = self.figure
+        fig.clf()
+        ax = fig.add_subplot(111)
+        ax.set_title('')
+        ax.vlines(np.arange(len(aramis_cdt.init_step_avg_lst)) + 0.5, [0], aramis_cdt.init_step_avg_lst)
+        ax.set_xlabel('crack number')
+        ax.set_ylabel('initiation step')
 
         if self.save_plot:
-            plt.savefig(os.path.join(self.save_dir, 'crack_init.png'))
+            fig.savefig(os.path.join(self.save_dir, 'crack_init.png'))
 
         if self.show_plot:
-            plt.show()
+            fig.canvas.draw()
 
-    plot_ad_channels = Button
-    def _plot_ad_channels_fired(self):
+    plot_force_time = Button
+    def _plot_force_time_fired(self):
+        fig = self.figure
+        fig.clf()
+        ax = fig.add_subplot(111)
 
-        aramis_cdt = self.aramis_cdt
-        plt.figure()
-
-        plt.title('AD channel values')
-        y = aramis_cdt.ad_channels_arr[:, :, 2] - aramis_cdt.ad_channels_arr[:, :, 1]
-        plt.plot(self.aramis_info.step_idx_list, y)
+        ax.set_title('')
+        ax.plot(self.aramis_data.step_time, self.aramis_data.force)
+        ax.set_xlabel('Time')
+        ax.set_ylabel('Force')
 
         if self.show_plot:
-            plt.show()
+            fig.canvas.draw()
 
     plot_number_of_missing_facets = Button
     def _plot_number_of_missing_facets_fired(self):
 
         aramis_cdt = self.aramis_cdt
-        plt.figure()
+        fig = self.figure
+        fig.clf()
+        ax = fig.add_subplot(111)
 
         y = aramis_cdt.number_of_missing_facets_t
-        plt.plot(self.aramis_info.step_idx_list, y)
+        ax.plot(self.aramis_info.step_idx_list, y)
 
-        plt.xlabel('step')
-        plt.ylabel('number of missing facets')
-        plt.title('missing facets in time')
+        ax.set_xlabel('step')
+        ax.set_ylabel('number of missing facets')
+        ax.set_title('missing facets in time')
 
         if self.save_plot:
-            plt.savefig(os.path.join(self.save_dir, 'number_of_missing_facets.png'))
+            fig.savefig(os.path.join(self.save_dir, 'number_of_missing_facets.png'))
 
         if self.show_plot:
-            plt.show()
+            fig.canvas.draw()
 
     plot_strain_crack_avg = Button
     def _plot_strain_crack_avg_fired(self):
 
         aramis_cdt = self.aramis_cdt
 
-        fig = plt.figure()
+        fig = self.figure
+        fig.clf()
         ax = fig.add_subplot(111, aspect='equal')
-        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % aramis_cdt.evaluated_step_idx)
+        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.evaluated_step_idx)
 
         plot3d_var = getattr(aramis_cdt, 'd_ux_arr')
 
-        mask = np.logical_or(np.isnan(aramis_cdt.x_arr_undeformed),
-                             aramis_cdt.data_array_undeformed_mask[0, :, :])
+        mask = np.logical_or(np.isnan(self.aramis_data.x_arr_undeformed),
+                             self.aramis_data.data_array_undeformed_mask[0, :, :])
         mask = None
 #         plt.scatter(aramis_cdt.x_arr_undeformed[mask],
 #                    aramis_cdt.y_arr_undeformed[mask], c=plot3d_var[mask], cmap=my_cmap_lin,
@@ -307,12 +347,12 @@ class AramisPlot2D(HasTraits):
 #                          aramis_cdt.y_arr_undeformed[mask][0, :, :],
 #                          plot3d_var[mask][0, :, :], 25, linewidths=.5, colors='k')
         # plotting filled contour
-        CS = ax.contourf(aramis_cdt.x_arr_undeformed,
-                         aramis_cdt.y_arr_undeformed,
+        CS = ax.contourf(self.aramis_data.x_arr_undeformed,
+                         self.aramis_data.y_arr_undeformed,
                          plot3d_var, 256, cmap=plt.get_cmap('jet'))
 
-        ax.vlines(aramis_cdt.x_arr_undeformed[0, :][aramis_cdt.crack_filter_avg],
-                   [0], np.nanmax(aramis_cdt.y_arr_undeformed),
+        ax.vlines(self.aramis_data.x_arr_undeformed[0, :][self.aramis_cdt.crack_filter_avg],
+                   [0], np.nanmax(self.aramis_data.y_arr_undeformed),
                    color='white', zorder=10, linewidth=2)
 
         ax.set_xlabel('x [mm]')
@@ -324,20 +364,21 @@ class AramisPlot2D(HasTraits):
             fig.savefig(os.path.join(self.save_dir, 'strain_crack_avg.png'))
 
         if self.show_plot:
-            fig.show()
+            fig.canvas.draw()
 
     plot_crack_filter_crack_avg = Button
     def _plot_crack_filter_crack_avg_fired(self):
         aramis_cdt = self.aramis_cdt
 
-        fig = plt.figure()
+        fig = self.figure
+        fig.clf()
         ax = fig.add_subplot(111, aspect='equal')
-        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % aramis_cdt.evaluated_step_idx)
+        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.evaluated_step_idx)
 
         plot3d_var = getattr(aramis_cdt, 'd_ux_arr')
 
-        mask = np.logical_or(np.isnan(aramis_cdt.x_arr_undeformed),
-                             aramis_cdt.data_array_undeformed_mask[0, :, :])
+        mask = np.logical_or(np.isnan(self.aramis_data.x_arr_undeformed),
+                             self.aramis_data.data_array_undeformed_mask[0, :, :])
         mask = None
 #         plt.scatter(aramis_cdt.x_arr_undeformed[mask],
 #                    aramis_cdt.y_arr_undeformed[mask], c=plot3d_var[mask], cmap=my_cmap_lin,
@@ -349,13 +390,13 @@ class AramisPlot2D(HasTraits):
 #                          aramis_cdt.y_arr_undeformed[mask][0, :, :],
 #                          plot3d_var[mask][0, :, :], 25, linewidths=.5, colors='k')
         # plotting filled contour
-        CS = ax.contourf(aramis_cdt.x_arr_undeformed,
-                         aramis_cdt.y_arr_undeformed,
+        CS = ax.contourf(self.aramis_data.x_arr_undeformed,
+                         self.aramis_data.y_arr_undeformed,
                          plot3d_var, 2, cmap=plt.get_cmap('binary'))
-        ax.plot(aramis_cdt.x_arr_undeformed, aramis_cdt.y_arr_undeformed, 'ko')
+        ax.plot(self.aramis_data.x_arr_undeformed, self.aramis_data.y_arr_undeformed, 'ko')
 
-        ax.plot(aramis_cdt.x_arr_undeformed[aramis_cdt.crack_filter],
-                 aramis_cdt.y_arr_undeformed[aramis_cdt.crack_filter], linestyle='None',
+        ax.plot(self.aramis_data.x_arr_undeformed[aramis_cdt.crack_filter],
+                 self.aramis_data.y_arr_undeformed[aramis_cdt.crack_filter], linestyle='None',
                  marker='.', color='white')
 #         CS = ax.contourf(aramis_cdt.x_arr_undeformed,
 #                          aramis_cdt.y_arr_undeformed,
@@ -365,8 +406,8 @@ class AramisPlot2D(HasTraits):
 #                  aramis_cdt.y_arr_undeformed[aramis_cdt.crack_filter],
 #                  'k.')
 
-        ax.vlines(aramis_cdt.x_arr_undeformed[0, :][aramis_cdt.crack_filter_avg],
-                   [0], np.nanmax(aramis_cdt.y_arr_undeformed[mask]),
+        ax.vlines(self.aramis_data.x_arr_undeformed[0, :][aramis_cdt.crack_filter_avg],
+                   [0], np.nanmax(self.aramis_data.y_arr_undeformed[mask]),
                    color='magenta', zorder=100, linewidth=2)
 
         ax.set_xlabel('x [mm]')
@@ -380,7 +421,7 @@ class AramisPlot2D(HasTraits):
             fig.savefig(os.path.join(self.save_dir, 'crack_filter_crack_avg.png'))
 
         if self.show_plot:
-            fig.show()
+            fig.canvas.draw()
 
     test_figure = Instance(plt.Figure)
 
@@ -393,21 +434,21 @@ class AramisPlot2D(HasTraits):
         fig = self.test_figure
         fig.clf()
 
-        fig.suptitle(aramis_cdt.aramis_info.specimen_name + ' - %d' % aramis_cdt.evaluated_step_idx, y=1)
+        fig.suptitle(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.evaluated_step_idx, y=1)
 
         ax_diag = plt.subplot2grid((2, 3), (0, 0))
         ax_hist = plt.subplot2grid((2, 3), (1, 0))
         ax_area = plt.subplot2grid((2, 3), (0, 1), rowspan=2, colspan=2,
                                    adjustable='box', aspect='equal')
 
-        ax_diag.plot(aramis_cdt.control_strain_t, aramis_cdt.stress_t)
-        ax_diag.plot(aramis_cdt.control_strain_t[aramis_cdt.evaluated_step_idx],
-                 aramis_cdt.stress_t[aramis_cdt.evaluated_step_idx], 'ro')
+#         ax_diag.plot(self.aramis_data.ad_channels_arr[:, 0], self.aramis_data.stress)
+#         ax_diag.plot(aramis_cdt.control_strain_t[self.aramis_data.evaluated_step_idx],
+#                  self.aramis_data.stress[aramis_cdt.evaluated_step_idx], 'ro')
 
         ax_diag.set_xlabel('control strain [-]')
         ax_diag.set_ylabel('nominal stress [MPa]')
-        ax_diag.set_xlim(0, aramis_cdt.control_strain_t.max())
-        ax_diag.set_ylim(0, aramis_cdt.stress_t.max())
+#         ax_diag.set_xlim(0, aramis_cdt.control_strain_t.max())
+#         ax_diag.set_ylim(0, self.aramis_data.stress.max())
 
         if aramis_cdt.crack_arr.size != 0:
             ax_hist.hist(aramis_cdt.crack_arr, bins=40, normed=True)
@@ -429,13 +470,13 @@ class AramisPlot2D(HasTraits):
 
         plot3d_var = getattr(aramis_cdt, 'd_ux_arr')
 
-        CS = ax_area.contourf(aramis_cdt.x_arr_undeformed,
-                         aramis_cdt.y_arr_undeformed,
+        CS = ax_area.contourf(self.aramis_data.x_arr_undeformed,
+                         self.aramis_data.y_arr_undeformed,
                          plot3d_var, 2, cmap=plt.get_cmap('binary'))
-        ax_area.plot(aramis_cdt.x_arr_undeformed, aramis_cdt.y_arr_undeformed, 'ko')
+        ax_area.plot(self.aramis_data.x_arr_undeformed, self.aramis_data.y_arr_undeformed, 'ko')
 
-        ax_area.plot(aramis_cdt.x_arr_undeformed[aramis_cdt.crack_filter],
-                 aramis_cdt.y_arr_undeformed[aramis_cdt.crack_filter], linestyle='None',
+        ax_area.plot(self.aramis_data.x_arr_undeformed[aramis_cdt.crack_filter],
+                 self.aramis_data.y_arr_undeformed[aramis_cdt.crack_filter], linestyle='None',
                  marker='.', color='white')
 
 #         ax_area.vlines(aramis_cdt.x_arr_undeformed[10, :-1][aramis_cdt.crack_filter_avg],
@@ -455,13 +496,15 @@ class AramisPlot2D(HasTraits):
 
         if self.save_plot:
             fig.savefig(os.path.join(self.save_dir, '%s%04d.png'
-                                     % (aramis_cdt.aramis_info.specimen_name, aramis_cdt.evaluated_step_idx)))
+                                     % (aramis_cdt.aramis_info.specimen_name, self.aramis_data.evaluated_step_idx)))
 
         if self.show_plot:
             fig.show()
 
     def handle_close(self, evt):
         print 'Closed Figure!'
+        import gc
+        print gc.collect()
         self.test_figure = None
 
     create_animation = Button
@@ -470,13 +513,13 @@ class AramisPlot2D(HasTraits):
         save_plot, show_plot = self.save_plot, self.show_plot
         self.save_plot = False
         self.show_plot = False
-        start_step_idx = self.aramis_cdt.evaluated_step_idx
+        start_step_idx = self.aramis_data.evaluated_step_idx
         fname_pattern = '%s%04d'
         for step_idx in self.aramis_info.step_idx_list:
-            self.aramis_cdt.evaluated_step_idx = step_idx
+            self.aramis_data.evaluated_step_idx = step_idx
             self.plot_test = True
             self.test_figure.savefig(os.path.join(self.temp_dir, fname_pattern
-                                     % (aramis_cdt.aramis_info.specimen_name, aramis_cdt.evaluated_step_idx)))
+                                     % (aramis_cdt.aramis_info.specimen_name, self.aramis_data.evaluated_step_idx)))
 
         try:
             os.system('ffmpeg -framerate 3 -i %s.png -vcodec ffv1 -sameq %s.avi' %
@@ -494,17 +537,13 @@ class AramisPlot2D(HasTraits):
 
         self.save_plot = save_plot
         self.show_plot = show_plot
-        self.aramis_cdt.evaluated_step_idx = start_step_idx
+        self.aramis_data.evaluated_step_idx = start_step_idx
 
     view = View(
-                Item('object.aramis_cdt.evaluated_step_idx',
-                     editor=RangeEditor(low=0, high_name='object.aramis_cdt.step_idx_max',
-                                        mode='slider'),
-                                        springy=True),
                 UItem('plot2d'),
                 UItem('plot_crack_hist'),
                 UItem('plot_number_of_cracks_t'),
-                UItem('plot_ad_channels'),
+                UItem('plot_force_time'),
                 UItem('plot_number_of_missing_facets'),
                 UItem('plot_stress_strain_init'),
                 UItem('plot_stress_strain'),
@@ -515,5 +554,22 @@ class AramisPlot2D(HasTraits):
                 UItem('plot_crack_filter_crack_avg'),
                 UItem('plot_crack_init'),
                 UItem('plot_test'),
-                UItem('create_animation')
+                UItem('create_animation'),
                 )
+
+if __name__ == '__main__':
+    from os.path import expanduser
+    home = expanduser("~")
+
+    data_dir = os.path.join(home, '.simdb_cache', 'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15')
+
+    AI = AramisInfo(data_dir=data_dir)
+    AD = AramisData(aramis_info=AI)
+    AC = AramisCDT(aramis_info=AI,
+                   aramis_data=AD
+                  )
+    AramisPlot2D(
+                 aramis_info=AI,
+                 aramis_data=AD,
+                 aramis_cdt=AC
+                 ).configure_traits()

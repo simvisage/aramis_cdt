@@ -15,7 +15,7 @@
 #-------------------------------------------------------------------------------
 
 from etsproxy.traits.api import \
-    HasTraits, Property, cached_property, Int, Array, Instance, Tuple, Button, List
+    HasTraits, Property, cached_property, Int, Array, Instance, Tuple, Button, List, Float
 
 from etsproxy.traits.ui.api import View, UItem
 
@@ -40,6 +40,11 @@ class AramisNPyGen(HasTraits):
     '''
 
     aramis_info = Instance(AramisInfo)
+
+    # TODO: add to UI and multiply force
+    force_t_mult_coef = Float(100.0)
+    '''Multiplication coefficient to obtain force_t from AD channel value
+    '''
 
     #===========================================================================
     # Undeformed state data

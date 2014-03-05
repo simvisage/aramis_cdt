@@ -29,44 +29,48 @@ if platform.system() == 'Linux':
 elif platform.system() == 'Windows':
     sysclock = time.clock
 
+import os
+
+from aramis_info import AramisInfo
+from aramis_data import AramisData
 from aramis_cdt import AramisCDT
 
 class AramisView3D(HasTraits):
     '''This class manages 3D views for AramisCDT variables
     '''
 
+    aramis_data = Instance(AramisData)
+
     aramis_cdt = Instance(AramisCDT)
 
     plot_title = Bool(True)
 
-    plot3d_var = Trait('07 d_ux_arr [mm]', {'01 x_arr [mm]':'x_arr_undeformed',
-                                            '02 y_arr [mm]':'y_arr_undeformed',
-                                            '03 z_arr [mm]':'z_arr_undeformed',
-                                            '04 ux_arr [mm]':'ux_arr',
-                                            '05 uy_arr [mm]':'uy_arr',
-                                            '06 uz_arr [mm]':'uz_arr',
-                                            '07 d_ux_arr [mm]':'d_ux_arr',
-                                            '08 crack_filed_arr [mm]': 'crack_field_arr'})
+    plot3d_var = Trait('07 d_ux_arr [mm]', {'01 x_arr [mm]':['aramis_data', 'x_arr_undeformed'],
+                                            '02 y_arr [mm]':['aramis_data', 'y_arr_undeformed'],
+                                            '03 z_arr [mm]':['aramis_data', 'z_arr_undeformed'],
+                                            '04 ux_arr [mm]':['aramis_data', 'ux_arr'],
+                                            '05 uy_arr [mm]':['aramis_data', 'uy_arr'],
+                                            '06 uz_arr [mm]':['aramis_data', 'uz_arr'],
+                                            '07 d_ux_arr [mm]':['aramis_cdt', 'd_ux_arr'],
+                                            '08 crack_filed_arr [mm]': ['aramis_cdt', 'crack_field_arr']})
 
     plot3d_points_flat = Button
     def _plot3d_points_flat_fired(self):
         '''Plot array of variable using colormap
         '''
-        aramis_cdt = self.aramis_cdt
-
         m.figure(fgcolor=(0, 0, 0), bgcolor=(1, 1, 1) , size=(1600, 900))
         engine = m.get_engine()
         scene = engine.scenes[0]
         scene.scene.disable_render = True
 
-        plot3d_var = getattr(aramis_cdt, self.plot3d_var_)
+        plot3d_var = getattr(getattr(self, self.plot3d_var_[0]), self.plot3d_var_[1])
 
-        mask = np.logical_or(np.isnan(aramis_cdt.x_arr_undeformed),
-                             aramis_cdt.data_array_undeformed_mask[0, :, :])
+        mask = np.logical_or(np.isnan(self.aramis_data.x_arr_undeformed),
+                             self.aramis_data.data_array_undeformed_mask[0, :, :])
         mask = None
-        m.points3d(aramis_cdt.x_arr_undeformed[mask],
-                   aramis_cdt.y_arr_undeformed[mask],
-                   aramis_cdt.z_arr_undeformed[mask],
+        m.points3d(self.aramis_data.x_arr_undeformed[mask],
+                   self.aramis_data.y_arr_undeformed[mask],
+                   self.aramis_data.z_arr_undeformed[mask],
                    plot3d_var[mask],
                    mode='cube',
                    scale_mode='none', scale_factor=1)
@@ -75,9 +79,9 @@ class AramisView3D(HasTraits):
         scene.scene.disable_render = False
 
         if self.plot_title:
-            m.title('step no. %d' % aramis_cdt.evaluated_step_idx, size=0.3)
+            m.title('step no. %d' % self.aramis_data.evaluated_step_idx, size=0.3)
 
-        m.scalarbar(orientation='horizontal', title=self.plot3d_var_)
+        m.scalarbar(orientation='horizontal', title=self.plot3d_var_[1])
 
         # plot axes
         m.axes()
@@ -107,11 +111,11 @@ class AramisView3D(HasTraits):
         # plot crack width ('crack_field_w')
         #-----------------------------------
 
-        z_arr = np.zeros_like(aramis_cdt.z_arr_undeformed)
+        z_arr = np.zeros_like(self.aramis_data.z_arr_undeformed)
 
-        plot3d_var = getattr(aramis_cdt, self.plot3d_var_)
-        m.points3d(z_arr, aramis_cdt.x_arr_undeformed, aramis_cdt.y_arr_undeformed, plot3d_var,
-                   mode='cube', colormap="blue-red", scale_mode='scalar', vmax=.2)
+        plot3d_var = getattr(getattr(self, self.plot3d_var_[0]), self.plot3d_var_[1])
+        m.points3d(z_arr, self.aramis_data.x_arr_undeformed, self.aramis_data.y_arr_undeformed, plot3d_var,
+                   mode='cube', colormap="blue-red", scale_mode='scalar')
 
         # scale glyphs
         #
@@ -125,8 +129,8 @@ class AramisView3D(HasTraits):
         # plot displacement jumps ('d_ux_w')
         #-----------------------------------
 
-        plot3d_var = getattr(aramis_cdt, self.plot3d_var_)
-        m.points3d(z_arr, aramis_cdt.x_arr_undeformed, aramis_cdt.y_arr_undeformed, plot3d_var, mode='cube',
+        plot3d_var = getattr(getattr(self, self.plot3d_var_[0]), self.plot3d_var_[1])
+        m.points3d(z_arr, self.aramis_data.x_arr_undeformed, self.aramis_data.y_arr_undeformed, plot3d_var, mode='cube',
                    colormap="blue-red", scale_mode='none')
 
         glyph1 = engine.scenes[0].children[1].children[0].children[0]
@@ -137,25 +141,26 @@ class AramisView3D(HasTraits):
 
         # rotate scene
         #
-        scene = engine.scenes[0]
+        # scene = engine.scenes[0]
         scene.scene.parallel_projection = True
         m.view(0, 90)
 
         glyph.glyph.glyph_source.glyph_position = 'head'
         glyph.glyph.glyph_source.glyph_position = 'tail'
 
-        module_manager = engine.scenes[0].children[0].children[0]
-        module_manager.scalar_lut_manager.scalar_bar_representation.minimum_size = np.array([1, 1])
-        module_manager.scalar_lut_manager.scalar_bar_representation.position2 = np.array([ 0.20603604, 0.16827586])
-        module_manager.scalar_lut_manager.scalar_bar_representation.moving = 0
-        module_manager.scalar_lut_manager.scalar_bar_representation.position = np.array([ 0.53971972, 0.19931035])
-        module_manager.scalar_lut_manager.scalar_bar_representation.maximum_size = np.array([100000, 100000])
+        module_manager = engine.scenes[0].children[1].children[0]
+        module_manager.scalar_lut_manager.show_scalar_bar = True
+        module_manager.scalar_lut_manager.show_legend = True
+        module_manager.scalar_lut_manager.scalar_bar.orientation = 'horizontal'
+        module_manager.scalar_lut_manager.scalar_bar.title = self.plot3d_var_[1]
+        module_manager.scalar_lut_manager.scalar_bar_representation.position = (0.10, 0.05)
+        module_manager.scalar_lut_manager.scalar_bar_representation.position2 = (0.8, 0.15)
         scene.scene.disable_render = False
 
         if self.plot_title:
-            m.title('step no. %d' % aramis_cdt.evaluated_step_idx, size=0.3)
+            m.title('step no. %d' % self.aramis_data.evaluated_step_idx, size=0.3)
 
-        m.scalarbar(orientation='horizontal', title=self.plot3d_var_)
+        # m.scalarbar(orientation='horizontal', title=self.plot3d_var_[1])
 
         # plot axes
         #
@@ -178,12 +183,12 @@ class AramisView3D(HasTraits):
         # plot crack width ('crack_field_w')
         #-----------------------------------
 
-        z_arr = np.zeros_like(aramis_cdt.z_arr_undeformed)
+        z_arr = np.zeros_like(self.aramis_data.z_arr_undeformed)
 
         plot3d_var = aramis_cdt.crack_field_arr
 #        plot3d_var = getattr(self, 'crack_field_w')
-        m.points3d(z_arr, aramis_cdt.x_arr_undeformed, aramis_cdt.y_arr_undeformed, plot3d_var,
-                   mode='cube', colormap="blue-red", scale_mode='scalar', vmax=.2)
+        m.points3d(z_arr, self.aramis_data.x_arr_undeformed, self.aramis_data.y_arr_undeformed, plot3d_var,
+                   mode='cube', colormap="blue-red", scale_mode='scalar')
 
         # scale glyphs
         #
@@ -199,7 +204,7 @@ class AramisView3D(HasTraits):
 
 #        plot3d_var = getattr(self, 'd_ux_w')
         plot3d_var = getattr(aramis_cdt, 'crack_field_arr')
-        m.points3d(z_arr, aramis_cdt.x_arr_undeformed, aramis_cdt.y_arr_undeformed, plot3d_var, mode='cube',
+        m.points3d(z_arr, self.aramis_data.x_arr_undeformed, self.aramis_data.y_arr_undeformed, plot3d_var, mode='cube',
                    colormap="blue-red", scale_mode='none')
 
         glyph1 = engine.scenes[0].children[1].children[0].children[0]
@@ -217,18 +222,19 @@ class AramisView3D(HasTraits):
         glyph.glyph.glyph_source.glyph_position = 'head'
         glyph.glyph.glyph_source.glyph_position = 'tail'
 
-        module_manager = engine.scenes[0].children[0].children[0]
-        module_manager.scalar_lut_manager.scalar_bar_representation.minimum_size = np.array([1, 1])
-        module_manager.scalar_lut_manager.scalar_bar_representation.position2 = np.array([ 0.20603604, 0.16827586])
-        module_manager.scalar_lut_manager.scalar_bar_representation.moving = 0
-        module_manager.scalar_lut_manager.scalar_bar_representation.position = np.array([ 0.53971972, 0.19931035])
-        module_manager.scalar_lut_manager.scalar_bar_representation.maximum_size = np.array([100000, 100000])
+        module_manager = engine.scenes[0].children[1].children[0]
+        module_manager.scalar_lut_manager.show_scalar_bar = True
+        module_manager.scalar_lut_manager.show_legend = True
+        module_manager.scalar_lut_manager.scalar_bar.orientation = 'horizontal'
+        module_manager.scalar_lut_manager.scalar_bar.title = 'crack_field'
+        module_manager.scalar_lut_manager.scalar_bar_representation.position = (0.10, 0.05)
+        module_manager.scalar_lut_manager.scalar_bar_representation.position2 = (0.8, 0.15)
         scene.scene.disable_render = False
 
         if self.plot_title:
-            m.title('step no. %d' % aramis_cdt.evaluated_step_idx, size=0.3)
+            m.title('step no. %d' % self.aramis_data.evaluated_step_idx, size=0.3)
 
-        m.scalarbar(orientation='horizontal', title='crack_field')
+        # m.scalarbar(orientation='horizontal', title='crack_field')
 
         # plot axes
         #
@@ -242,3 +248,22 @@ class AramisView3D(HasTraits):
                 UItem('plot3d_points'),
                 UItem('plot3d_cracks'),
                )
+
+
+if __name__ == '__main__':
+    from os.path import expanduser
+    home = expanduser("~")
+
+    data_dir = os.path.join(home, '.simdb_cache', 'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15')
+
+    AI = AramisInfo(data_dir=data_dir)
+    AD = AramisData(aramis_info=AI)
+    AC = AramisCDT(aramis_info=AI,
+                   aramis_data=AD,
+                integ_radius=1
+                  )
+    AramisView3D(
+                 aramis_info=AI,
+                 aramis_data=AD,
+                 aramis_cdt=AC
+                 ).configure_traits()

@@ -55,7 +55,7 @@ class AramisRemote(HasTraits):
 
     simdb_cache_dir = DelegatesTo('simdb')
 
-    experiment_dir = Directory
+    simdb_dir = Directory
     '''Directory of the experiment containing extended data file
     '''
 
@@ -63,17 +63,17 @@ class AramisRemote(HasTraits):
     '''Relative path inside database structure - the path is same for experiment
     in both database structures (remote and local)
     '''
-    @on_trait_change('experiment_dir')
+    @on_trait_change('simdb_dir')
     def _relative_path_update(self):
-        self.relative_path = self.experiment_dir.replace(self.simdb_dir, '')[1:]
+        self.relative_path = self.simdb_dir.replace(self.simdb_dir, '')[1:]
 
     extended_data_ini = File
     '''Extended data file 'extended_data.ini' contain the information about
     available Aramis files
     '''
-    @on_trait_change('experiment_dir')
+    @on_trait_change('simdb_dir')
     def _extended_data_ini_update(self):
-        self.extended_data_ini = os.path.join(self.experiment_dir, 'extended_data.cfg')
+        self.extended_data_ini = os.path.join(self.simdb_dir, 'extended_data.cfg')
 
     aramis_files = List(Str)
     '''Available Aramis files obtained from *.cfg file
@@ -138,12 +138,8 @@ class AramisRemote(HasTraits):
         zf.close()
         print 'FILE %s DECOMPRESSED' % self.aramis_file_selected
 
-    set_dir = Button
-    def _set_dir_fired(self):
-        self.aramis_info.data_dir = os.path.join(self.local_dir, self.aramis_file_selected)
-
     view = View(
-                Item('experiment_dir'),
+                Item('simdb_dir'),
                 Item('server_username', style='readonly'),
                 Item('server_host', style='readonly'),
                 Item('simdb_cache_remote_dir', style='readonly'),
@@ -151,10 +147,10 @@ class AramisRemote(HasTraits):
                      label='Available Aramis files'),
                 UItem('download'),
                 UItem('decompress'),
-                UItem('set_dir')
+                # UItem('set_dir')
                 )
 
 
 if __name__ == '__main__':
-    AR = AramisRemote(experiment_dir='/home/kelidas/simdb/exdata/tensile_tests/buttstrap_clamping/2013-07-09_TTb-4c-2cm-0-TU_bs4-Aramis3d')
+    AR = AramisRemote()
     AR.configure_traits()

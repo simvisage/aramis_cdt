@@ -42,7 +42,7 @@ class AramisInfo(HasTraits):
     from files placed in the data directory.
     '''
     data_dir = Directory(auto_set=False, enter_set=True)
-    '''Directory of data files (*.txt) exported by Aramis Software.
+    '''Directory of data files (*.npy) exported by Aramis Software.
     '''
 
     npy_dir = Directory
@@ -61,25 +61,26 @@ class AramisInfo(HasTraits):
     def _file_step_list_update(self):
         '''Update values of file_list and step_list. Sorted by the step number.
         '''
-        if os.path.exists(self.npy_dir):
-            file_list = [v for v in os.listdir(self.npy_dir) if os.path.splitext(v)[1] == ".npy"]
-        else:
-            file_list = [v for v in os.listdir(self.data_dir) if os.path.splitext(v)[1] == ".txt"]
-        step_list = []
-        pat = r'displ.*-(?P<step>\d+).*'
-        for f in file_list:
-            print f
-            m = re.match(pat, f)
-            if m:
-                step_list.append(int(m.groupdict()['step']))
-        # sort filenames by the step number
-        # file_arr = np.array(file_list, dtype=str)
-        # idx = np.argsort(step_list)
-        step_list.sort()
+        try:
+            if os.path.exists(self.npy_dir):
+                file_list = [v for v in os.listdir(self.npy_dir) if os.path.splitext(v)[1] == ".npy"]
+            else:
+                file_list = [v for v in os.listdir(self.data_dir) if os.path.splitext(v)[1] == ".txt"]
+            step_list = []
+            pat = r'displ.*-(?P<step>\d+).*'
+            for f in file_list:
+                m = re.match(pat, f)
+                if m:
+                    step_list.append(int(m.groupdict()['step']))
+            # sort filenames by the step number
+            # file_arr = np.array(file_list, dtype=str)
+            # idx = np.argsort(step_list)
+            step_list.sort()
 
-        # self.file_list = file_arr[idx].tolist()
-        self.step_list = step_list
-        print step_list
+            # self.file_list = file_arr[idx].tolist()
+            self.step_list = step_list
+        except:
+            self.step_list = []
 
     number_of_steps = Int
     '''Number of time steps
@@ -158,7 +159,7 @@ class AramisInfo(HasTraits):
         self.last_step = np.max(self.step_list)
 
     view = View(
-                Item('data_dir'),
+                # Item('data_dir'),
                 Item('specimen_name', style='readonly'),
                 Item('first_step', style='readonly'),
                 Item('last_step', style='readonly'),
@@ -178,17 +179,8 @@ class AramisInfo(HasTraits):
 
 
 if __name__ == '__main__':
-    if platform.system() == 'Linux':
-        #data_dir = r'/media/data/_linux_data/aachen/Aramis_07_2013/TTb-4c-2cm-0-TU-V2_bs4-Xf19s15-Yf19s15'
-        data_dir = r'/home/rch/.simdb_cache/exdata/tensile_tests/buttstrap_clamping/2013-07-09_TTb-4c-2cm-0-TU_bs4-Aramis3d/aramis/TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15'
-    elif platform.system() == 'Windows':
-        data_dir = r'E:\_linux_data\aachen/Aramis_07_2013/TTb-4c-2cm-0-TU-V2_bs4-Xf19s15-Yf19s15'
 
-    AI = AramisInfo(data_dir=data_dir)
-    print AI.data_dir
-    print AI.specimen_name
-    print AI.facet_params_dict
-    print AI.step_list
+    AI = AramisInfo()
     AI.configure_traits()
 
 
