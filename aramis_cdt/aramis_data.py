@@ -345,6 +345,7 @@ class AramisData(AramisRawData):
                                         springy=True),
                 Item('data_array_undeformed_shape', label='data shape', style='readonly'),
                 # 'transform_data',
+                id='aramisCDT.data',
                 )
 
 

@@ -148,6 +148,7 @@ class AramisRemote(HasTraits):
                 UItem('download'),
                 UItem('decompress'),
                 # UItem('set_dir')
+                id='aramisCDT.remote',
                 )
 
 

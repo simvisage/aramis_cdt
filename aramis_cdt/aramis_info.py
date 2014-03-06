@@ -174,6 +174,7 @@ class AramisInfo(HasTraits):
 #                        Item('step_selected', style='text', show_label=False,
 #                             springy=True),
 #                        ),
+                id='aramisCDT.info',
                 resizable=True
                 )
 

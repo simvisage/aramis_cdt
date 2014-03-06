@@ -437,18 +437,19 @@ class AramisPlot2D(HasTraits):
         fig.suptitle(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.evaluated_step_idx, y=1)
 
         ax_diag = plt.subplot2grid((2, 3), (0, 0))
+        ax_diag.locator_params(nbins=4)
         ax_hist = plt.subplot2grid((2, 3), (1, 0))
+        ax_hist.locator_params(nbins=4)
         ax_area = plt.subplot2grid((2, 3), (0, 1), rowspan=2, colspan=2,
                                    adjustable='box', aspect='equal')
 
-#         ax_diag.plot(self.aramis_data.ad_channels_arr[:, 0], self.aramis_data.stress)
-#         ax_diag.plot(aramis_cdt.control_strain_t[self.aramis_data.evaluated_step_idx],
-#                  self.aramis_data.stress[aramis_cdt.evaluated_step_idx], 'ro')
+        ax_diag.plot(self.aramis_cdt.control_strain_t, self.aramis_data.stress)
+        ax_diag.plot(aramis_cdt.control_strain_t[self.aramis_data.evaluated_step_idx],
+                 self.aramis_data.stress[self.aramis_data.evaluated_step_idx], 'ro')
 
         ax_diag.set_xlabel('control strain [-]')
         ax_diag.set_ylabel('nominal stress [MPa]')
-#         ax_diag.set_xlim(0, aramis_cdt.control_strain_t.max())
-#         ax_diag.set_ylim(0, self.aramis_data.stress.max())
+        ax_diag.set_xlim(0, ax_diag.get_xlim()[1])
 
         if aramis_cdt.crack_arr.size != 0:
             ax_hist.hist(aramis_cdt.crack_arr, bins=40, normed=True)
@@ -465,7 +466,7 @@ class AramisPlot2D(HasTraits):
                      cumulative=True, bins=40, linewidth=2)
         ax_hist_2.set_ylabel('probability [-]')
         ax_hist_2.set_ylim(0, 1)
-        ax_hist.set_xlim(0, 0.14)
+        ax_hist.set_xlim(0, 0.15)
         ax_hist.set_ylim(0, 100)
 
         plot3d_var = getattr(aramis_cdt, 'd_ux_arr')
@@ -555,6 +556,7 @@ class AramisPlot2D(HasTraits):
                 UItem('plot_crack_init'),
                 UItem('plot_test'),
                 UItem('create_animation'),
+                id='aramisCDT.view2d',
                 )
 
 if __name__ == '__main__':
@@ -568,6 +570,9 @@ if __name__ == '__main__':
     AC = AramisCDT(aramis_info=AI,
                    aramis_data=AD
                   )
+    AC.run_t = True
+    AC.run_back = True
+    AD.evaluated_step_idx = 203
     AramisPlot2D(
                  aramis_info=AI,
                  aramis_data=AD,

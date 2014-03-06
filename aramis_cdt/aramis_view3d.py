@@ -247,6 +247,7 @@ class AramisView3D(HasTraits):
                 UItem('plot3d_points_flat'),
                 UItem('plot3d_points'),
                 UItem('plot3d_cracks'),
+                id='aramisCDT.view3d',
                )
 
 

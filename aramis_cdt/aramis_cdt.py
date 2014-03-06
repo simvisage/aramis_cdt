@@ -384,6 +384,7 @@ class AramisCDT(HasTraits):
                       UItem('run_t'),
                       UItem('run_back'),
                       ),
+                id='aramisCDT.cdt',
                 )
 
 
