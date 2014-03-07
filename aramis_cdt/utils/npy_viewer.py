@@ -17,7 +17,7 @@ from traits.api import \
     HasTraits, Float, Property, cached_property, Int, Array, Bool, \
     Instance, DelegatesTo, Tuple, Button, List, Str, File
 
-from traitsui.api import View, Item, HGroup, EnumEditor, Group, UItem, RangeEditor
+from traitsui.api import View, Item, HGroup, EnumEditor, Group, UItem, RangeEditor, Tabbed
 
 from traitsui.ui_editors.array_view_editor import ArrayViewEditor
 
@@ -35,7 +35,9 @@ elif platform.system() == 'Windows':
 
 
 class NpyData(HasTraits):
-    data = Array
+    data = Array()
+    def _data_default(self):
+        return np.empty(1)
     traits = View(
                 Item('data',
                         show_label=False,
@@ -47,20 +49,19 @@ class NpyData(HasTraits):
 class NpyViewer(HasTraits):
     npy_file = File
 
-    data = Instance(NpyData)
+    data = Instance(NpyData,())
 
     load_data = Button()
-
     def _load_data_fired(self):
-        self.load_data.data = np.load(self.npy_file)
-
+        self.data = NpyData(data = np.load(self.npy_file))
+        
     traits = View(
-                'npy_file',
-                UItem('load_data'),
-                Item('@data'),
+                  Group(
+                        'npy_file',
+                        UItem('load_data'),
+                        ),
+                UItem('data', style='custom'),
                 title='Array Viewer',
-                width=0.3,
-                height=0.8,
                 resizable=True,
                 )
 
