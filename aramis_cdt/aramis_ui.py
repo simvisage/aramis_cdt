@@ -48,6 +48,8 @@ class AramisUI(HasTraits):
     data_dir = Directory(auto_set=False, enter_set=True)
     '''Directory of data files (*.txt) exported by Aramis Software.
     '''
+    def _data_dir_default(self):
+        return os.path.join(self.aramis_remote.simdb_cache_dir)
 
     aramis_info = Instance(AramisInfo, ())
 
@@ -133,9 +135,11 @@ if __name__ == '__main__':
     from os.path import expanduser
     home = expanduser("~")
 
-    data_dir = os.path.join(home, '.simdb_cache', 'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15')
+#     data_dir = os.path.join(home, '.simdb_cache', 'exdata/bending_tests',
+#                             'three_point', '2013-07-09_BT-6c-2cm-0-TU_bs4-Aramis3d',
+#                             'aramis', 'BT-6c-V4-bs4-Xf19s1-Yf19s4')
 
-    AI = AramisInfo(data_dir=data_dir)
-    # AI = AramisInfo()
+    # AI = AramisInfo(data_dir=data_dir)
+    AI = AramisInfo()
     AUI = AramisUI(aramis_info=AI)
     AUI.configure_traits()

@@ -65,7 +65,9 @@ if __name__ == '__main__':
     from os.path import expanduser
     home = expanduser("~")
 
-    data_dir = os.path.join(home, '.simdb_cache', 'aramis', 'BT-6c-V4-bs4-Xf19s1-Yf19s4')
+    data_dir = os.path.join(home, '.simdb_cache', 'exdata/bending_tests',
+                            'three_point', '2013-07-09_BT-6c-2cm-0-TU_bs4-Aramis3d',
+                            'aramis', 'BT-6c-V4-bs4-Xf19s1-Yf19s4')
 
     AI = AramisInfo(data_dir=data_dir)
     AD = AramisData(aramis_info=AI,

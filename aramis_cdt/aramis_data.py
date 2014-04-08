@@ -50,7 +50,7 @@ class AramisRawData(HasTraits):
     @on_trait_change('aramis_info.data_dir')
     def aramis_info_change(self):
         if self.aramis_info.data_dir == '':
-            print 'Data directory is empty!'
+            print 'Data directory in UI is not defined!'
         else:
             self.aramis_info_changed = True
 

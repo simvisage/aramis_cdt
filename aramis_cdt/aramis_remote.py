@@ -55,7 +55,7 @@ class AramisRemote(HasTraits):
 
     simdb_cache_dir = DelegatesTo('simdb')
 
-    simdb_dir = Directory
+    extended_data_dir = Directory
     '''Directory of the experiment containing extended data file
     '''
 
@@ -63,17 +63,17 @@ class AramisRemote(HasTraits):
     '''Relative path inside database structure - the path is same for experiment
     in both database structures (remote and local)
     '''
-    @on_trait_change('simdb_dir')
+    @on_trait_change('extended_data_dir')
     def _relative_path_update(self):
-        self.relative_path = self.simdb_dir.replace(self.simdb_dir, '')[1:]
+        self.relative_path = self.extended_data_dir.replace(self.simdb_dir, '')[1:]
 
     extended_data_ini = File
     '''Extended data file 'extended_data.ini' contain the information about
     available Aramis files
     '''
-    @on_trait_change('simdb_dir')
+    @on_trait_change('extended_data_dir')
     def _extended_data_ini_update(self):
-        self.extended_data_ini = os.path.join(self.simdb_dir, 'extended_data.cfg')
+        self.extended_data_ini = os.path.join(self.extended_data_dir, 'extended_data.cfg')
 
     aramis_files = List(Str)
     '''Available Aramis files obtained from *.cfg file
@@ -100,7 +100,7 @@ class AramisRemote(HasTraits):
         return os.path.join(self.simdb_cache_dir, self.relative_path, 'aramis')
 
     server_dir = Property(File)
-    '''Remote path to the directory contained selected Aramis data
+    '''Remote path to the directory containing selected Aramis data
     '''
     def _get_server_dir(self):
         return os.path.join(self.simdb_cache_remote_dir, self.relative_path, 'aramis')
@@ -115,6 +115,9 @@ class AramisRemote(HasTraits):
     '''Prepare local data structure and download the *.zip file from server
     '''
     def _download_fired(self):
+        print 'servre', self.server_dir
+        print 'zip', self.zip_filename
+        print 'local', self.local_dir
         import paramiko
         if not os.path.exists(self.local_dir):
             os.makedirs(self.local_dir)
@@ -139,7 +142,8 @@ class AramisRemote(HasTraits):
         print 'FILE %s DECOMPRESSED' % self.aramis_file_selected
 
     view = View(
-                Item('simdb_dir'),
+                Item('simdb_dir', style='readonly'),
+                Item('extended_data_dir'),
                 Item('server_username', style='readonly'),
                 Item('server_host', style='readonly'),
                 Item('simdb_cache_remote_dir', style='readonly'),
@@ -149,6 +153,7 @@ class AramisRemote(HasTraits):
                 UItem('decompress'),
                 # UItem('set_dir')
                 id='aramisCDT.remote',
+                resizable=True
                 )
 
 
