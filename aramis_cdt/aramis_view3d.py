@@ -15,7 +15,7 @@
 #-------------------------------------------------------------------------------
 
 from etsproxy.traits.api import \
-    HasTraits, Float, Bool, Trait, Instance, Button
+    HasTraits, Float, Bool, Trait, Instance, Button, WeakRef
 
 from etsproxy.traits.ui.api import  UItem, View, Item
 
@@ -39,9 +39,9 @@ class AramisView3D(HasTraits):
     '''This class manages 3D views for AramisCDT variables
     '''
 
-    aramis_data = Instance(AramisData)
+    aramis_data = WeakRef(AramisData)
 
-    aramis_cdt = Instance(AramisCDT)
+    aramis_cdt = WeakRef(AramisCDT)
 
     plot_title = Bool(True)
 

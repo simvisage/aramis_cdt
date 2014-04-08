@@ -19,7 +19,7 @@ from etsproxy.traits.api import \
 
 from scipy import stats
 
-from etsproxy.traits.ui.api import UItem, View, Item, RangeEditor, VGroup
+from etsproxy.traits.ui.api import UItem, View, Item, RangeEditor, VGroup, Group
 from matplotlib.figure import Figure
 
 import platform
@@ -527,35 +527,43 @@ class AramisPlot2D(HasTraits):
                       (os.path.join(self.temp_dir, fname_pattern.replace('%s', aramis_cdt.aramis_info.specimen_name)),
                        os.path.join(self.save_dir, aramis_cdt.aramis_info.specimen_name)))
         except:
-            print 'Cannot create video in avi format. Check if you have "ffmpeg" in in yourt system path.'
+            print 'Cannot create video in avi format. Check if you have "ffmpeg" in in your system path.'
 
         try:
             os.system('convert -verbose -delay 25 %s* %s.gif' %
                       (os.path.join(self.temp_dir, aramis_cdt.aramis_info.specimen_name),
                        os.path.join(self.save_dir, aramis_cdt.aramis_info.specimen_name)))
         except:
-            print 'Cannot create animated gif. Check if you have "convert" in in yourt system path.'
+            print 'Cannot create animated gif. Check if you have "convert" in in your system path.'
 
         self.save_plot = save_plot
         self.show_plot = show_plot
         self.aramis_data.evaluated_step_idx = start_step_idx
 
     view = View(
-                UItem('plot2d'),
-                UItem('plot_crack_hist'),
-                UItem('plot_number_of_cracks_t'),
-                UItem('plot_force_time'),
-                UItem('plot_number_of_missing_facets'),
-                UItem('plot_stress_strain_init'),
-                UItem('plot_stress_strain'),
-                UItem('plot_w_strain'),
-                UItem('plot_subw_strain'),
-                UItem('plot_force_step'),
-                UItem('plot_strain_crack_avg'),
-                UItem('plot_crack_filter_crack_avg'),
-                UItem('plot_crack_init'),
-                UItem('plot_test'),
-                UItem('create_animation'),
+                Group(
+                    UItem('plot2d'),
+                    UItem('plot_crack_hist'),
+                    UItem('plot_number_of_cracks_t'),
+                    UItem('plot_stress_strain_init'),
+                    UItem('plot_stress_strain'),
+                    UItem('plot_w_strain'),
+                    UItem('plot_subw_strain'),
+                    UItem('plot_strain_crack_avg'),
+                    UItem('plot_crack_filter_crack_avg'),
+                    UItem('plot_crack_init'),
+                    UItem('plot_test'),
+                    '_',
+                    '_',
+                    UItem('create_animation'),
+                    label='Plot results',
+                    ),
+                Group(
+                    UItem('plot_force_time'),
+                    UItem('plot_force_step'),
+                    UItem('plot_number_of_missing_facets'),
+                    label='Check data',
+                    ),
                 id='aramisCDT.view2d',
                 )
 
