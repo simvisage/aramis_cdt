@@ -89,9 +89,9 @@ class AramisCDT(HasTraits):
     def _get_d_ux_arr(self):
         d_arr = get_d(self.aramis_data.ux_arr, self.integ_radius)
         # cutoff the negative strains - noise
-        d_arr[ d_arr < 0.0 ] = 0.0
+        # d_arr[ d_arr < 0.0 ] = 0.0
         # eliminate displacement jumps smaller then specified tolerance
-        d_arr[ d_arr < self.d_ux_threshold ] = 0.0
+        # d_arr[ d_arr < self.d_ux_threshold ] = 0.0
         return d_arr
 
     dd_ux_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
@@ -243,7 +243,7 @@ class AramisCDT(HasTraits):
     '''
 
     init_step_avg_lst = List()
-    '''List of steps (list length is equal to number of cracks at the 
+    '''List of steps (list length is equal to number of cracks at the
     crack_detect_idx) when the crack initiate
     '''
     init_step_lst = List()
@@ -258,7 +258,7 @@ class AramisCDT(HasTraits):
                                            self.number_of_cracks_avg)
 
     crack_detect_mask_avg = Property(Array, depends_on='crack_detect_idx')
-    '''Mask of cracks identified in crack_detect_idx and used for backward 
+    '''Mask of cracks identified in crack_detect_idx and used for backward
     identification of the crack initialization.
     '''
     @cached_property
@@ -267,7 +267,7 @@ class AramisCDT(HasTraits):
         return self.crack_filter_avg
 
     crack_detect_mask = Property(Array, depends_on='crack_detect_idx')
-    '''Mask of cracks identified in crack_detect_idx and used for backward 
+    '''Mask of cracks identified in crack_detect_idx and used for backward
     identification of the crack initialization.
     '''
     @cached_property

@@ -66,21 +66,26 @@ if __name__ == '__main__':
     home = expanduser("~")
 
     data_dir = os.path.join(home, '.simdb_cache', 'exdata/bending_tests',
-                            'three_point', '2013-07-09_BT-6c-2cm-0-TU_bs4-Aramis3d',
-                            'aramis', 'BT-6c-V4-bs4-Xf19s1-Yf19s4')
+                             'three_point', '2013-07-09_BT-6c-2cm-0-TU_bs4-Aramis3d',
+                             'aramis', 'BT-6c-V4-bs4-Xf19s15-Yf19s15')
 
     AI = AramisInfo(data_dir=data_dir)
+    # AI = AramisInfo()
     AD = AramisData(aramis_info=AI,
-                    evaluated_step_idx=100)
+                    evaluated_step_idx=10)
     AC = AramisBSA(aramis_info=AI,
                    aramis_data=AD,
                    integ_radius=15)
 
-    x = np.nanmean(AC.d_ux_arr2[:, 1000:1300], axis=1)
-    print AC.d_ux_arr2.shape
-    y = AD.y_arr_undeformed[:, 1000]
-    import matplotlib.pyplot as plt
-    plt.plot(x, y)
+    for step in [5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 225]:
+        AD.evaluated_step_idx = step
+        x = np.mean(AC.d_ux_arr2[:, 70:90], axis=1)
+        print AC.d_ux_arr2.shape
+        y = AD.y_arr_undeformed[:, 79]
+        import matplotlib.pyplot as plt
+        plt.plot(x, y)
 
+    plt.plot([-0.004, 0.014], [0, 0], color='black')
+    plt.plot([0, 0], [-10, 10], color='black')
     plt.show()
     # AC.configure_traits()
