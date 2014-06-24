@@ -15,15 +15,10 @@
 #-------------------------------------------------------------------------------
 
 from etsproxy.traits.api import \
-    HasTraits, Float, Property, cached_property, Int, Array, Bool, \
-    Instance, DelegatesTo, Tuple, Button, List, Str, Event, on_trait_change, WeakRef
-
-from etsproxy.traits.ui.api import View, Item, HGroup, EnumEditor, Group, UItem, RangeEditor
+    Property, cached_property, Array
 
 import numpy as np
-from scipy import stats
 import os
-import re
 
 import platform
 import time
