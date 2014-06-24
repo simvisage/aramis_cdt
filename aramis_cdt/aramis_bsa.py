@@ -54,7 +54,6 @@ class AramisBSA(AramisCDT):
     def _get_d_ux_arr2(self):
         x_und = self.aramis_data.x_arr_undeformed
         ux = self.aramis_data.ux_arr
-        x_def = x_und + ux
         du_arr = np.zeros_like(x_und)
         ir = self.integ_radius
         du_arr[:, ir:-ir] = (ux[:, 2 * ir:] - ux[:, :-2 * ir]) / (x_und[:, 2 * ir:] - x_und[:, :-2 * ir])
@@ -75,13 +74,15 @@ if __name__ == '__main__':
                     evaluated_step_idx=10)
     AC = AramisBSA(aramis_info=AI,
                    aramis_data=AD,
-                   integ_radius=15)
+                   integ_radius=10)
 
-    for step in [5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 225]:
+    for step in [225]:
         AD.evaluated_step_idx = step
-        x = np.mean(AC.d_ux_arr2[:, 70:90], axis=1)
-        print AC.d_ux_arr2.shape
-        y = AD.y_arr_undeformed[:, 79]
+        mid_idx = AC.d_ux_arr2.shape[1] / 2
+        x = np.mean(AC.d_ux_arr2[:, mid_idx - 4:mid_idx + 4], axis=1)
+        # x = AC.d_ux_arr2[:, mid_idx - 4:mid_idx + 4]
+
+        y = AD.y_arr_undeformed[:, mid_idx]
         import matplotlib.pyplot as plt
         plt.plot(x, y)
 
