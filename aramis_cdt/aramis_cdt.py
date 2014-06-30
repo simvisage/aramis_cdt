@@ -168,8 +168,10 @@ class AramisCDT(HasTraits):
     def _get_crack_filter(self):
         dd_ux_arr = self.dd_ux_arr
         ddd_ux_arr = self.ddd_ux_arr
-        return ((dd_ux_arr[:, 1:] * dd_ux_arr[:, :-1] < self.dd_ux_threshold) *
-                ((ddd_ux_arr[:, 1:] + ddd_ux_arr[:, :-1]) / 2.0 < self.ddd_ux_threshold))
+        crack_filter = ((dd_ux_arr[:, 1:] * dd_ux_arr[:, :-1] < self.dd_ux_threshold) *
+                        ((ddd_ux_arr[:, 1:] + ddd_ux_arr[:, :-1]) / 2.0 < self.ddd_ux_threshold))
+        print "number of cracks determined by 'crack_filter': ", np.sum(crack_filter, axis=1)
+        return crack_filter
 
     number_of_subcracks = Property(Int, depends_on='aramis_info_changed, aramis_data.+params_changed')
     '''Number of sub-cracks
