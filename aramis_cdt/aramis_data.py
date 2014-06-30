@@ -42,7 +42,7 @@ def get_d(u_arr, integ_radius):
 
 
 class AramisRawData(HasTraits):
-    '''Aramis Data Structure - load data from *.npy files 
+    '''Aramis Data Structure - load data from *.npy files
     '''
     aramis_info = Instance(AramisInfo)
 
@@ -62,7 +62,7 @@ class AramisRawData(HasTraits):
         self.evaluated_step_idx = int(np.argwhere(self.force == self.force.max())[0])
 
     evaluated_step_idx_filename = Property(Str, depends_on='+params_changed')
-    '''Filename for the evaluated step 
+    '''Filename for the evaluated step
     '''
     @cached_property
     def _get_evaluated_step_idx_filename(self):
@@ -91,13 +91,13 @@ class AramisRawData(HasTraits):
         if os.path.exists(fname_npy):
             data_arr = np.load(fname_npy)
         else:
-            print '*.npy data does not exist!'
+            raise IOError, '*.npy data does not exist!'
         print 'loading time =', sysclock() - start_t
         print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
         return data_arr
 
     input_array = Property(Array, depends_on='aramis_info_changed, +params_changed')
-    '''Array of Aramis exported data 
+    '''Array of Aramis exported data
     [index_x, index_y, displ_x, displ_y, displ_z]
     '''
     @cached_property
@@ -141,7 +141,7 @@ class AramisData(AramisRawData):
     '''
 
     evaluated_step_idx_filename = Property(Str, depends_on='+params_changed')
-    '''Filename for the evaluated step 
+    '''Filename for the evaluated step
     '''
     @cached_property
     def _get_evaluated_step_idx_filename(self):
@@ -156,8 +156,8 @@ class AramisData(AramisRawData):
     '''
     @cached_property
     def _get_data_array_undeformed(self):
-        '''Load data for the first step from *.npy file. If file *.npy does 
-        not exist the data is load from *.txt and saved as *.npy. 
+        '''Load data for the first step from *.npy file. If file *.npy does
+        not exist the data is load from *.txt and saved as *.npy.
         (improve speed of loading)
         '''
         if self.transform_data:
@@ -258,7 +258,7 @@ class AramisData(AramisRawData):
     # Data array
     #===========================================================================
     data_array = Property(Array, depends_on='aramis_info_changed, +params_changed')
-    '''Array of Aramis exported data 
+    '''Array of Aramis exported data
     [index_x, index_y, displ_x, displ_y, displ_z]
     '''
     @cached_property

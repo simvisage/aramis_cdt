@@ -73,12 +73,13 @@ if __name__ == '__main__':
                     evaluated_step_idx=10)
     AC = AramisBSA(aramis_info=AI,
                    aramis_data=AD,
-                   integ_radius=100)
+                   integ_radius=10)
 
     for step in range(0, 300, 5):  # [225]:
         AD.evaluated_step_idx = step
         mid_idx = AC.d_ux_arr2.shape[1] / 2
         x = np.mean(AC.d_ux_arr2[:, mid_idx - 0:mid_idx + 1], axis=1)
+
         # x = AC.d_ux_arr2[:, mid_idx - 4:mid_idx + 4]
 
         y = AD.y_arr_undeformed[:, mid_idx]
