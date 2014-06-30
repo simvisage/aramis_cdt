@@ -20,7 +20,7 @@ from etsproxy.traits.api import \
 from etsproxy.traits.ui.api import  UItem, View, Item
 
 import numpy as np
-import etsproxy.mayavi.mlab as m
+# import etsproxy.mayavi.mlab as m
 
 import platform
 import time
@@ -30,6 +30,7 @@ elif platform.system() == 'Windows':
     sysclock = time.clock
 
 import os
+from mayavi.tools.mlab_scene_model import MlabSceneModel
 
 from aramis_info import AramisInfo
 from aramis_data import AramisData
@@ -39,9 +40,11 @@ class AramisView3D(HasTraits):
     '''This class manages 3D views for AramisCDT variables
     '''
 
-    aramis_data = WeakRef(AramisData)
+    aramis_data = Instance(AramisData)
 
-    aramis_cdt = WeakRef(AramisCDT)
+    aramis_cdt = Instance(AramisCDT)
+
+    scene = Instance(MlabSceneModel)
 
     plot_title = Bool(True)
 
@@ -58,10 +61,14 @@ class AramisView3D(HasTraits):
     def _plot3d_points_flat_fired(self):
         '''Plot array of variable using colormap
         '''
-        m.figure(fgcolor=(0, 0, 0), bgcolor=(1, 1, 1) , size=(1600, 900))
-        engine = m.get_engine()
-        scene = engine.scenes[0]
-        scene.scene.disable_render = True
+        # m.figure(fgcolor=(0, 0, 0), bgcolor=(1, 1, 1) , size=(900, 600))
+        # engine = m.get_engine()
+        # scene = engine.scenes[0]
+        self.scene.mlab.clf()
+        m = self.scene.mlab
+        m.fgcolor = (0, 0, 0)
+        m.bgcolor = (1, 1, 1)
+        self.scene.scene.disable_render = True
 
         plot3d_var = getattr(getattr(self, self.plot3d_var_[0]), self.plot3d_var_[1])
 
@@ -75,8 +82,8 @@ class AramisView3D(HasTraits):
                    mode='cube',
                    scale_mode='none', scale_factor=1)
         m.view(0, 0)
-        scene.scene.parallel_projection = True
-        scene.scene.disable_render = False
+        self.scene.scene.parallel_projection = True
+        self.scene.scene.disable_render = False
 
         if self.plot_title:
             m.title('step no. %d' % self.aramis_data.evaluated_step_idx, size=0.3)
@@ -85,8 +92,6 @@ class AramisView3D(HasTraits):
 
         # plot axes
         m.axes()
-
-        m.show()
 
     glyph_x_length = Float(0.200)
     glyph_y_length = Float(0.200)
@@ -101,11 +106,15 @@ class AramisView3D(HasTraits):
         '''Plot arrays of variables in 3d relief
         '''
         aramis_cdt = self.aramis_cdt
-        m.figure(fgcolor=(0, 0, 0), bgcolor=(1, 1, 1), size=(900, 600))
+        # m.figure(fgcolor=(0, 0, 0), bgcolor=(1, 1, 1), size=(900, 600))
 
-        engine = m.get_engine()
-        scene = engine.scenes[0]
-        scene.scene.disable_render = True
+        #
+        # scene = engine.scenes[0]
+        self.scene.mlab.clf()
+        m = self.scene.mlab
+        m.fgcolor = (0, 0, 0)
+        m.bgcolor = (1, 1, 1)
+        self.scene.scene.disable_render = True
 
         #-----------------------------------
         # plot crack width ('crack_field_w')
@@ -119,7 +128,7 @@ class AramisView3D(HasTraits):
 
         # scale glyphs
         #
-        glyph = engine.scenes[0].children[0].children[0].children[0]
+        glyph = self.scene.engine.scenes[0].children[0].children[0].children[0]
         glyph.glyph.glyph_source.glyph_position = 'tail'
         glyph.glyph.glyph_source.glyph_source.x_length = self.glyph_x_length_cr
         glyph.glyph.glyph_source.glyph_source.y_length = self.glyph_y_length_cr
@@ -133,7 +142,7 @@ class AramisView3D(HasTraits):
         m.points3d(z_arr, self.aramis_data.x_arr_undeformed, self.aramis_data.y_arr_undeformed, plot3d_var, mode='cube',
                    colormap="blue-red", scale_mode='none')
 
-        glyph1 = engine.scenes[0].children[1].children[0].children[0]
+        glyph1 = self.scene.engine.scenes[0].children[1].children[0].children[0]
 #       # switch order of the scale_factor corresponding to the order of the
         glyph1.glyph.glyph_source.glyph_source.x_length = self.glyph_z_length
         glyph1.glyph.glyph_source.glyph_source.y_length = self.glyph_x_length
@@ -142,20 +151,20 @@ class AramisView3D(HasTraits):
         # rotate scene
         #
         # scene = engine.scenes[0]
-        scene.scene.parallel_projection = True
+        self.scene.scene.parallel_projection = True
         m.view(0, 90)
 
         glyph.glyph.glyph_source.glyph_position = 'head'
         glyph.glyph.glyph_source.glyph_position = 'tail'
 
-        module_manager = engine.scenes[0].children[1].children[0]
+        module_manager = self.scene.engine.scenes[0].children[1].children[0]
         module_manager.scalar_lut_manager.show_scalar_bar = True
         module_manager.scalar_lut_manager.show_legend = True
         module_manager.scalar_lut_manager.scalar_bar.orientation = 'horizontal'
         module_manager.scalar_lut_manager.scalar_bar.title = self.plot3d_var_[1]
         module_manager.scalar_lut_manager.scalar_bar_representation.position = (0.10, 0.05)
         module_manager.scalar_lut_manager.scalar_bar_representation.position2 = (0.8, 0.15)
-        scene.scene.disable_render = False
+        self.scene.scene.disable_render = False
 
         if self.plot_title:
             m.title('step no. %d' % self.aramis_data.evaluated_step_idx, size=0.3)
@@ -166,18 +175,20 @@ class AramisView3D(HasTraits):
         #
         m.axes()
 
-        m.show()
-
     plot3d_cracks = Button
     def _plot3d_cracks_fired(self):
         '''Plot cracks in 3D
         '''
         aramis_cdt = self.aramis_cdt
-        m.figure(fgcolor=(0, 0, 0), bgcolor=(1, 1, 1), size=(900, 600))
+        # m.figure(fgcolor=(0, 0, 0), bgcolor=(1, 1, 1), size=(900, 600))
 
-        engine = m.get_engine()
-        scene = engine.scenes[0]
-        scene.scene.disable_render = True
+        # engine = m.get_engine()
+        # scene = engine.scenes[0]
+        self.scene.mlab.clf()
+        m = self.scene.mlab
+        m.fgcolor = (0, 0, 0)
+        m.bgcolor = (1, 1, 1)
+        self.scene.scene.disable_render = True
 
         #-----------------------------------
         # plot crack width ('crack_field_w')
@@ -192,7 +203,7 @@ class AramisView3D(HasTraits):
 
         # scale glyphs
         #
-        glyph = engine.scenes[0].children[0].children[0].children[0]
+        glyph = self.scene.engine.scenes[0].children[0].children[0].children[0]
         glyph.glyph.glyph_source.glyph_position = 'tail'
         glyph.glyph.glyph_source.glyph_source.x_length = self.glyph_x_length_cr
         glyph.glyph.glyph_source.glyph_source.y_length = self.glyph_y_length_cr
@@ -207,7 +218,7 @@ class AramisView3D(HasTraits):
         m.points3d(z_arr, self.aramis_data.x_arr_undeformed, self.aramis_data.y_arr_undeformed, plot3d_var, mode='cube',
                    colormap="blue-red", scale_mode='none')
 
-        glyph1 = engine.scenes[0].children[1].children[0].children[0]
+        glyph1 = self.scene.engine.scenes[0].children[1].children[0].children[0]
 #       # switch order of the scale_factor corresponding to the order of the
         glyph1.glyph.glyph_source.glyph_source.x_length = self.glyph_z_length
         glyph1.glyph.glyph_source.glyph_source.y_length = self.glyph_x_length
@@ -215,14 +226,14 @@ class AramisView3D(HasTraits):
 
         # rotate scene
         #
-        scene = engine.scenes[0]
+        scene = self.scene.engine.scenes[0]
         scene.scene.parallel_projection = True
         m.view(0, 90)
 
         glyph.glyph.glyph_source.glyph_position = 'head'
         glyph.glyph.glyph_source.glyph_position = 'tail'
 
-        module_manager = engine.scenes[0].children[1].children[0]
+        module_manager = self.scene.engine.scenes[0].children[1].children[0]
         module_manager.scalar_lut_manager.show_scalar_bar = True
         module_manager.scalar_lut_manager.show_legend = True
         module_manager.scalar_lut_manager.scalar_bar.orientation = 'horizontal'
@@ -240,13 +251,18 @@ class AramisView3D(HasTraits):
         #
         # m.axes()
 
-        m.show()
+    clean_scene = Button
+    def _clean_scene_fired(self):
+        self.scene.mlab.clf()
+
 
     view = View(
                 Item('plot3d_var'),
                 UItem('plot3d_points_flat'),
                 UItem('plot3d_points'),
                 UItem('plot3d_cracks'),
+                Item('_'),
+                UItem('clean_scene'),
                 id='aramisCDT.view3d',
                )
 

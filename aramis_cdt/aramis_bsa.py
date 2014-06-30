@@ -15,15 +15,10 @@
 #-------------------------------------------------------------------------------
 
 from etsproxy.traits.api import \
-    HasTraits, Float, Property, cached_property, Int, Array, Bool, \
-    Instance, DelegatesTo, Tuple, Button, List, Str, Event, on_trait_change, WeakRef
-
-from etsproxy.traits.ui.api import View, Item, HGroup, EnumEditor, Group, UItem, RangeEditor
+    Property, cached_property, Array
 
 import numpy as np
-from scipy import stats
 import os
-import re
 
 import platform
 import time
@@ -54,7 +49,6 @@ class AramisBSA(AramisCDT):
     def _get_d_ux_arr2(self):
         x_und = self.aramis_data.x_arr_undeformed
         ux = self.aramis_data.ux_arr
-        x_def = x_und + ux
         du_arr = np.zeros_like(x_und)
         ir = self.integ_radius
         du_arr[:, ir:-ir] = (ux[:, 2 * ir:] - ux[:, :-2 * ir]) / (x_und[:, 2 * ir:] - x_und[:, :-2 * ir])
@@ -66,21 +60,32 @@ if __name__ == '__main__':
     home = expanduser("~")
 
     data_dir = os.path.join(home, '.simdb_cache', 'exdata/bending_tests',
-                            'three_point', '2013-07-09_BT-6c-2cm-0-TU_bs4-Aramis3d',
-                            'aramis', 'BT-6c-V4-bs4-Xf19s1-Yf19s4')
+                             'three_point', '2013-07-09_BT-6c-2cm-0-TU_bs4-Aramis3d',
+                             'aramis', 'BT-6c-V4-bs4-Xf19s15-Yf19s15')
+
+    data_dir = os.path.join(home, '.simdb_cache', 'exdata/bending_tests',
+                             'three_point', '2013-07-09_BT-6c-2cm-0-TU_bs4-Aramis3d',
+                             'aramis', 'BT-6c-V4-bs4-Xf19s1-Yf19s4')
 
     AI = AramisInfo(data_dir=data_dir)
+    # AI = AramisInfo()
     AD = AramisData(aramis_info=AI,
-                    evaluated_step_idx=100)
+                    evaluated_step_idx=10)
     AC = AramisBSA(aramis_info=AI,
                    aramis_data=AD,
-                   integ_radius=15)
+                   integ_radius=100)
 
-    x = np.nanmean(AC.d_ux_arr2[:, 1000:1300], axis=1)
-    print AC.d_ux_arr2.shape
-    y = AD.y_arr_undeformed[:, 1000]
-    import matplotlib.pyplot as plt
-    plt.plot(x, y)
+    for step in range(0, 300, 5):  # [225]:
+        AD.evaluated_step_idx = step
+        mid_idx = AC.d_ux_arr2.shape[1] / 2
+        x = np.mean(AC.d_ux_arr2[:, mid_idx - 0:mid_idx + 1], axis=1)
+        # x = AC.d_ux_arr2[:, mid_idx - 4:mid_idx + 4]
 
+        y = AD.y_arr_undeformed[:, mid_idx]
+        import matplotlib.pyplot as plt
+        plt.plot(x, y)
+
+    plt.plot([-0.004, 0.014], [0, 0], color='black')
+    plt.plot([0, 0], [-10, 10], color='black')
     plt.show()
     # AC.configure_traits()

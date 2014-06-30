@@ -41,6 +41,10 @@ from aramis_info import AramisInfo
 
 class AramisRemote(HasTraits):
 
+    def __init__(self, *args, **metadata):
+        self._load_cfg_files()
+        super(AramisRemote, self).__init__(*args, **metadata)
+
     aramis_info = Instance(AramisInfo)
 
     simdb = Instance(SimDB, ())
@@ -67,22 +71,31 @@ class AramisRemote(HasTraits):
     def _relative_path_update(self):
         self.relative_path = self.extended_data_dir.replace(self.simdb_dir, '')[1:]
 
-    extended_data_ini = File
-    '''Extended data file 'extended_data.ini' contain the information about
+    extended_data_cfg_filename = Str('extended_data.cfg')
+
+    extended_data_cfg = File
+    '''Extended data file 'extended_data.cfg' contain the information about
     available Aramis files
     '''
     @on_trait_change('extended_data_dir')
-    def _extended_data_ini_update(self):
-        self.extended_data_ini = os.path.join(self.extended_data_dir, 'extended_data.cfg')
+    def _extended_data_cfg_update(self):
+        self.extended_data_cfg = os.path.join(self.extended_data_dir, 'extended_data.cfg')
+
+    experiment_lst = List(Str)
+
+    experiment_selected = Str
 
     aramis_files = List(Str)
     '''Available Aramis files obtained from *.cfg file
     '''
-    @on_trait_change('extended_data_ini')
+    @on_trait_change('experiment_selected')
     def _aramis_files_update(self):
-        if os.path.exists(self.extended_data_ini):
+        path = os.path.join(self.simdb_dir,
+                            self.experiment_selected,
+                            self.extended_data_cfg_filename)
+        if os.path.exists(path):
             config = ConfigParser.ConfigParser()
-            config.read(self.extended_data_ini)
+            config.read(path)
             lst = ['']
             lst += config.get('aramis_data', 'aramis_files').split(',\n')
             self.aramis_files = lst
@@ -141,9 +154,20 @@ class AramisRemote(HasTraits):
         zf.close()
         print 'FILE %s DECOMPRESSED' % self.aramis_file_selected
 
+    def _load_cfg_files(self):
+        name_lst = []
+        path_lst = []
+        for path, subdirs, files in os.walk(self.simdb_dir):
+            for name in files:
+                if name == self.extended_data_cfg_filename:
+                    name_lst.append(name)
+                    path_lst.append(path)
+                    self.experiment_lst.append(path.replace(self.simdb_dir, '')[1:])
+
     view = View(
                 Item('simdb_dir', style='readonly'),
-                Item('extended_data_dir'),
+                Item('experiment_selected', editor=EnumEditor(name='experiment_lst')),
+                # Item('extended_data_dir'),
                 Item('server_username', style='readonly'),
                 Item('server_host', style='readonly'),
                 Item('simdb_cache_remote_dir', style='readonly'),
