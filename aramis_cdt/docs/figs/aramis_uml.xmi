@@ -1,0 +1,1315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMI verified="false" xmi.version="1.2" timestamp="2014-06-30T15:00:50" xmlns:UML="http://schema.omg.org/spec/UML/1.3">
+ <XMI.header>
+  <XMI.documentation>
+   <XMI.exporter>umbrello uml modeller http://umbrello.kde.org</XMI.exporter>
+   <XMI.exporterVersion>1.6.4</XMI.exporterVersion>
+   <XMI.exporterEncoding>UnicodeUTF8</XMI.exporterEncoding>
+  </XMI.documentation>
+  <XMI.metamodel xmi.version="1.3" href="UML.xml" xmi.name="UML"/>
+ </XMI.header>
+ <XMI.content>
+  <UML:Model isSpecification="false" isAbstract="false" isLeaf="false" xmi.id="m1" isRoot="false" name="UML Model">
+   <UML:Namespace.ownedElement>
+    <UML:Stereotype visibility="public" isSpecification="false" namespace="m1" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="folder" name="folder"/>
+    <UML:Stereotype visibility="public" isSpecification="false" namespace="m1" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="datatype" name="datatype"/>
+    <UML:Model stereotype="folder" visibility="public" isSpecification="false" namespace="m1" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Logical View" name="Logical View">
+     <UML:Namespace.ownedElement>
+      <UML:Package stereotype="folder" visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Datatypes" name="Datatypes">
+       <UML:Namespace.ownedElement>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="SAWBSmHpws2u" name="int"/>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="wB1MLmjgf7ir" name="char"/>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Qumt2H4U1LKx" name="bool"/>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="KrM4qGFraYbJ" name="float"/>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="EPt5MKx9DzOF" name="double"/>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="PZkMl4E792MM" name="short"/>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="wvTE6fdzlzJg" name="long"/>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="UeUk4tJoE2qQ" name="unsigned int"/>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="zSTKJQDmeJSH" name="unsigned short"/>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="BEapJ4RlmVd3" name="unsigned long"/>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="r5AHD7hgR04e" name="string"/>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="BxCKAm9TobCb" name="array"/>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="peOgiYvvfcZ5" name="tuple"/>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="chMIdXEprOZy" name="dict"/>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="NZ1werZ2VHYR" name="object"/>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="B1hGcJyyaZVo" name="set"/>
+       </UML:Namespace.ownedElement>
+      </UML:Package>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="KCvJzIqyDUnm" name="AramisBSA">
+       <UML:GeneralizableElement.generalization>
+        <UML:Generalization xmi.idref="IizmWL6gGPdZ"/>
+       </UML:GeneralizableElement.generalization>
+       <UML:Classifier.feature>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="dWQuu3R8dBq0" name="_get_d_ux_arr2">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="vt1DBRyovOgp" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="h1eCF0qg1KaP" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+       </UML:Classifier.feature>
+      </UML:Class>
+      <UML:Generalization discriminator="" visibility="public" isSpecification="false" namespace="Logical View" child="KCvJzIqyDUnm" xmi.id="IizmWL6gGPdZ" parent="J12i9EhqUK8Q" name=""/>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="J12i9EhqUK8Q" name="AramisCDT">
+       <UML:GeneralizableElement.generalization>
+        <UML:Generalization xmi.idref="vjeGH19A2KJR"/>
+       </UML:GeneralizableElement.generalization>
+       <UML:Classifier.feature>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="kzVvgXksPisb" type="3gfZb5saoCTz" name="aramis_info"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="opc8L65UxQWT" type="Qumt2H4U1LKx" name="aramis_info_changed"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="FKxY28NSBYb4" type="nCLFWLfvx1Hj" name="aramis_data"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="ODMXjxZ2tsPa" type="3gfZb5saoCTz" name="step_list"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="Jf3WTg7NK7EP" type="SAWBSmHpws2u" name="integ_radius"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="eXgVlWO7hkeR" type="SAWBSmHpws2u" name="crack_detect_idx"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="fBTX3t7LW9rx" type="KrM4qGFraYbJ" name="d_ux_threshold"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="nwK84WXg1DBm" type="BxCKAm9TobCb" name="d_ux_arr"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="iXtPGVqvhKSi" type="BxCKAm9TobCb" name="dd_ux_arr"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="BY3hhveUpwat" type="BxCKAm9TobCb" name="ddd_ux_arr"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="bFNIZq1iM2P1" type="BxCKAm9TobCb" name="d_ux_arr_avg"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="x1Tnx4eN9CrS" type="BxCKAm9TobCb" name="dd_ux_arr_avg"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="S7XUJiE1E8QU" type="BxCKAm9TobCb" name="ddd_ux_arr_avg"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="s6R6CqYn5w4e" type="BxCKAm9TobCb" name="d_uy_arr"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="k5M47j53iYod" type="BxCKAm9TobCb" name="d_uz_arr"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="aS0kcqATucX4" type="KrM4qGFraYbJ" name="dd_ux_threshold"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="S6rX0v9kyTm4" type="KrM4qGFraYbJ" name="ddd_ux_threshold"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="Ar5qNtTyJRgu" type="KrM4qGFraYbJ" name="dd_ux_avg_threshold"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="FqN9QsBqw1Lw" type="KrM4qGFraYbJ" name="ddd_ux_avg_threshold"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="uUetvQv5F0vd" type="BxCKAm9TobCb" name="crack_filter"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="rMZAoD211N9S" type="SAWBSmHpws2u" name="number_of_subcracks"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="GKICLc7G6j70" type="BxCKAm9TobCb" name="crack_filter_avg"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="A25N0z0pJXx5" type="SAWBSmHpws2u" name="number_of_cracks_avg"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="i07kNGCdaSou" type="BxCKAm9TobCb" name="crack_spacing_avg"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="2vA9eH9mHCAF" type="BxCKAm9TobCb" name="crack_arr"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="984RezWMzd6L" type="KrM4qGFraYbJ" name="crack_arr_mean"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="rGyQhkKjdUqG" type="KrM4qGFraYbJ" name="crack_arr_std"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="jx2y8ABFHDgv" type="BxCKAm9TobCb" name="crack_avg_arr"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="CDFAoKVgaR6F" type="BxCKAm9TobCb" name="crack_field_arr"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="COxpsl5Zj6Vp" type="BxCKAm9TobCb" name="number_of_cracks_t"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="Gg4VtjQ3wgDi" type="wn7rAWcXhyIS" name="number_of_missing_facets_t"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="yiMWASmKqh7g" type="BxCKAm9TobCb" name="control_strain_t"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="SBD9HiwVMz1D" type="wn7rAWcXhyIS" name="init_step_avg_lst"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="iPHc3UK1BhYJ" type="wn7rAWcXhyIS" name="init_step_lst"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="7IdwzkaPvmXA" type="BxCKAm9TobCb" name="crack_width_avg_t"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="UTgpSf2A4Jk6" type="BxCKAm9TobCb" name="crack_stress_t"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="m57xkfGpvtju" type="Qumt2H4U1LKx" name="number_of_cracks_t_analyse"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="bKIX6pfYGJNh" type="BxCKAm9TobCb" name="crack_detect_mask_avg"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="yOp1ha7TdCON" type="BxCKAm9TobCb" name="crack_detect_mask"/>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="zQpzk6R1Cmgz" name="aramis_info_change">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="Iz6hwLNvjAtR" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="wjp2pvwuxce3" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="HKST46Q0pD3c" comment="=========================================================================== Crack detection===========================================================================" name="_crack_detect_idx">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="WsvF0ohH67jA" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="9xW4X87p5BW2" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="C791LAcU76Wd" comment=" cutoff the negative strains - noise eliminate displacement jumps smaller then specified tolerance" name="_get_d_ux_arr">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="2A59GmHStORC" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="FcSKnxKIpGVp" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Y3eeABHPnhhY" name="_get_dd_ux_arr">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="4f8v3a8cbmEl" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="e0oRGIFISIPg" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="vT8gAoFno1E2" name="_get_dd_ux_arr_avg">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="5p0gZCQVfYBo" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="JRIkjiQnNXhO" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="KOb8QnAjFTRw" name="_get_ddd_ux_arr">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="3WGh5SVNq4WE" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="9siUNPsSEr8n" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="pey25PzCFhgc" name="_get_ddd_ux_arr_avg">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="mb8afcpTElVK" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="6Z2IQB5RfK8k" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="8UWMBDyFkzX8" name="_get_d_ux_arr_avg">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="E0MSlrmsMHEV" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="8bZnvgYfFeDt" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="SAlC9IIHtr5m" comment=" cutoff the negative strains - noise eliminate displacement jumps smaller then specified tolerance" name="_get_d_uy_arr">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="reFBvThNdQXl" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="VbRlDfeRd0tP" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="gp2Ye5KAektr" comment=" cutoff the negative strains - noise eliminate displacement jumps smaller then specified tolerance" name="_get_d_uz_arr">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="592hZXSFMSny" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="NVI0VANKocUh" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="W66Aqz2BUIBx" name="_get_crack_filter">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="UMdooRnIVtTL" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="SZGGBkvHtxwQ" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="rVUJnfHEEXSO" name="_get_crack_filter_avg">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="YN03FTM4wqNh" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="FOf8JZWov9ah" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Wevi9O6OmjU5" name="_get_crack_spacing_avg">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="K64GxSxR4r9C" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="I0rBAQtiltm0" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="FEazx34E3uPB" name="_get_crack_arr">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="Wf6ZUEljSJiN" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="KIu39e4Ti6hf" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="MkbQc1buHTyR" name="_get_crack_arr_mean">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="ktQAC6XZq9zR" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="50so6aTbDYAh" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="8YLP2Jo7JftO" name="_get_crack_arr_std">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="bIjPPgqXFCvF" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="FNzSt77b0VlA" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="VhKnMEBbZ81Q" name="_get_crack_avg_arr">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="nQx0cqF6Yats" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="F61DbmNC27aS" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="m2SLATlNaka9" comment="=========================================================================== Crack detection in time===========================================================================" name="_get_crack_field_arr">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="i21Eas5MsXf2" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="UxMW2wwoKsov" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="yOPY8xgcu26v" name="__number_of_cracks_t">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="0rTsO8sMWFte" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="w1jGtXBZZAm9" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="CZE5ZJ0TKjjB" name="_get_crack_detect_mask_avg">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="Xh04wrg7OtCx" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="Gtio1Sv0JPqf" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="CCOUv5f9yLvy" name="_get_crack_detect_mask">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="YSVwLfrVrFzk" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="orw5EmjlRjnO" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+       </UML:Classifier.feature>
+      </UML:Class>
+      <UML:Generalization discriminator="" visibility="public" isSpecification="false" namespace="Logical View" child="J12i9EhqUK8Q" xmi.id="vjeGH19A2KJR" parent="7x3Gm1vnf72d" name=""/>
+      <UML:Generalization discriminator="" visibility="public" isSpecification="false" namespace="Logical View" child="KcrHxlFjc9pq" xmi.id="tWZLFLjnnCh8" parent="7x3Gm1vnf72d" name=""/>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="nCLFWLfvx1Hj" name="AramisData">
+       <UML:GeneralizableElement.generalization>
+        <UML:Generalization xmi.idref="LDOhthiYFy7f"/>
+       </UML:GeneralizableElement.generalization>
+       <UML:Classifier.feature>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="OjT1PSDb51gX" type="3gfZb5saoCTz" name="step_list"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="DdQIe6pNzqaQ" type="Qumt2H4U1LKx" name="transform_data"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="quEQCdHV99yB" type="r5AHD7hgR04e" name="evaluated_step_idx_filename"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="uIeO34DGieYK" type="BxCKAm9TobCb" name="data_array_undeformed"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="iNhiBG80AMOK" type="peOgiYvvfcZ5" name="data_array_undeformed_shape"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="xgp4noGi4s47" type="BxCKAm9TobCb" name="data_array_undeformed_mask"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="xINfwtzcGfKQ" type="BxCKAm9TobCb" name="n_x_undeformed"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="vQO3kmNiQBmE" type="BxCKAm9TobCb" name="n_y_undeformed"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="x0u1ty8qGTVA" type="BxCKAm9TobCb" name="x_idx_undeformed"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="MUna75y2WM5G" type="BxCKAm9TobCb" name="y_idx_undeformed"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="9RwXahjXhdWa" type="BxCKAm9TobCb" name="x_arr_undeformed"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="ceOs5t3RMozR" type="BxCKAm9TobCb" name="y_arr_undeformed"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="tyUPIXePwaxW" type="BxCKAm9TobCb" name="z_arr_undeformed"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="Hg1xKXVw9umE" type="SAWBSmHpws2u" name="length_x_undeformed"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="lpd5ddXVZzur" type="SAWBSmHpws2u" name="length_y_undeformed"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="WWHT7CxMszHA" type="SAWBSmHpws2u" name="length_z_undeformed"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="Wn6gfruOgWSI" type="BxCKAm9TobCb" name="data_array"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="7zlgyfVSAktH" type="BxCKAm9TobCb" name="ux_array"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="wrbnqrxMe22H" type="BxCKAm9TobCb" name="ux_arr_avg"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="tvfXR7nY4YC0" type="BxCKAm9TobCb" name="uy_arr"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="CfRMQKbKBA7z" type="BxCKAm9TobCb" name="uz_arr"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="13Mf5MuwFYTe" type="BxCKAm9TobCb" name="step_time"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="fFCinMgx27JS" type="BxCKAm9TobCb" name="force"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="Sukb5sZ4ttkw" type="KrM4qGFraYbJ" name="area"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="FcsTAJ7oYIWK" type="BxCKAm9TobCb" name="stress"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="eAHgIZ6iRrJU" type="SAWBSmHpws2u" name="step_idx_max"/>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="lSH0OOeMzZo3" comment="=========================================================================== Undeformed state variables===========================================================================" name="_get_evaluated_step_idx_filename">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="siShmCQXehV0" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="KDrJyvn1dC0O" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="39L3h96zMxJI" name="_get_data_array_undeformed">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="TBF5qi6uqPxV" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="r4IUGIq6yGlk" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Y1UswlBlpTF3" name="_get_data_array_undeformed_shape">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="Iwl6Jgbrh4kb" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="j37hKrPn2cqt" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="ptNdKae3emiy" name="_get_data_array_undeformed_mask">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="tddahLAXEV8Y" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="b5jdfZUxUD4n" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="5mZhWFd7IMjx" name="_get_n_x_undeformed">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="91mLUsrZfOF9" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="wBuOPwBIaorH" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="dsHvDyq79lVY" name="_get_n_y_undeformed">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="8nilAvuno9hz" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="ferFTiVahFwB" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="7X6HGbnwFe9g" name="_get_x_idx_undeformed">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="mZsYhXXm2d1J" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="KcFzqBAwwrf6" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="CpDQRK4kvJjl" name="_get_y_idx_undeformed">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="qZJtBKAL7LjZ" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="SsfPjKTVrJ2W" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="foHa70JaswxZ" name="_get_x_arr_undeformed">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="GV9LqssUe92m" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="GO36i5cWevNn" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="AMK0IFaXdbdJ" name="_get_y_arr_undeformed">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="3bxik0SsKkrc" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="gFoIB96PfDiT" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="zR7a2ksgygy7" name="_get_z_arr_undeformed">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="rNOB5Fm4etce" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="n2WSDCwHnrxY" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="cUKY8HfwJ9MX" name="_get_length_x_undeformed">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="Ht9vmlYMEsuK" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="LGm98hfx2397" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="7ZERgbw2pgBv" name="_get_length_y_undeformed">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="KY0WQsrYQ5x6" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="LotNr2U6vb2f" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="er8SXHNq5GDv" comment="=========================================================================== Data array===========================================================================" name="_get_length_z_undeformed">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="fwU5zPAcGI4l" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="Gf19G1pYZn5y" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="aRbdgmYwPY6f" comment="=========================================================================== Displacement arrays===========================================================================" name="_get_data_array">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="sVm8lqrJFQxv" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="XtD5eI3HCVLC" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="ATqZ1uCXlNcP" comment=" missing values replaced by averaged values in y-direction ux_arr[ux_arr &lt; 0.01] = 0" name="_get_ux_arr">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="avbqJWjT0X2z" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="gdgq8100Wm6I" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="RCWAZ6ZDjE4p" comment=" missing values replaced with average in y-direction" name="_get_ux_arr_avg">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="6tW4QW3qiY0I" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="F2pkpt0NmZB5" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="eYVMmXB1a1jN" name="_get_uy_arr">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="lS3Uy2kbaDxM" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="sjkfJwiNpFRD" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="l8LJ75g0oOd5" name="_get_uz_arr">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="OUpyhmIStej0" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="KLQ7YrLKIMmG" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="hPyTobZ6vzET" name="_get_step_time">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="tX9m9tnqGlJ2" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="pZn5vXJI19Gj" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Lq9GoNjbuVgn" comment=" TODO: load from exp db" name="_get_force">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="jXqyJ70ew9sk" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="0z526Mj0rqm0" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="UZJO4zC3wH51" name="_get_stress">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="KGCGO4ysdHFg" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="bm1SclQKJEGa" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="ERj8gm9GY8g8" name="_get_step_idx_max">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="1p9e6OKIn1RS" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="u7QDJgldvxtJ" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+       </UML:Classifier.feature>
+      </UML:Class>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="KcrHxlFjc9pq" name="AramisRawData">
+       <UML:GeneralizableElement.generalization>
+        <UML:Generalization xmi.idref="tWZLFLjnnCh8"/>
+       </UML:GeneralizableElement.generalization>
+       <UML:Classifier.feature>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="O1t2yCE86yRT" type="3gfZb5saoCTz" name="aramis_info"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="Ov0UtRwRQgqF" type="Qumt2H4U1LKx" name="aramis_info_changed"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="cqmAoHMIiSW0" type="SAWBSmHpws2u" name="evaluated_step_idx"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="OpgJ1NBNGBrA" type="r5AHD7hgR04e" name="evaluated_step_idx_filename"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="alZySQE2EyC2" type="Qumt2H4U1LKx" name="transform_data"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="EWKuypuNcYeb" type="BxCKAm9TobCb" name="input_array_undeformed"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="upyA0nIbZsZz" type="BxCKAm9TobCb" name="input_array"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="Gl1UiBVwhpod" type="BxCKAm9TobCb" name="ad_channels_arr"/>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Jg86spChLnN8" name="aramis_info_change">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="1yY7wVSDBYH1" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="NlFX0cc1BPZw" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="LRggE3oZm24m" name="_evaluated_step_idx">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="idOrAfsV6WAI" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="celn4Lh3HFBD" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="XwpJyt4YVnMZ" name="_get_evaluated_step_idx_filename">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="Zh1dE9vl5i32" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="63bNHmYzNwrV" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Z7a5swczyDMF" comment="' * 50" name="_get_input_array_undeformed">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="ywe4ch6CmeHf" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="xvCLp1qPjp2v" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="btcX5wk2rwLf" name="_get_input_array">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="u2leg2HFttmw" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="yA4fz4awyEyb" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="qWzfRKKPUM2S" name="_get_ad_channels_arr">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="haGZS2VGXSty" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="PcONoKwgMhJ2" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+       </UML:Classifier.feature>
+      </UML:Class>
+      <UML:Generalization discriminator="" visibility="public" isSpecification="false" namespace="Logical View" child="nCLFWLfvx1Hj" xmi.id="LDOhthiYFy7f" parent="KcrHxlFjc9pq" name=""/>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="3gfZb5saoCTz" name="AramisInfo">
+       <UML:GeneralizableElement.generalization>
+        <UML:Generalization xmi.idref="kwbcGkM4wkbZ"/>
+       </UML:GeneralizableElement.generalization>
+       <UML:Classifier.feature>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="qXbCcZBSrE0F" type="r5AHD7hgR04e" name="data_dir"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="OBNlkxsqluJT" type="r5AHD7hgR04e" name="npy_dir"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="blUaZwWPx7xW" type="wn7rAWcXhyIS" name="step_list"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="AIg5Z9eLbCsY" type="SAWBSmHpws2u" name="number_of_steps"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="iHTnCxky4Z6b" type="wn7rAWcXhyIS" name="step_idx_list"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="CdGAwi56zj9Y" type="r5AHD7hgR04e" name="specimen_name"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="rltSxkyfzRRC" type="r5AHD7hgR04e" name="undeformed_coords_filename"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="PBARiE0ssH2o" type="r5AHD7hgR04e" name="displacements_basename"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="z5swn0VelM4j" type="chMIdXEprOZy" name="facet_params_dict"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="63M6UnGrwOJf" type="SAWBSmHpws2u" name="n_px_facet_size_x"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="cJXUaYGYb7UO" type="SAWBSmHpws2u" name="n_px_facet_step_x"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="7z0qK5XO6sUY" type="SAWBSmHpws2u" name="n_px_facet_size_y"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="fiQa6jDj0iBb" type="SAWBSmHpws2u" name="n_px_facet_step_y"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="KqksVSG3XxEE" type="SAWBSmHpws2u" name="first_step"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="yxNXBnezKDAu" type="SAWBSmHpws2u" name="last_step"/>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="zygvgFVDWfMB" comment="     file_list = List(Str)     '''List of names of *.txt data files contained in the directory.     '''" name="_npy_dir_update">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="JdaeuCEtAsnr" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="mYtaN8xFEtxW" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="7I4cvPnfvhGG" comment=" sort filenames by the step number file_arr = np.array(file_list, dtype=str) idx = np.argsort(step_list) self.file_list = file_arr[idx].tolist()" name="_file_step_list_update">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="FCpQ4cFAsHml" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="nBV14SXM350x" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="eXQZCenyqIzs" name="_number_of_steps_update">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="5PcxeMgJt6q4" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="jVEmYDioPVCU" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="je2Xu1PdUeO1" name="_step_idx_list_update">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="cHJWL8a4kabe" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="r6pEbzggMIb0" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="ZzG4de5SkseJ" name="_specimen_name_update">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="bGDLqmzPlDRM" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="pLzBbYBEpTi8" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="rUmbMRsBkrKL" name="_facet_params_dict_update">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="Gqh048Mtd7Tx" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="PWXCzFLYTWtH" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="WL7GDRZav7lu" name="_n_px_facet_size_x_update">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="rB3SGWNmsU23" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="K4SoaJ5q8kqA" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uZbpgMkzQAly" name="_n_px_facet_step_x_update">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="GBm8gm9aMkN2" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="SonYZbiOmlq2" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="551TEmSgZFE8" name="_n_px_facet_size_y_update">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="A8hWr5Xw8YPM" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="quUbfKbtVOz9" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Jp2s4Eyv8SUm" name="_n_px_facet_step_y_update">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="5fWECuaVjbLm" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="k5fDTfLel28c" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="nHfwh9gPELcg" name="_first_step_update">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="jolQN4CAJr40" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="yxIkyQK16rDI" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="ykPD4zr0v9kr" name="_last_step_update">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="gCLz3Qz08MDC" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="Z3sds6vbse1D" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+       </UML:Classifier.feature>
+      </UML:Class>
+      <UML:Generalization discriminator="" visibility="public" isSpecification="false" namespace="Logical View" child="3gfZb5saoCTz" xmi.id="kwbcGkM4wkbZ" parent="7x3Gm1vnf72d" name=""/>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="M2DHBv8kyyMo" name="AramisRemote">
+       <UML:GeneralizableElement.generalization>
+        <UML:Generalization xmi.idref="4HPuuP7abTac"/>
+       </UML:GeneralizableElement.generalization>
+       <UML:Classifier.feature>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="P230Xgo1sfDk" type="3gfZb5saoCTz" name="aramis_info"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="4W1uBDeHLDqN" type="gn2mcd7hTTfo" name="simdb"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="JjNOTRwgAHrt" type="r5AHD7hgR04e" name="extended_data_dir"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="BU4NceLGcKca" type="r5AHD7hgR04e" name="relative_path"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="T1lgspeBW1Xz" type="r5AHD7hgR04e" name="extended_data_ini"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="SSgajXUszYFb" type="AbpmtSMKT5yK" name="aramis_files"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="dVRc3R3V5dCa" type="r5AHD7hgR04e" name="aramis_file_selected"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="75ZdIAnrzZiP" type="r5AHD7hgR04e" name="local_dir"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="u3tz1BscgIDh" type="r5AHD7hgR04e" name="server_dir"/>
+        <UML:Attribute visibility="public" isSpecification="false" xmi.id="hGAmrNMzQtag" type="r5AHD7hgR04e" name="zip_filename"/>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="mcnL3LxusYrk" name="_relative_path_update">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="thGC2mOoO99P" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="Lzy9IT7X4oie" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="U5HLd93w625P" name="_extended_data_ini_update">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="EP6bZGy1JGKu" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="VBwazcCrHS3K" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="NOqTQuqv5kT2" name="_aramis_files_update">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="EpsX5DRQbGs1" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="Kftc5uuIK0rr" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+       </UML:Classifier.feature>
+      </UML:Class>
+      <UML:Generalization discriminator="" visibility="public" isSpecification="false" namespace="Logical View" child="M2DHBv8kyyMo" xmi.id="4HPuuP7abTac" parent="7x3Gm1vnf72d" name=""/>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="AiuDTMDnz7N5" name="AramisUI">
+       <UML:GeneralizableElement.generalization>
+        <UML:Generalization xmi.idref="1HNJGEAU1305"/>
+       </UML:GeneralizableElement.generalization>
+       <UML:Classifier.feature>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="emcdnci13Coh" name="_aramis_data_default">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="zQGsqq0Sdc6O" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="ZcUdJV6JhNLy" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="EmOFyCwWnR74" name="_aramis_remote_default">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="eQMF2SbGDzWB" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="uENbbhZa7nQw" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="AQhxrnzl1KKc" name="_aramis_cdt_default">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="q7I37mCFCsA2" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="1rA7fa3J1PW1" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="f9neT6EVxOaa" name="_aramis_view2d_default">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="z2p9szBV6x9Z" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="wdrv0NxoVFpa" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="3N20lcbfDSbC" name="_aramis_view3d_default">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="b3Bh0KE1hF1Q" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="oY0Hlqriqerg" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="pa531eFpCD4v" comment=" figure.add_subplot(111) figure.add_axes([0.15, 0.15, 0.75, 0.75])" name="_figure_default">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="01VfEU545974" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="3vdrXVX8WgnU" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="nKryXvrZoVOL" name="_load_data_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="vKU0Rb4Ctt8O" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="yuRUaEybDTES" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="o0xcVKxTEOvo" name="_set_dir_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="JGVAAeYwcUZ7" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="crNoIcEDuiEJ" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+       </UML:Classifier.feature>
+      </UML:Class>
+      <UML:Generalization discriminator="" visibility="public" isSpecification="false" namespace="Logical View" child="AiuDTMDnz7N5" xmi.id="1HNJGEAU1305" parent="7x3Gm1vnf72d" name=""/>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="oWY0tRoTIAHa" name="AramisPlot2D">
+       <UML:GeneralizableElement.generalization>
+        <UML:Generalization xmi.idref="kVncDzvUEOcM"/>
+       </UML:GeneralizableElement.generalization>
+       <UML:Classifier.feature>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Fc3Tzgnzp6cS" name="_save_dir_default">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="3csSsY3887Z7" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="vJrFXGSBT98n" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="nN7aRh2KyraV" name="_temp_dir_default">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="kgMsltyWE56f" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="70fY9nLCNCdG" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="m6ykxWE4Wtde" comment="         ax.plot(aramis_data.x_arr_undeformed.T[ir:-ir, :],                 (get_d(aramis_data.x_arr_undeformed + aramis_data.ux_arr, ir).T - get_d(aramis_data.x_arr_undeformed, ir).T)[ir:-ir, :], color='black')        ax.plot(aramis_data.x_arr_undeformed.T[ir:-ir, :],                 get_d(aramis_data.x_arr_undeformed + aramis_data.ux_arr, ir).T[ir:-ir, :], color='black')" name="_plot2d_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="ThOhkULUbHCY" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="ewoz8RDs8Zjr" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="nObJHExtAmrH" comment=" these are matplotlib.patch.Patch properties place a text box in upper left in axes coords," name="_plot_crack_hist_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="11haIs95GkNY" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="B47Hco93VXiD" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="wIP42GLEJRVv" name="_plot_number_of_cracks_t_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="Us2kaPGWfeZi" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="Fcyj9ew9gcjy" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="ssuBJP4Z00I9" name="_plot_force_step_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="iFvOtU6mN0xg" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="fCILo0JGqL1R" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="N2DN0TVfgl0S" name="_plot_stress_strain_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="PkdmiYQ5YcRZ" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="lIjcbi1Kxwgr" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="5uCjdDCPVtz6" name="_plot_w_strain_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="VSa14za9rltU" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="b0OWu4NJoy3W" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="y3rRwqVVou1h" name="_plot_subw_strain_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="kMfZ7W45XvUR" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="wNyjJ2DoUnoW" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="k0wWswDoHCVa" name="_plot_stress_strain_init_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="IqipkDHSBBy3" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="CjNeUBAFXnmf" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="7ApOKLxW4I8Y" name="_plot_crack_init_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="VQWeZThhdU3x" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="RIly3WbLMI94" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="pyRrGZOhp7es" name="_plot_force_time_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="0HvbmzYZvxPA" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="dDCyVJ2yhXcG" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="WnpJuT9WfLUA" name="_plot_number_of_missing_facets_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="S8GO5fYZSNsL" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="cW7J3ha1xVcj" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="p2rSLJayphHr" comment="         plt.scatter(aramis_cdt.x_arr_undeformed[mask],                    aramis_cdt.y_arr_undeformed[mask], c=plot3d_var[mask], cmap=my_cmap_lin,                    marker='s') contour the data, plotting dots at the nonuniform data points.         CS = plt.contour(aramis_cdt.x_arr_undeformed[mask][0, :, :],                          aramis_cdt.y_arr_undeformed[mask][0, :, :],                          plot3d_var[mask][0, :, :], 25, linewidths=.5, colors='k') plotting filled contour" name="_plot_strain_crack_avg_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="vfGL17go7VGS" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="PpsKLT3nbH9h" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="oqQcWgTtVJDo" comment="         plt.scatter(aramis_cdt.x_arr_undeformed[mask],                    aramis_cdt.y_arr_undeformed[mask], c=plot3d_var[mask], cmap=my_cmap_lin,                    marker='s') contour the gridded data, plotting dots at the nonuniform data points.         CS = plt.contour(aramis_cdt.x_arr_undeformed[mask][0, :, :],                          aramis_cdt.y_arr_undeformed[mask][0, :, :],                          plot3d_var[mask][0, :, :], 25, linewidths=.5, colors='k') plotting filled contour         CS = ax.contourf(aramis_cdt.x_arr_undeformed,                          aramis_cdt.y_arr_undeformed,                          plot3d_var, 256, cmap=plt.get_cmap('jet'))         ax.plot(aramis_cdt.x_arr_undeformed[aramis_cdt.crack_filter],                  aramis_cdt.y_arr_undeformed[aramis_cdt.crack_filter],                  'k.') plt.colorbar() plt.axis('equal')" name="_plot_crack_filter_crack_avg_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="MQATwOwiEKKi" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="kEaMVh1QNHmM" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="ylbS3oGn2q9W" comment="         ax_area.vlines(aramis_cdt.x_arr_undeformed[10, :-1][aramis_cdt.crack_filter_avg],                    [0], np.nanmax(aramis_cdt.y_arr_undeformed),                    color='red', zorder=100, linewidth=1) ax_area.set_colorbar(CS, orientation='horizontal')         cbar_ax = fig.add_axes([0.45, 0.15, 0.5, 0.03])         fig.colorbar(CS, cax=cbar_ax, orientation='horizontal')" name="_plot_test_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="j8jvQ2ePnFrq" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="YAwtQgDk7NE1" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="25c4ujaQuVJI" name="handle_close">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="y0OqVf6e99vy" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="BW2IrEHYM1Tn" type="r5AHD7hgR04e" value="" name="self"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="35AoLzdN4FPy" type="r5AHD7hgR04e" value="" name="evt"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="NCWiByVC3d1M" name="_create_animation_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="fgCmn7l9KFrT" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="cchgp7dl7zaa" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+       </UML:Classifier.feature>
+      </UML:Class>
+      <UML:Generalization discriminator="" visibility="public" isSpecification="false" namespace="Logical View" child="oWY0tRoTIAHa" xmi.id="kVncDzvUEOcM" parent="7x3Gm1vnf72d" name=""/>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="BKgFxfbZHJD6" name="AramisView3D">
+       <UML:GeneralizableElement.generalization>
+        <UML:Generalization xmi.idref="OqpTqP1T6DFt"/>
+       </UML:GeneralizableElement.generalization>
+       <UML:Classifier.feature>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="xJ03WEvpCvSO" comment=" m.figure(fgcolor=(0, 0, 0), bgcolor=(1, 1, 1) , size=(900, 600)) engine = m.get_engine() scene = engine.scenes[0] plot axes" name="_plot3d_points_flat_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="Z6mHe2oZLndq" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="lXmwHM3hWgLx" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="1WfDP6aAdK5u" comment=" m.figure(fgcolor=(0, 0, 0), bgcolor=(1, 1, 1), size=(900, 600)) scene = engine.scenes[0]----------------------------------- plot crack width ('crack_field_w')----------------------------------- scale glyphs----------------------------------- plot displacement jumps ('d_ux_w')-----------------------------------       # switch order of the scale_factor corresponding to the order of the rotate scene scene = engine.scenes[0] m.scalarbar(orientation='horizontal', title=self.plot3d_var_[1]) plot axes" name="_plot3d_points_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="tNCDAn39HgNf" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="e8Z9ov6Mzrbd" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="mvpNFuGr0p0n" comment=" m.figure(fgcolor=(0, 0, 0), bgcolor=(1, 1, 1), size=(900, 600)) engine = m.get_engine() scene = engine.scenes[0]----------------------------------- plot crack width ('crack_field_w')-----------------------------------        plot3d_var = getattr(self, 'crack_field_w') scale glyphs----------------------------------- plot displacement jumps ('d_ux_w')-----------------------------------        plot3d_var = getattr(self, 'd_ux_w')       # switch order of the scale_factor corresponding to the order of the rotate scene m.scalarbar(orientation='horizontal', title='crack_field') plot axes m.axes()" name="_plot3d_cracks_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="GzNWeiBOdymq" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="k57jwiKn5VyE" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="t2irpgeYllHf" name="_clean_scene_fired">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="pyPQxBHoBxfz" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="RaRX3PjJP6n1" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+       </UML:Classifier.feature>
+      </UML:Class>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="7x3Gm1vnf72d" name="HasTraits"/>
+      <UML:Generalization discriminator="" visibility="public" isSpecification="false" namespace="Logical View" child="BKgFxfbZHJD6" xmi.id="OqpTqP1T6DFt" parent="7x3Gm1vnf72d" name=""/>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="dIXP1o2TMT0P" comment="    Wraps paramiko for super-simple SFTP uploading and downloading.&#xa;" name="SFTPServer">
+       <UML:GeneralizableElement.generalization>
+        <UML:Generalization xmi.idref="tjhGnUHcRg3M"/>
+       </UML:GeneralizableElement.generalization>
+       <UML:Classifier.feature>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="95dakewYw4X9" name="__init__">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="IxbAVh2BnEFR" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="sWxv1B2JPaw6" type="r5AHD7hgR04e" value="" name="self"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="6yhLfVMoZxNH" type="r5AHD7hgR04e" value="" name="username"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="ZHpVKMcCsX5u" type="r5AHD7hgR04e" value="" name="password"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="g6B5g7Cn5r6i" type="r5AHD7hgR04e" value="" name="host"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="KQVrLs8u7xNR" type="r5AHD7hgR04e" value="" name="port"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="LPCPGH5YhaQ1" name="upload">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="lLOzuIh8Da9K" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="QWvYSHxkEZuj" type="r5AHD7hgR04e" value="" name="self"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="Gvt198SSXdpl" type="r5AHD7hgR04e" value="" name="local"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="utJZThasEUQg" type="r5AHD7hgR04e" value="" name="remote"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="galDDYw5RDev" name="download">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="PKPuRnJqroPU" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="vFl7h9lSU9PP" type="r5AHD7hgR04e" value="" name="self"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="P4XbcftIDeTO" type="r5AHD7hgR04e" value="" name="remote"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="DNTcb7XUKGZz" type="r5AHD7hgR04e" value="" name="local"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="RJkcxC08ZRlA" comment="        Close the connection if it's active&#xa;" name="close">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="15lrsAJJR3uP" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="XGcpXBpwVEou" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="DsVnKGvpVYe0" comment=" sys.stdout.write(&quot;\r&quot; + &quot;Downloading... %3f%%&quot; % percent) sys.stdout.flush() with-statement support" name="_printTotals">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="e9BSvd7sP5FA" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="hRwBej5dooUg" type="r5AHD7hgR04e" value="" name="self"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="xlyOnsl0kHl2" type="r5AHD7hgR04e" value="" name="transferred"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="Vhp0DU0stv3X" type="r5AHD7hgR04e" value="" name="toBeTransferred"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="v0AdHwglbVlm" name="__enter__">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="7mbWrqekqoO6" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="xkerdgMFpVfk" type="r5AHD7hgR04e" value="" name="self"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="i4rHXa1TIeIv" name="__exit__">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="Mwwvw31VAYMx" type="r5AHD7hgR04e"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="Ke878orFaQjQ" type="r5AHD7hgR04e" value="" name="self"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="GNA5BYBsa076" type="r5AHD7hgR04e" value="" name="type"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="a9Zrnpk7TtEb" type="r5AHD7hgR04e" value="" name="value"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="h3oHSXfiuqn4" type="r5AHD7hgR04e" value="" name="tb"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+       </UML:Classifier.feature>
+      </UML:Class>
+      <UML:Generalization discriminator="" visibility="public" isSpecification="false" namespace="Logical View" child="dIXP1o2TMT0P" xmi.id="tjhGnUHcRg3M" parent="NZ1werZ2VHYR" name=""/>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="wn7rAWcXhyIS" name="list of int"/>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="gn2mcd7hTTfo" name="SimDB"/>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="AbpmtSMKT5yK" name="list"/>
+     </UML:Namespace.ownedElement>
+     <XMI.extension xmi.extender="umbrello">
+      <diagrams>
+       <diagram showopsig="1" linecolor="#ff0000" snapx="25" showattribassocs="1" snapy="25" linewidth="0" showattsig="1" textcolor="#000000" isopen="1" showpackage="1" showpubliconly="0" showstereotype="1" name="class diagram" font="Ubuntu,10,-1,5,50,0,0,0,0,0" canvasheight="1430.30615234375" canvaswidth="1244.2041015625" localid="-1" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#d3d3d3" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffffff" zoom="72" xmi.id="lR3QAkNNtQ2E" documentation="" showscope="1" snapgrid="0" showatts="1" type="1">
+        <widgets>
+         <classwidget linecolor="#000000" usesdiagramfillcolor="0" linewidth="0" showoperations="1" textcolor="#000000" usesdiagramusefillcolor="0" showpubliconly="1" showpackage="1" x="-969" showattsigs="601" showstereotype="1" y="-1215" showattributes="1" font="Ubuntu,10,-1,5,75,0,0,0,0,0" localid="2ozEOeGCwikZ" width="71" isinstance="0" usefillcolor="1" fillcolor="#ffffff" xmi.id="7x3Gm1vnf72d" showscope="1" height="29" showopsigs="601"/>
+         <classwidget linecolor="#000000" usesdiagramfillcolor="0" linewidth="0" showoperations="1" textcolor="#000000" usesdiagramusefillcolor="0" showpubliconly="1" showpackage="1" x="-1549" showattsigs="601" showstereotype="1" y="-1047" showattributes="1" font="Ubuntu,10,-1,5,75,0,0,0,0,0" localid="Aik6cf1geWqC" width="309" isinstance="0" usefillcolor="1" fillcolor="#ffffff" xmi.id="3gfZb5saoCTz" showscope="1" height="420" showopsigs="601"/>
+         <classwidget linecolor="#000000" usesdiagramfillcolor="0" linewidth="0" showoperations="1" textcolor="#000000" usesdiagramusefillcolor="0" showpubliconly="1" showpackage="1" x="-1159.183715820312" showattsigs="601" showstereotype="1" y="-881.6326293945312" showattributes="1" font="Ubuntu,10,-1,5,75,0,0,0,0,0" localid="rrBbje1ygWvu" width="352" isinstance="0" usefillcolor="1" fillcolor="#ffffff" xmi.id="KcrHxlFjc9pq" showscope="1" height="225" showopsigs="601"/>
+         <classwidget linecolor="#000000" usesdiagramfillcolor="0" linewidth="0" showoperations="1" textcolor="#000000" usesdiagramusefillcolor="0" showpubliconly="1" showpackage="1" x="-1167.346923828125" showattsigs="601" showstereotype="1" y="-534.69384765625" showattributes="1" font="Ubuntu,10,-1,5,75,0,0,0,0,0" localid="FTXX24NZ3dJ2" width="362" isinstance="0" usefillcolor="1" fillcolor="#ffffff" xmi.id="nCLFWLfvx1Hj" showscope="1" height="750" showopsigs="601"/>
+         <classwidget linecolor="#000000" usesdiagramfillcolor="0" linewidth="0" showoperations="1" textcolor="#000000" usesdiagramusefillcolor="0" showpubliconly="1" showpackage="1" x="-689.7958984375" showattsigs="601" showstereotype="1" y="-983.6734619140625" showattributes="1" font="Ubuntu,10,-1,5,75,0,0,0,0,0" localid="EUSiGaVanzMr" width="320" isinstance="0" usefillcolor="1" fillcolor="#ffffff" xmi.id="J12i9EhqUK8Q" showscope="1" height="915" showopsigs="601"/>
+         <classwidget linecolor="none" usesdiagramfillcolor="0" linewidth="0" showoperations="1" textcolor="#000000" usesdiagramusefillcolor="0" showpubliconly="0" showpackage="1" x="-1543.047607421875" showattsigs="601" showstereotype="1" y="-478.6666564941406" showattributes="1" font="Ubuntu,10,-1,5,75,0,0,0,0,0" localid="D9rmieasu3CE" width="308" isinstance="0" usefillcolor="1" fillcolor="#ffffff" xmi.id="M2DHBv8kyyMo" showscope="1" height="210" showopsigs="601"/>
+        </widgets>
+        <messages/>
+        <associations>
+         <assocwidget indexa="1" indexb="1" usesdiagramusefillcolor="1" widgetaid="3gfZb5saoCTz" usesdiagramfillcolor="0" fillcolor="#ffff00" linecolor="#000000" seqnum="" totalcounta="2" xmi.id="kwbcGkM4wkbZ" widgetbid="7x3Gm1vnf72d" totalcountb="2" type="500" textcolor="none" usefillcolor="1" linewidth="none" font="Ubuntu,10,-1,5,50,0,0,0,0,0">
+          <linepath layout="Polyline">
+           <startpoint startx="-1240" starty="-1047"/>
+           <endpoint endx="-969" endy="-1186"/>
+          </linepath>
+         </assocwidget>
+         <assocwidget indexa="1" indexb="1" usesdiagramusefillcolor="0" widgetaid="KcrHxlFjc9pq" usesdiagramfillcolor="0" fillcolor="#ffff00" linecolor="#000000" seqnum="" totalcounta="2" xmi.id="tWZLFLjnnCh8" widgetbid="7x3Gm1vnf72d" totalcountb="2" type="500" textcolor="none" usefillcolor="1" linewidth="none" font="Ubuntu,10,-1,5,50,0,0,0,0,0">
+          <linepath layout="Polyline">
+           <startpoint startx="-969" starty="-881.6326293945312"/>
+           <endpoint endx="-969" endy="-1186"/>
+          </linepath>
+         </assocwidget>
+         <assocwidget linecolor="#000000" indexa="1" usesdiagramfillcolor="0" widgetbid="3gfZb5saoCTz" indexb="1" linewidth="none" seqnum="" textcolor="none" usesdiagramusefillcolor="0" totalcounta="2" totalcountb="2" widgetaid="KcrHxlFjc9pq" font="Ubuntu,10,-1,5,50,0,0,0,0,0" visibilityA="0" visibilityB="0" usefillcolor="1" fillcolor="#ffff00" changeabilityA="900" xmi.id="O1t2yCE86yRT" changeabilityB="900" type="510">
+          <linepath layout="Polyline">
+           <startpoint startx="-1159.183715820312" starty="-881.6326293945312"/>
+           <endpoint endx="-1240" endy="-881.6326293945312"/>
+          </linepath>
+          <floatingtext linecolor="#000000" usesdiagramfillcolor="0" linewidth="none" textcolor="none" usesdiagramusefillcolor="1" x="-1238" showstereotype="1" y="-881.7142944335938" text="aramis_info" font="Ubuntu,10,-1,5,50,0,0,0,0,0" localid="a0mRpv0ZYzXE" pretext="+" role="710" width="83" isinstance="0" posttext="" usefillcolor="1" fillcolor="#ffffff" xmi.id="WQ8EKwKgvCjt" height="19"/>
+         </assocwidget>
+         <assocwidget indexa="1" indexb="1" usesdiagramusefillcolor="0" widgetaid="nCLFWLfvx1Hj" usesdiagramfillcolor="0" fillcolor="#ffff00" linecolor="#000000" seqnum="" totalcounta="2" xmi.id="LDOhthiYFy7f" widgetbid="KcrHxlFjc9pq" totalcountb="2" type="500" textcolor="none" usefillcolor="1" linewidth="none" font="Ubuntu,10,-1,5,50,0,0,0,0,0">
+          <linepath layout="Polyline">
+           <startpoint startx="-967.346923828125" starty="-534.69384765625"/>
+           <endpoint endx="-967.346923828125" endy="-656.6326293945312"/>
+          </linepath>
+         </assocwidget>
+         <assocwidget linecolor="#000000" indexa="1" usesdiagramfillcolor="0" widgetbid="3gfZb5saoCTz" indexb="1" linewidth="none" seqnum="" textcolor="none" usesdiagramusefillcolor="0" totalcounta="2" totalcountb="2" widgetaid="nCLFWLfvx1Hj" font="Ubuntu,10,-1,5,50,0,0,0,0,0" visibilityA="0" visibilityB="0" usefillcolor="1" fillcolor="#ffff00" changeabilityA="900" xmi.id="OjT1PSDb51gX" changeabilityB="900" type="510">
+          <linepath layout="Polyline">
+           <startpoint startx="-1167.346923828125" starty="-534.69384765625"/>
+           <endpoint endx="-1240" endy="-627"/>
+          </linepath>
+          <floatingtext linecolor="#000000" usesdiagramfillcolor="0" linewidth="none" textcolor="none" usesdiagramusefillcolor="1" x="-1238" showstereotype="1" y="-625.2857055664062" text="step_list" font="Ubuntu,10,-1,5,50,0,0,0,0,0" localid="kv0FS2JoaKPt" pretext="+" role="710" width="68" isinstance="0" posttext="" usefillcolor="1" fillcolor="#ffffff" xmi.id="KVsV4nJTUnSr" height="19"/>
+         </assocwidget>
+         <assocwidget indexa="1" indexb="1" usesdiagramusefillcolor="0" widgetaid="J12i9EhqUK8Q" usesdiagramfillcolor="0" fillcolor="#ffff00" linecolor="#000000" seqnum="" totalcounta="2" xmi.id="vjeGH19A2KJR" widgetbid="7x3Gm1vnf72d" totalcountb="2" type="500" textcolor="none" usefillcolor="1" linewidth="none" font="Ubuntu,10,-1,5,50,0,0,0,0,0">
+          <linepath layout="Polyline">
+           <startpoint startx="-689.7958984375" starty="-983.6734619140625"/>
+           <endpoint endx="-898" endy="-1186"/>
+          </linepath>
+         </assocwidget>
+         <assocwidget linecolor="#000000" indexa="1" usesdiagramfillcolor="0" widgetbid="3gfZb5saoCTz" indexb="1" linewidth="none" seqnum="" textcolor="none" usesdiagramusefillcolor="0" totalcounta="2" totalcountb="2" widgetaid="J12i9EhqUK8Q" font="Ubuntu,10,-1,5,50,0,0,0,0,0" visibilityA="0" visibilityB="0" usefillcolor="1" fillcolor="#ffff00" changeabilityA="900" xmi.id="kzVvgXksPisb" changeabilityB="900" type="510">
+          <linepath layout="Polyline">
+           <startpoint startx="-689.7958984375" starty="-979.5918579101562"/>
+           <endpoint endx="-1240" endy="-979.5918579101562"/>
+          </linepath>
+          <floatingtext linecolor="#000000" usesdiagramfillcolor="0" linewidth="none" textcolor="none" usesdiagramusefillcolor="1" x="-1238" showstereotype="1" y="-977.9183959960938" text="aramis_info" font="Ubuntu,10,-1,5,50,0,0,0,0,0" localid="DKJTvo1gmMYV" pretext="+" role="710" width="83" isinstance="0" posttext="" usefillcolor="1" fillcolor="#ffffff" xmi.id="x8rL4XqoWJkA" height="19"/>
+         </assocwidget>
+         <assocwidget linecolor="#000000" indexa="1" usesdiagramfillcolor="0" widgetbid="nCLFWLfvx1Hj" indexb="1" linewidth="none" seqnum="" textcolor="none" usesdiagramusefillcolor="0" totalcounta="2" totalcountb="2" widgetaid="J12i9EhqUK8Q" font="Ubuntu,10,-1,5,50,0,0,0,0,0" visibilityA="0" visibilityB="0" usefillcolor="1" fillcolor="#ffff00" changeabilityA="900" xmi.id="FKxY28NSBYb4" changeabilityB="900" type="510">
+          <linepath layout="Polyline">
+           <startpoint startx="-689.7958984375" starty="-426.5306091308594"/>
+           <endpoint endx="-805.346923828125" endy="-426.5306091308594"/>
+          </linepath>
+          <floatingtext linecolor="#000000" usesdiagramfillcolor="0" linewidth="none" textcolor="none" usesdiagramusefillcolor="1" x="-803.1836547851562" showstereotype="1" y="-428.2857055664062" text="aramis_data" font="Ubuntu,10,-1,5,50,0,0,0,0,0" localid="LwIPjRFVFqda" pretext="+" role="710" width="88" isinstance="0" posttext="" usefillcolor="1" fillcolor="#ffffff" xmi.id="wg2r4YIJrGqt" height="19"/>
+         </assocwidget>
+         <assocwidget indexa="1" indexb="1" usesdiagramusefillcolor="0" widgetaid="M2DHBv8kyyMo" usesdiagramfillcolor="0" fillcolor="#ffff00" linecolor="none" seqnum="" totalcounta="2" xmi.id="4HPuuP7abTac" widgetbid="7x3Gm1vnf72d" totalcountb="2" type="500" textcolor="none" usefillcolor="1" linewidth="none" font="Ubuntu,10,-1,5,50,0,0,0,0,0">
+          <linepath layout="Polyline">
+           <startpoint startx="-1235.047607421875" starty="-478.6666564941406"/>
+           <endpoint endx="-969" endy="-1186"/>
+          </linepath>
+         </assocwidget>
+         <assocwidget linecolor="none" indexa="1" usesdiagramfillcolor="0" widgetbid="3gfZb5saoCTz" indexb="1" linewidth="none" seqnum="" textcolor="none" usesdiagramusefillcolor="0" totalcounta="2" totalcountb="2" widgetaid="M2DHBv8kyyMo" font="Ubuntu,10,-1,5,50,0,0,0,0,0" visibilityA="0" visibilityB="0" usefillcolor="1" fillcolor="#ffff00" changeabilityA="900" xmi.id="P230Xgo1sfDk" changeabilityB="900" type="510">
+          <linepath layout="Polyline">
+           <startpoint startx="-1533.523803710938" starty="-478.6666564941406"/>
+           <endpoint endx="-1533.523803710938" endy="-627"/>
+          </linepath>
+          <floatingtext linecolor="none" usesdiagramfillcolor="1" linewidth="none" textcolor="none" usesdiagramusefillcolor="1" x="-1614" showstereotype="1" y="-633" text="aramis_info" font="Ubuntu,10,-1,5,50,0,0,0,0,0" localid="58Zb3Sxh6pbL" pretext="+" role="710" width="83" isinstance="0" posttext="" usefillcolor="1" fillcolor="none" xmi.id="7qMzNVNmXOk2" height="19"/>
+         </assocwidget>
+        </associations>
+       </diagram>
+      </diagrams>
+     </XMI.extension>
+    </UML:Model>
+    <UML:Model stereotype="folder" visibility="public" isSpecification="false" namespace="m1" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Use Case View" name="Use Case View">
+     <UML:Namespace.ownedElement/>
+    </UML:Model>
+    <UML:Model stereotype="folder" visibility="public" isSpecification="false" namespace="m1" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Component View" name="Component View">
+     <UML:Namespace.ownedElement/>
+    </UML:Model>
+    <UML:Model stereotype="folder" visibility="public" isSpecification="false" namespace="m1" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Deployment View" name="Deployment View">
+     <UML:Namespace.ownedElement/>
+    </UML:Model>
+    <UML:Model stereotype="folder" visibility="public" isSpecification="false" namespace="m1" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Entity Relationship Model" name="Entity Relationship Model">
+     <UML:Namespace.ownedElement/>
+    </UML:Model>
+   </UML:Namespace.ownedElement>
+  </UML:Model>
+ </XMI.content>
+ <XMI.extensions xmi.extender="umbrello">
+  <docsettings viewid="lR3QAkNNtQ2E" uniqueid="hGAmrNMzQtag" documentation=""/>
+  <listview>
+   <listitem open="1" type="800" id="Views">
+    <listitem open="1" type="821" id="Component View"/>
+    <listitem open="1" type="827" id="Deployment View"/>
+    <listitem open="1" type="836" id="Entity Relationship Model"/>
+    <listitem open="1" type="801" id="Logical View">
+     <listitem open="0" type="813" id="KCvJzIqyDUnm">
+      <listitem open="0" type="815" id="dWQuu3R8dBq0"/>
+     </listitem>
+     <listitem open="0" type="813" id="J12i9EhqUK8Q">
+      <listitem open="0" type="815" id="yOPY8xgcu26v"/>
+      <listitem open="0" type="815" id="HKST46Q0pD3c"/>
+      <listitem open="0" type="815" id="MkbQc1buHTyR"/>
+      <listitem open="0" type="815" id="8YLP2Jo7JftO"/>
+      <listitem open="0" type="815" id="FEazx34E3uPB"/>
+      <listitem open="0" type="815" id="VhKnMEBbZ81Q"/>
+      <listitem open="0" type="815" id="CZE5ZJ0TKjjB"/>
+      <listitem open="0" type="815" id="CCOUv5f9yLvy"/>
+      <listitem open="0" type="815" id="m2SLATlNaka9"/>
+      <listitem open="0" type="815" id="rVUJnfHEEXSO"/>
+      <listitem open="0" type="815" id="W66Aqz2BUIBx"/>
+      <listitem open="0" type="815" id="Wevi9O6OmjU5"/>
+      <listitem open="0" type="815" id="8UWMBDyFkzX8"/>
+      <listitem open="0" type="815" id="C791LAcU76Wd"/>
+      <listitem open="0" type="815" id="SAlC9IIHtr5m"/>
+      <listitem open="0" type="815" id="gp2Ye5KAektr"/>
+      <listitem open="0" type="815" id="vT8gAoFno1E2"/>
+      <listitem open="0" type="815" id="Y3eeABHPnhhY"/>
+      <listitem open="0" type="815" id="pey25PzCFhgc"/>
+      <listitem open="0" type="815" id="KOb8QnAjFTRw"/>
+      <listitem open="0" type="814" id="FKxY28NSBYb4"/>
+      <listitem open="0" type="814" id="kzVvgXksPisb"/>
+      <listitem open="0" type="815" id="zQpzk6R1Cmgz"/>
+      <listitem open="0" type="814" id="opc8L65UxQWT"/>
+      <listitem open="0" type="814" id="yiMWASmKqh7g"/>
+      <listitem open="0" type="814" id="2vA9eH9mHCAF"/>
+      <listitem open="0" type="814" id="984RezWMzd6L"/>
+      <listitem open="0" type="814" id="rGyQhkKjdUqG"/>
+      <listitem open="0" type="814" id="jx2y8ABFHDgv"/>
+      <listitem open="0" type="814" id="eXgVlWO7hkeR"/>
+      <listitem open="0" type="814" id="yOp1ha7TdCON"/>
+      <listitem open="0" type="814" id="bKIX6pfYGJNh"/>
+      <listitem open="0" type="814" id="CDFAoKVgaR6F"/>
+      <listitem open="0" type="814" id="uUetvQv5F0vd"/>
+      <listitem open="0" type="814" id="GKICLc7G6j70"/>
+      <listitem open="0" type="814" id="i07kNGCdaSou"/>
+      <listitem open="0" type="814" id="UTgpSf2A4Jk6"/>
+      <listitem open="0" type="814" id="7IdwzkaPvmXA"/>
+      <listitem open="0" type="814" id="nwK84WXg1DBm"/>
+      <listitem open="0" type="814" id="bFNIZq1iM2P1"/>
+      <listitem open="0" type="814" id="fBTX3t7LW9rx"/>
+      <listitem open="0" type="814" id="s6R6CqYn5w4e"/>
+      <listitem open="0" type="814" id="k5M47j53iYod"/>
+      <listitem open="0" type="814" id="iXtPGVqvhKSi"/>
+      <listitem open="0" type="814" id="x1Tnx4eN9CrS"/>
+      <listitem open="0" type="814" id="Ar5qNtTyJRgu"/>
+      <listitem open="0" type="814" id="aS0kcqATucX4"/>
+      <listitem open="0" type="814" id="BY3hhveUpwat"/>
+      <listitem open="0" type="814" id="S7XUJiE1E8QU"/>
+      <listitem open="0" type="814" id="FqN9QsBqw1Lw"/>
+      <listitem open="0" type="814" id="S6rX0v9kyTm4"/>
+      <listitem open="0" type="814" id="SBD9HiwVMz1D"/>
+      <listitem open="0" type="814" id="iPHc3UK1BhYJ"/>
+      <listitem open="0" type="814" id="Jf3WTg7NK7EP"/>
+      <listitem open="0" type="814" id="A25N0z0pJXx5"/>
+      <listitem open="0" type="814" id="COxpsl5Zj6Vp"/>
+      <listitem open="0" type="814" id="m57xkfGpvtju"/>
+      <listitem open="0" type="814" id="Gg4VtjQ3wgDi"/>
+      <listitem open="0" type="814" id="rMZAoD211N9S"/>
+      <listitem open="0" type="814" id="ODMXjxZ2tsPa"/>
+     </listitem>
+     <listitem open="0" type="813" id="nCLFWLfvx1Hj">
+      <listitem open="0" type="815" id="ptNdKae3emiy"/>
+      <listitem open="0" type="815" id="Y1UswlBlpTF3"/>
+      <listitem open="0" type="815" id="39L3h96zMxJI"/>
+      <listitem open="0" type="815" id="aRbdgmYwPY6f"/>
+      <listitem open="0" type="815" id="lSH0OOeMzZo3"/>
+      <listitem open="0" type="815" id="Lq9GoNjbuVgn"/>
+      <listitem open="0" type="815" id="cUKY8HfwJ9MX"/>
+      <listitem open="0" type="815" id="7ZERgbw2pgBv"/>
+      <listitem open="0" type="815" id="er8SXHNq5GDv"/>
+      <listitem open="0" type="815" id="5mZhWFd7IMjx"/>
+      <listitem open="0" type="815" id="dsHvDyq79lVY"/>
+      <listitem open="0" type="815" id="ERj8gm9GY8g8"/>
+      <listitem open="0" type="815" id="hPyTobZ6vzET"/>
+      <listitem open="0" type="815" id="UZJO4zC3wH51"/>
+      <listitem open="0" type="815" id="RCWAZ6ZDjE4p"/>
+      <listitem open="0" type="815" id="ATqZ1uCXlNcP"/>
+      <listitem open="0" type="815" id="eYVMmXB1a1jN"/>
+      <listitem open="0" type="815" id="l8LJ75g0oOd5"/>
+      <listitem open="0" type="815" id="foHa70JaswxZ"/>
+      <listitem open="0" type="815" id="7X6HGbnwFe9g"/>
+      <listitem open="0" type="815" id="AMK0IFaXdbdJ"/>
+      <listitem open="0" type="815" id="CpDQRK4kvJjl"/>
+      <listitem open="0" type="815" id="zR7a2ksgygy7"/>
+      <listitem open="0" type="814" id="Sukb5sZ4ttkw"/>
+      <listitem open="0" type="814" id="Wn6gfruOgWSI"/>
+      <listitem open="0" type="814" id="uIeO34DGieYK"/>
+      <listitem open="0" type="814" id="xgp4noGi4s47"/>
+      <listitem open="0" type="814" id="iNhiBG80AMOK"/>
+      <listitem open="0" type="814" id="quEQCdHV99yB"/>
+      <listitem open="0" type="814" id="fFCinMgx27JS"/>
+      <listitem open="0" type="814" id="Hg1xKXVw9umE"/>
+      <listitem open="0" type="814" id="lpd5ddXVZzur"/>
+      <listitem open="0" type="814" id="WWHT7CxMszHA"/>
+      <listitem open="0" type="814" id="xINfwtzcGfKQ"/>
+      <listitem open="0" type="814" id="vQO3kmNiQBmE"/>
+      <listitem open="0" type="814" id="eAHgIZ6iRrJU"/>
+      <listitem open="0" type="814" id="OjT1PSDb51gX"/>
+      <listitem open="0" type="814" id="13Mf5MuwFYTe"/>
+      <listitem open="0" type="814" id="FcsTAJ7oYIWK"/>
+      <listitem open="0" type="814" id="DdQIe6pNzqaQ"/>
+      <listitem open="0" type="814" id="wrbnqrxMe22H"/>
+      <listitem open="0" type="814" id="7zlgyfVSAktH"/>
+      <listitem open="0" type="814" id="tvfXR7nY4YC0"/>
+      <listitem open="0" type="814" id="CfRMQKbKBA7z"/>
+      <listitem open="0" type="814" id="9RwXahjXhdWa"/>
+      <listitem open="0" type="814" id="x0u1ty8qGTVA"/>
+      <listitem open="0" type="814" id="ceOs5t3RMozR"/>
+      <listitem open="0" type="814" id="MUna75y2WM5G"/>
+      <listitem open="0" type="814" id="tyUPIXePwaxW"/>
+     </listitem>
+     <listitem open="0" type="813" id="3gfZb5saoCTz">
+      <listitem open="0" type="815" id="rUmbMRsBkrKL"/>
+      <listitem open="0" type="815" id="7I4cvPnfvhGG"/>
+      <listitem open="0" type="815" id="nHfwh9gPELcg"/>
+      <listitem open="0" type="815" id="ykPD4zr0v9kr"/>
+      <listitem open="0" type="815" id="WL7GDRZav7lu"/>
+      <listitem open="0" type="815" id="551TEmSgZFE8"/>
+      <listitem open="0" type="815" id="uZbpgMkzQAly"/>
+      <listitem open="0" type="815" id="Jp2s4Eyv8SUm"/>
+      <listitem open="0" type="815" id="zygvgFVDWfMB"/>
+      <listitem open="0" type="815" id="eXQZCenyqIzs"/>
+      <listitem open="0" type="815" id="ZzG4de5SkseJ"/>
+      <listitem open="0" type="815" id="je2Xu1PdUeO1"/>
+      <listitem open="0" type="814" id="qXbCcZBSrE0F"/>
+      <listitem open="0" type="814" id="PBARiE0ssH2o"/>
+      <listitem open="0" type="814" id="z5swn0VelM4j"/>
+      <listitem open="0" type="814" id="KqksVSG3XxEE"/>
+      <listitem open="0" type="814" id="yxNXBnezKDAu"/>
+      <listitem open="0" type="814" id="63M6UnGrwOJf"/>
+      <listitem open="0" type="814" id="7z0qK5XO6sUY"/>
+      <listitem open="0" type="814" id="cJXUaYGYb7UO"/>
+      <listitem open="0" type="814" id="fiQa6jDj0iBb"/>
+      <listitem open="0" type="814" id="OBNlkxsqluJT"/>
+      <listitem open="0" type="814" id="AIg5Z9eLbCsY"/>
+      <listitem open="0" type="814" id="CdGAwi56zj9Y"/>
+      <listitem open="0" type="814" id="iHTnCxky4Z6b"/>
+      <listitem open="0" type="814" id="blUaZwWPx7xW"/>
+      <listitem open="0" type="814" id="rltSxkyfzRRC"/>
+     </listitem>
+     <listitem open="0" type="813" id="oWY0tRoTIAHa">
+      <listitem open="0" type="815" id="NCWiByVC3d1M"/>
+      <listitem open="0" type="815" id="oqQcWgTtVJDo"/>
+      <listitem open="0" type="815" id="nObJHExtAmrH"/>
+      <listitem open="0" type="815" id="7ApOKLxW4I8Y"/>
+      <listitem open="0" type="815" id="ssuBJP4Z00I9"/>
+      <listitem open="0" type="815" id="pyRrGZOhp7es"/>
+      <listitem open="0" type="815" id="wIP42GLEJRVv"/>
+      <listitem open="0" type="815" id="WnpJuT9WfLUA"/>
+      <listitem open="0" type="815" id="p2rSLJayphHr"/>
+      <listitem open="0" type="815" id="N2DN0TVfgl0S"/>
+      <listitem open="0" type="815" id="k0wWswDoHCVa"/>
+      <listitem open="0" type="815" id="y3rRwqVVou1h"/>
+      <listitem open="0" type="815" id="ylbS3oGn2q9W"/>
+      <listitem open="0" type="815" id="5uCjdDCPVtz6"/>
+      <listitem open="0" type="815" id="m6ykxWE4Wtde"/>
+      <listitem open="0" type="815" id="Fc3Tzgnzp6cS"/>
+      <listitem open="0" type="815" id="nN7aRh2KyraV"/>
+      <listitem open="0" type="815" id="25c4ujaQuVJI"/>
+     </listitem>
+     <listitem open="0" type="813" id="KcrHxlFjc9pq">
+      <listitem open="0" type="815" id="LRggE3oZm24m"/>
+      <listitem open="0" type="815" id="qWzfRKKPUM2S"/>
+      <listitem open="0" type="815" id="XwpJyt4YVnMZ"/>
+      <listitem open="0" type="815" id="Z7a5swczyDMF"/>
+      <listitem open="0" type="815" id="btcX5wk2rwLf"/>
+      <listitem open="0" type="814" id="Gl1UiBVwhpod"/>
+      <listitem open="0" type="814" id="O1t2yCE86yRT"/>
+      <listitem open="0" type="815" id="Jg86spChLnN8"/>
+      <listitem open="0" type="814" id="Ov0UtRwRQgqF"/>
+      <listitem open="0" type="814" id="cqmAoHMIiSW0"/>
+      <listitem open="0" type="814" id="OpgJ1NBNGBrA"/>
+      <listitem open="0" type="814" id="upyA0nIbZsZz"/>
+      <listitem open="0" type="814" id="EWKuypuNcYeb"/>
+      <listitem open="0" type="814" id="alZySQE2EyC2"/>
+     </listitem>
+     <listitem open="1" type="813" id="M2DHBv8kyyMo">
+      <listitem open="0" type="815" id="NOqTQuqv5kT2"/>
+      <listitem open="0" type="815" id="U5HLd93w625P"/>
+      <listitem open="0" type="815" id="mcnL3LxusYrk"/>
+      <listitem open="0" type="814" id="dVRc3R3V5dCa"/>
+      <listitem open="0" type="814" id="SSgajXUszYFb"/>
+      <listitem open="0" type="814" id="P230Xgo1sfDk"/>
+      <listitem open="0" type="814" id="JjNOTRwgAHrt"/>
+      <listitem open="0" type="814" id="T1lgspeBW1Xz"/>
+      <listitem open="0" type="814" id="75ZdIAnrzZiP"/>
+      <listitem open="0" type="814" id="BU4NceLGcKca"/>
+      <listitem open="0" type="814" id="u3tz1BscgIDh"/>
+      <listitem open="0" type="814" id="4W1uBDeHLDqN"/>
+      <listitem open="0" type="814" id="hGAmrNMzQtag"/>
+     </listitem>
+     <listitem open="0" type="813" id="AiuDTMDnz7N5">
+      <listitem open="0" type="815" id="AQhxrnzl1KKc"/>
+      <listitem open="0" type="815" id="emcdnci13Coh"/>
+      <listitem open="0" type="815" id="EmOFyCwWnR74"/>
+      <listitem open="0" type="815" id="f9neT6EVxOaa"/>
+      <listitem open="0" type="815" id="3N20lcbfDSbC"/>
+      <listitem open="0" type="815" id="pa531eFpCD4v"/>
+      <listitem open="0" type="815" id="nKryXvrZoVOL"/>
+      <listitem open="0" type="815" id="o0xcVKxTEOvo"/>
+     </listitem>
+     <listitem open="0" type="813" id="BKgFxfbZHJD6">
+      <listitem open="0" type="815" id="t2irpgeYllHf"/>
+      <listitem open="0" type="815" id="mvpNFuGr0p0n"/>
+      <listitem open="0" type="815" id="1WfDP6aAdK5u"/>
+      <listitem open="0" type="815" id="xJ03WEvpCvSO"/>
+     </listitem>
+     <listitem open="0" type="807" id="lR3QAkNNtQ2E" label="class diagram"/>
+     <listitem open="0" type="830" id="Datatypes">
+      <listitem open="1" type="829" id="BxCKAm9TobCb"/>
+      <listitem open="1" type="829" id="Qumt2H4U1LKx"/>
+      <listitem open="1" type="829" id="wB1MLmjgf7ir"/>
+      <listitem open="1" type="829" id="chMIdXEprOZy"/>
+      <listitem open="1" type="829" id="EPt5MKx9DzOF"/>
+      <listitem open="1" type="829" id="KrM4qGFraYbJ"/>
+      <listitem open="1" type="829" id="SAWBSmHpws2u"/>
+      <listitem open="1" type="829" id="wvTE6fdzlzJg"/>
+      <listitem open="1" type="829" id="NZ1werZ2VHYR"/>
+      <listitem open="1" type="829" id="B1hGcJyyaZVo"/>
+      <listitem open="1" type="829" id="PZkMl4E792MM"/>
+      <listitem open="1" type="829" id="r5AHD7hgR04e"/>
+      <listitem open="1" type="829" id="peOgiYvvfcZ5"/>
+      <listitem open="1" type="829" id="UeUk4tJoE2qQ"/>
+      <listitem open="1" type="829" id="BEapJ4RlmVd3"/>
+      <listitem open="1" type="829" id="zSTKJQDmeJSH"/>
+     </listitem>
+     <listitem open="0" type="813" id="7x3Gm1vnf72d"/>
+     <listitem open="1" type="813" id="AbpmtSMKT5yK"/>
+     <listitem open="1" type="813" id="wn7rAWcXhyIS"/>
+     <listitem open="0" type="813" id="dIXP1o2TMT0P">
+      <listitem open="0" type="815" id="v0AdHwglbVlm"/>
+      <listitem open="0" type="815" id="i4rHXa1TIeIv"/>
+      <listitem open="0" type="815" id="95dakewYw4X9"/>
+      <listitem open="0" type="815" id="DsVnKGvpVYe0"/>
+      <listitem open="0" type="815" id="RJkcxC08ZRlA"/>
+      <listitem open="0" type="815" id="galDDYw5RDev"/>
+      <listitem open="0" type="815" id="LPCPGH5YhaQ1"/>
+     </listitem>
+     <listitem open="1" type="813" id="gn2mcd7hTTfo"/>
+    </listitem>
+    <listitem open="1" type="802" id="Use Case View"/>
+   </listitem>
+  </listview>
+  <codegeneration>
+   <codegenerator language="Python">
+    <sourcecode value="x_und=self.aramis_data.x_arr_undeformed&#xa;ux=self.aramis_data.ux_arr&#xa;x_def=x_und+ux&#xa;du_arr=np.zeros_like(x_und)&#xa;ir=self.integ_radius&#xa;du_arr[:,ir:-ir]=(ux[:,2*ir:]-ux[:,:-2*ir])/(x_und[:,2*ir:]-x_und[:,:-2*ir])&#xa;return du_arr&#xa;" id="dWQuu3R8dBq0"/>
+    <sourcecode value="if self.aramis_info.data_dir=='':&#xa;  print'Data directory in UI is not defined!'&#xa;&#xa;else:&#xa;  self.aramis_info_changed=True&#xa;&#xa;" id="zQpzk6R1Cmgz"/>
+    <sourcecode value="self.crack_detect_idx=int(np.argwhere(self.aramis_data.force==self.aramis_data.force.max())[0])&#xa;" id="HKST46Q0pD3c"/>
+    <sourcecode value="d_arr=get_d(self.aramis_data.ux_arr,self.integ_radius)&#xa;d_arr[d_arr&lt;0.0]=0.0&#xa;d_arr[d_arr&lt;self.d_ux_threshold]=0.0&#xa;return d_arr&#xa;" id="C791LAcU76Wd"/>
+    <sourcecode value="return get_d(self.d_ux_arr,self.integ_radius)&#xa;" id="Y3eeABHPnhhY"/>
+    <sourcecode value="return np.average(self.dd_ux_arr,axis=0)&#xa;" id="vT8gAoFno1E2"/>
+    <sourcecode value="return get_d(self.dd_ux_arr,self.integ_radius)&#xa;" id="KOb8QnAjFTRw"/>
+    <sourcecode value="return np.average(self.ddd_ux_arr,axis=0)&#xa;" id="pey25PzCFhgc"/>
+    <sourcecode value="d_u=self.d_ux_arr&#xa;d_avg=np.average(d_u,axis=0)&#xa;return d_avg&#xa;" id="8UWMBDyFkzX8"/>
+    <sourcecode value="d_arr=get_d(self.aramis_data.uy_arr,self.integ_radius)&#xa;d_arr[d_arr&lt;0.0]=0.0&#xa;d_arr[d_arr&lt;self.d_ux_threshold]=0.0&#xa;return d_arr&#xa;" id="SAlC9IIHtr5m"/>
+    <sourcecode value="d_arr=get_d(self.aramis_data.uz_arr,self.integ_radius)&#xa;d_arr[d_arr&lt;0.0]=0.0&#xa;d_arr[d_arr&lt;self.d_ux_threshold]=0.0&#xa;return d_arr&#xa;" id="gp2Ye5KAektr"/>
+    <sourcecode value="dd_ux_arr=self.dd_ux_arr&#xa;ddd_ux_arr=self.ddd_ux_arr&#xa;crack_filter=((dd_ux_arr[:,1:]*dd_ux_arr[:,:-1]&lt;self.dd_ux_threshold)*&#xa;((ddd_ux_arr[:,1:]+ddd_ux_arr[:,:-1])/2.0&lt;self.ddd_ux_threshold))print&quot;number of cracks determined by 'crack_filter': &quot;,np.sum(crack_filter,axis=1)&#xa;return crack_filter&#xa;" id="W66Aqz2BUIBx"/>
+    <sourcecode value="dd_ux_arr_avg=self.dd_ux_arr_avg&#xa;ddd_ux_arr_avg=self.ddd_ux_arr_avg&#xa;crack_filter_avg=((dd_ux_arr_avg[1:]*dd_ux_arr_avg[:-1]&lt;self.dd_ux_avg_threshold)*&#xa;((ddd_ux_arr_avg[1:]+ddd_ux_arr_avg[:-1])/2.0&lt;self.ddd_ux_avg_threshold))print&quot;number of cracks determined by 'crack_filter_avg': &quot;,np.sum(crack_filter_avg)&#xa;return crack_filter_avg&#xa;" id="rVUJnfHEEXSO"/>
+    <sourcecode value="n_cr_avg=np.sum(self.crack_filter_avg)&#xa;s_cr_avg=self.aramis_data.length_x_undeformed/n_cr_avg&#xa;print&quot;average crack spacing [mm]: %.1f&quot;%(s_cr_avg)&#xa;return s_cr_avg&#xa;" id="Wevi9O6OmjU5"/>
+    <sourcecode value="return self.d_ux_arr[np.where(self.crack_filter)]&#xa;" id="FEazx34E3uPB"/>
+    <sourcecode value="return self.crack_arr.mean()&#xa;" id="MkbQc1buHTyR"/>
+    <sourcecode value="return self.crack_arr.std()&#xa;" id="8YLP2Jo7JftO"/>
+    <sourcecode value="return self.d_ux_arr_avg[np.where(self.crack_filter_avg)]&#xa;" id="VhKnMEBbZ81Q"/>
+    <sourcecode value="cf_w=np.zeros_like(self.d_ux_arr)&#xa;cf_w[np.where(self.crack_filter)]=self.crack_arr&#xa;return cf_w&#xa;" id="m2SLATlNaka9"/>
+    <sourcecode value="self.number_of_cracks_t=np.append(self.number_of_cracks_t,&#xa;self.number_of_cracks_avg)" id="yOPY8xgcu26v"/>
+    <sourcecode value="self.aramis_data.evaluated_step_idx=self.crack_detect_idx&#xa;return self.crack_filter_avg&#xa;" id="CZE5ZJ0TKjjB"/>
+    <sourcecode value="self.aramis_data.evaluated_step_idx=self.crack_detect_idx&#xa;return self.crack_filter&#xa;" id="CCOUv5f9yLvy"/>
+    <sourcecode value="return'%s%d'%(self.aramis_info.displacements_basename,&#xa;self.aramis_info.step_list[self.evaluated_step_idx])" id="lSH0OOeMzZo3"/>
+    <sourcecode value="'''Load data for the first step from *.npy file. If file *.npy does ;not exist the data is load from*.txt and saved as*.npy.&#xa;(improve speed of loading)&#xa;''';if self.transform_data:&#xa;  return self._transform_coord(self.input_array_undeformed)&#xa;&#xa;else:&#xa;  return self.input_array_undeformed&#xa;&#xa;" id="39L3h96zMxJI"/>
+    <sourcecode value="if self.aramis_info.data_dir=='':&#xa;  return(0,0,0)&#xa;&#xa;else:&#xa;  return(3,self.n_y_undeformed,self.n_x_undeformed)&#xa;&#xa;" id="Y1UswlBlpTF3"/>
+    <sourcecode value="return np.isnan(self.input_array_undeformed)&#xa;" id="ptNdKae3emiy"/>
+    <sourcecode value="return self.input_array_undeformed.shape[2]&#xa;" id="5mZhWFd7IMjx"/>
+    <sourcecode value="return self.input_array_undeformed.shape[1]&#xa;" id="dsHvDyq79lVY"/>
+    <sourcecode value="return(np.arange(self.n_x_undeformed)[np.newaxis,:]*&#xa;np.ones(self.n_y_undeformed)[:,np.newaxis]).astype(int)" id="7X6HGbnwFe9g"/>
+    <sourcecode value="return(np.arange(self.n_y_undeformed)[np.newaxis,:]*&#xa;np.ones(self.n_x_undeformed)[:,np.newaxis]).T" id="CpDQRK4kvJjl"/>
+    <sourcecode value="return self.data_array_undeformed[0,:,:]&#xa;" id="foHa70JaswxZ"/>
+    <sourcecode value="return self.data_array_undeformed[1,:,:]&#xa;" id="AMK0IFaXdbdJ"/>
+    <sourcecode value="return self.data_array_undeformed[2,:,:]&#xa;" id="zR7a2ksgygy7"/>
+    <sourcecode value="return np.nanmax(self.x_arr_undeformed)-np.nanmin(self.x_arr_undeformed)&#xa;" id="cUKY8HfwJ9MX"/>
+    <sourcecode value="return self.y_arr_undeformed.max()-self.y_arr_undeformed.min()&#xa;" id="7ZERgbw2pgBv"/>
+    <sourcecode value="return self.z_arr_undeformed.max()-self.z_arr_undeformed.min()&#xa;" id="er8SXHNq5GDv"/>
+    <sourcecode value="if self.transform_data:&#xa;  return self.input_array&#xa;&#xa;else:&#xa;  return self.input_array&#xa;&#xa;" id="aRbdgmYwPY6f"/>
+    <sourcecode value="ux_arr=self.data_array[0,:,:]&#xa;ux_masked=np.ma.masked_array(ux_arr,mask=np.isnan(ux_arr))&#xa;ux_avg=np.ma.average(ux_masked,axis=0)&#xa;y_idx_zeros,x_idx_zeros=np.where(np.isnan(ux_arr))&#xa;ux_arr[y_idx_zeros,x_idx_zeros]=ux_avg[x_idx_zeros]&#xa;return ux_arr&#xa;" id="ATqZ1uCXlNcP"/>
+    <sourcecode value="ux_arr=self.ux_arr&#xa;ux_avg=np.average(ux_arr,axis=0)&#xa;return ux_avg&#xa;" id="RCWAZ6ZDjE4p"/>
+    <sourcecode value="return self.data_array[1,:,:]&#xa;" id="eYVMmXB1a1jN"/>
+    <sourcecode value="return self.data_array[2,:,:]&#xa;" id="l8LJ75g0oOd5"/>
+    <sourcecode value="return self.ad_channels_arr[:,0]&#xa;" id="hPyTobZ6vzET"/>
+    <sourcecode value="return self.ad_channels_arr[:,1]&#xa;" id="Lq9GoNjbuVgn"/>
+    <sourcecode value="return self.force/self.area&#xa;" id="UZJO4zC3wH51"/>
+    <sourcecode value="if hasattr(self.aramis_info,'number_of_steps'):&#xa;  return self.aramis_info.number_of_steps-1&#xa;&#xa;else:&#xa;  return 1&#xa;&#xa;" id="ERj8gm9GY8g8"/>
+    <sourcecode value="if self.aramis_info.data_dir=='':&#xa;  print'Data directory in UI is not defined!'&#xa;&#xa;else:&#xa;  self.aramis_info_changed=True&#xa;&#xa;" id="Jg86spChLnN8"/>
+    <sourcecode value="self.evaluated_step_idx=int(np.argwhere(self.force==self.force.max())[0])&#xa;" id="LRggE3oZm24m"/>
+    <sourcecode value="return'%s%d'%(self.aramis_info.displacements_basename,&#xa;self.aramis_info.step_list[self.evaluated_step_idx])" id="XwpJyt4YVnMZ"/>
+    <sourcecode value="'''Load data for the first step from *.npy file.;''';fname=self.aramis_info.undeformed_coords_filename&#xa;print';print'loading',fname,'...'&#xa;start_t=sysclock()&#xa;dir_npy=self.aramis_info.npy_dir&#xa;fname_npy=os.path.join(dir_npy,fname+'.npy')&#xa;if os.path.exists(fname_npy):&#xa;  data_arr=np.load(fname_npy)&#xa;&#xa;else:&#xa;  print'*.npy data does not exist!'&#xa;&#xa;print'loading time =',sysclock()-start_t&#xa;print'number of missing facets is',np.sum(np.isnan(data_arr).astype(int))&#xa;return data_arr&#xa;" id="Z7a5swczyDMF"/>
+    <sourcecode value="fname='%s%d'%(self.aramis_info.displacements_basename,&#xa;self.aramis_info.step_list[self.evaluated_step_idx])print'loading',fname,'...'&#xa;start_t=sysclock()&#xa;dir_npy=self.aramis_info.npy_dir&#xa;if os.path.exists(dir_npy)==False:&#xa;  os.mkdir(dir_npy)&#xa;&#xa;fname_npy=os.path.join(dir_npy,fname+'.npy')&#xa;data_arr=np.load(fname_npy)&#xa;print'loading time =',sysclock()-start_t&#xa;print'number of missing facets is',np.sum(np.isnan(data_arr).astype(int))&#xa;return data_arr&#xa;" id="btcX5wk2rwLf"/>
+    <sourcecode value="ad_channels_file=os.path.join(self.aramis_info.npy_dir,'ad_channels.npy')&#xa;if os.path.exists(ad_channels_file):&#xa;  return np.load(ad_channels_file)&#xa;&#xa;else:&#xa;  print'File %s does not exists!'%ad_channels_file&#xa;&#xa;" id="qWzfRKKPUM2S"/>
+    <sourcecode value="self.npy_dir=os.path.join(self.data_dir,'npy/')&#xa;" id="zygvgFVDWfMB"/>
+    <sourcecode value="'''Update values of file_list and step_list. Sorted by the step number.;''';try:&#xa;  if os.path.exists(self.npy_dir):&#xa;    file_list=[v for v in os.listdir(self.npy_dir)if os.path.splitext(v)[1]==&quot;.npy&quot;]&#xa;&#xa;  else:&#xa;    file_list=[v for v in os.listdir(self.data_dir)if os.path.splitext(v)[1]==&quot;.txt&quot;]&#xa;&#xa;  step_list=[]&#xa;  pat=r'displ.*-(?P&lt;step>\d+).*'&#xa;  for f in file_list:&#xa;    m=re.match(pat,f)&#xa;    if m:&#xa;      step_list.append(int(m.groupdict()['step']))&#xa;&#xa;&#xa;  step_list.sort()&#xa;  self.step_list=step_list&#xa;&#xa;except:&#xa;  self.step_list=[]&#xa;&#xa;" id="7I4cvPnfvhGG"/>
+    <sourcecode value="self.number_of_steps=len(self.step_list)&#xa;" id="eXQZCenyqIzs"/>
+    <sourcecode value="self.step_idx_list=np.arange(self.number_of_steps,dtype=int).tolist()&#xa;" id="je2Xu1PdUeO1"/>
+    <sourcecode value="self.specimen_name=os.path.split(self.data_dir)[-1]&#xa;" id="ZzG4de5SkseJ"/>
+    <sourcecode value="pat=r'.*Xf(?P&lt;fsz_x>\d+)s(?P&lt;fst_x>\d+)-Yf(?P&lt;fsz_y>\d+)s(?P&lt;fst_y>\d+).*'&#xa;m=re.match(pat,self.specimen_name)&#xa;self.facet_params_dict=m.groupdict()&#xa;" id="rUmbMRsBkrKL"/>
+    <sourcecode value="self.n_px_facet_size_x=int(self.facet_params_dict['fsz_x'])&#xa;" id="WL7GDRZav7lu"/>
+    <sourcecode value="self.n_px_facet_step_x=int(self.facet_params_dict['fst_x'])&#xa;" id="uZbpgMkzQAly"/>
+    <sourcecode value="self.n_px_facet_size_y=int(self.facet_params_dict['fsz_y'])&#xa;" id="551TEmSgZFE8"/>
+    <sourcecode value="self.n_px_facet_step_y=int(self.facet_params_dict['fst_y'])&#xa;" id="Jp2s4Eyv8SUm"/>
+    <sourcecode value="self.first_step=np.min(self.step_list)&#xa;" id="nHfwh9gPELcg"/>
+    <sourcecode value="self.last_step=np.max(self.step_list)&#xa;" id="ykPD4zr0v9kr"/>
+    <sourcecode value="self.relative_path=self.extended_data_dir.replace(self.simdb_dir,'')[1:]&#xa;" id="mcnL3LxusYrk"/>
+    <sourcecode value="self.extended_data_ini=os.path.join(self.extended_data_dir,'extended_data.cfg')&#xa;" id="U5HLd93w625P"/>
+    <sourcecode value="if os.path.exists(self.extended_data_ini):&#xa;  config=ConfigParser.ConfigParser()&#xa;  config.read(self.extended_data_ini)&#xa;  lst=['']&#xa;  lst+=config.get('aramis_data','aramis_files').split(',\n')&#xa;  self.aramis_files=lst&#xa;&#xa;else:&#xa;  self.aramis_files=['extended file does not exist']&#xa;&#xa;" id="NOqTQuqv5kT2"/>
+    <sourcecode value="return AramisData(aramis_info=self.aramis_info)&#xa;" id="emcdnci13Coh"/>
+    <sourcecode value="return AramisRemote(aramis_info=self.aramis_info)&#xa;" id="EmOFyCwWnR74"/>
+    <sourcecode value="return AramisCDT(aramis_info=self.aramis_info,&#xa;aramis_data=self.aramis_data)" id="AQhxrnzl1KKc"/>
+    <sourcecode value="return AramisPlot2D(aramis_info=self.aramis_info,&#xa;aramis_data=self.aramis_data,aramis_cdt=self.aramis_cdt,figure=self.figure)" id="f9neT6EVxOaa"/>
+    <sourcecode value="return AramisView3D(aramis_data=self.aramis_data,&#xa;aramis_cdt=self.aramis_cdt,scene=self.scene)" id="3N20lcbfDSbC"/>
+    <sourcecode value="figure=Figure(tight_layout=True)&#xa;return figure&#xa;" id="pa531eFpCD4v"/>
+    <sourcecode value="self.aramis_info.data_dir=self.data_dir&#xa;" id="nKryXvrZoVOL"/>
+    <sourcecode value="self.data_dir=os.path.join(self.aramis_remote.local_dir,&#xa;self.aramis_remote.aramis_file_selected)" id="o0xcVKxTEOvo"/>
+    <sourcecode value="return os.getcwd()&#xa;" id="Fc3Tzgnzp6cS"/>
+    <sourcecode value="return tempfile.mkdtemp()&#xa;" id="nN7aRh2KyraV"/>
+    <sourcecode value="aramis_data=self.aramis_data&#xa;aramis_cdt=self.aramis_cdt&#xa;fig=self.figure&#xa;fig.clf()&#xa;ax=fig.add_subplot(2,2,1)&#xa;ax.plot(aramis_data.x_idx_undeformed.T,aramis_cdt.d_ux_arr.T,color='black')&#xa;ax.plot(aramis_data.x_idx_undeformed[0,:],aramis_cdt.d_ux_arr_avg,color='red',linewidth=2)&#xa;y_max_lim=ax.get_ylim()[-1]&#xa;ax.vlines(aramis_data.x_idx_undeformed[0,:-1],[0],aramis_cdt.crack_filter_avg*y_max_lim,&#xa;color='magenta',linewidth=1,zorder=10)ax2=fig.add_subplot(2,2,2)&#xa;ax2.plot(aramis_data.x_idx_undeformed.T,aramis_data.ux_arr.T,color='green')&#xa;ax2.plot(aramis_data.x_idx_undeformed[0,:],aramis_data.ux_arr_avg,color='red',linewidth=2)&#xa;y_max_lim=ax2.get_ylim()[-1]&#xa;ax2.vlines(aramis_data.x_idx_undeformed[0,:-1],[0],aramis_cdt.crack_filter_avg*y_max_lim,&#xa;color='magenta',linewidth=1,zorder=10)ax3=fig.add_subplot(2,2,3)&#xa;ax3.plot(aramis_data.x_idx_undeformed[0,:],aramis_cdt.dd_ux_arr_avg,color='black')&#xa;ax3.plot(aramis_data.x_idx_undeformed[0,:],aramis_cdt.ddd_ux_arr_avg,color='blue')&#xa;y_max_lim=ax3.get_ylim()[-1]&#xa;ax3.vlines(aramis_data.x_idx_undeformed[0,:-1],[0],aramis_cdt.crack_filter_avg*y_max_lim,&#xa;color='magenta',linewidth=1,zorder=10)ax=fig.add_subplot(2,2,4)&#xa;from aramis_cdt import get_d&#xa;ir=aramis_cdt.integ_radius&#xa;xx=get_d(aramis_data.x_arr_undeformed+aramis_data.ux_arr,ir)&#xa;print xx[:,ir]&#xa;print xx[:,ir][:,None]*np.ones(xx.shape[1])[None,:]&#xa;ax.plot(aramis_data.x_arr_undeformed.T[ir:-ir,:],&#xa;(xx-xx[:,ir][:,None]*np.ones(xx.shape[1])[None,:]).T[ir:-ir,:]*1000,color='black')plt.suptitle(self.aramis_info.specimen_name+' - %d'%aramis_data.evaluated_step_idx)&#xa;aramis_cdt.crack_spacing_avg&#xa;if self.save_plot:&#xa;  fig.savefig(os.path.join(self.save_dir,'plot2d.png'))&#xa;&#xa;if self.show_plot:&#xa;  fig.canvas.draw()&#xa;&#xa;" id="m6ykxWE4Wtde"/>
+    <sourcecode value="aramis_cdt=self.aramis_cdt&#xa;fig=self.figure&#xa;fig.clf()&#xa;ax=fig.add_subplot(111)&#xa;ax.hist(aramis_cdt.crack_arr,bins=40,normed=True)&#xa;ax.set_xlabel('crack_width [mm]')&#xa;ax.set_ylabel('frequency [-]')&#xa;ax2=ax.twinx()&#xa;ax2.hist(aramis_cdt.crack_arr,normed=True,&#xa;histtype='step',color='black',cumulative=True,bins=40,linewidth=2)ax2.set_ylabel('probability [-]')&#xa;ax.set_title(aramis_cdt.aramis_info.specimen_name+' - %d'%self.aramis_data.evaluated_step_idx)&#xa;mu=aramis_cdt.crack_arr.mean()&#xa;sigma=aramis_cdt.crack_arr.std()&#xa;skew=stats.skew(aramis_cdt.crack_arr)&#xa;textstr='$\mu=%.3g$\n$\sigma=%.3g$\n$\gamma_1=%.3g$'%(mu,sigma,skew)&#xa;props=dict(boxstyle='round',facecolor='wheat',alpha=1)&#xa;ax.text(0.95,0.95,textstr,transform=ax.transAxes,fontsize=14,&#xa;verticalalignment='top',horizontalalignment='right',bbox=props)if self.save_plot:&#xa;  fig.savefig(os.path.join(self.save_dir,'crack_hist.png'))&#xa;&#xa;if self.show_plot:&#xa;  fig.canvas.draw()&#xa;&#xa;" id="nObJHExtAmrH"/>
+    <sourcecode value="aramis_cdt=self.aramis_cdt&#xa;fig=self.figure&#xa;fig.clf()&#xa;ax=fig.add_subplot(111)&#xa;ax.plot(aramis_cdt.control_strain_t,aramis_cdt.number_of_cracks_t)&#xa;ax.set_xlabel('control strain')&#xa;ax.set_ylabel('number of cracks')&#xa;if self.show_plot:&#xa;  fig.canvas.draw()&#xa;&#xa;" id="wIP42GLEJRVv"/>
+    <sourcecode value="aramis_cdt=self.aramis_cdt&#xa;fig=self.figure&#xa;fig.clf()&#xa;ax=fig.add_subplot(111)&#xa;ax.set_title('')&#xa;ax.plot(self.aramis_info.step_idx_list,self.aramis_data.force)&#xa;ax.set_xlabel('step')&#xa;ax.set_ylabel('force_t [kN]')&#xa;if self.save_plot:&#xa;  fig.savefig(os.path.join(self.save_dir,'force_time.png'))&#xa;&#xa;if self.show_plot:&#xa;  fig.canvas.draw()&#xa;&#xa;" id="ssuBJP4Z00I9"/>
+    <sourcecode value="aramis_cdt=self.aramis_cdt&#xa;fig=self.figure&#xa;fig.clf()&#xa;ax=fig.add_subplot(111)&#xa;ax.set_title('')&#xa;ax.plot(aramis_cdt.control_strain_t,self.aramis_data.stress)&#xa;ax.set_xlabel('control strain [-]')&#xa;ax.set_ylabel('nominal stress [MPa]')&#xa;if self.save_plot:&#xa;  fig.savefig(os.path.join(self.save_dir,'stress_strain.png'))&#xa;&#xa;if self.show_plot:&#xa;  fig.canvas.draw()&#xa;&#xa;" id="N2DN0TVfgl0S"/>
+    <sourcecode value="aramis_cdt=self.aramis_cdt&#xa;fig=self.figure&#xa;fig.clf()&#xa;ax=fig.add_subplot(111)&#xa;ax.set_title('')&#xa;plt.plot(aramis_cdt.control_strain_t,&#xa;aramis_cdt.crack_width_avg_t.T)ax.set_xlabel('control strain [-]')&#xa;ax.set_ylabel('crack width [mm]')&#xa;if self.save_plot:&#xa;  fig.savefig(os.path.join(self.save_dir,'w_strain.png'))&#xa;&#xa;if self.show_plot:&#xa;  fig.canvas.draw()&#xa;&#xa;" id="5uCjdDCPVtz6"/>
+    <sourcecode value="aramis_cdt=self.aramis_cdt&#xa;fig=self.figure&#xa;fig.clf()&#xa;ax=fig.add_subplot(111)&#xa;ax.set_title('')&#xa;ax.plot(aramis_cdt.control_strain_t,&#xa;aramis_cdt.crack_width_t.T)ax.set_xlabel('control strain [-]')&#xa;ax.set_ylabel('subcrack width [mm]')&#xa;if self.save_plot:&#xa;  fig.savefig(os.path.join(self.save_dir,'subw_strain.png'))&#xa;&#xa;if self.show_plot:&#xa;  fig.canvas.draw()&#xa;&#xa;" id="y3rRwqVVou1h"/>
+    <sourcecode value="aramis_cdt=self.aramis_cdt&#xa;fig=self.figure&#xa;fig.clf()&#xa;ax=fig.add_subplot(111)&#xa;ax.set_title('')&#xa;ax.plot(aramis_cdt.control_strain_t,self.aramis_data.stress)&#xa;ax.plot(aramis_cdt.control_strain_t[aramis_cdt.init_step_avg_lst],&#xa;self.aramis_data.stress[aramis_cdt.init_step_avg_lst],'ro',linewidth=4)ax.plot(aramis_cdt.control_strain_t[aramis_cdt.init_step_lst],&#xa;self.aramis_data.stress[aramis_cdt.init_step_lst],'kx',linewidth=4)ax.set_xlabel('control strain [-]')&#xa;ax.set_ylabel('nominal stress [MPa]')&#xa;if self.save_plot:&#xa;  fig.savefig(os.path.join(self.save_dir,'stress_strain_init.png'))&#xa;&#xa;if self.show_plot:&#xa;  fig.canvas.draw()&#xa;&#xa;" id="k0wWswDoHCVa"/>
+    <sourcecode value="aramis_cdt=self.aramis_cdt&#xa;fig=self.figure&#xa;fig.clf()&#xa;ax=fig.add_subplot(111)&#xa;ax.set_title('')&#xa;ax.vlines(np.arange(len(aramis_cdt.init_step_avg_lst))+0.5,[0],aramis_cdt.init_step_avg_lst)&#xa;ax.set_xlabel('crack number')&#xa;ax.set_ylabel('initiation step')&#xa;if self.save_plot:&#xa;  fig.savefig(os.path.join(self.save_dir,'crack_init.png'))&#xa;&#xa;if self.show_plot:&#xa;  fig.canvas.draw()&#xa;&#xa;" id="7ApOKLxW4I8Y"/>
+    <sourcecode value="fig=self.figure&#xa;fig.clf()&#xa;ax=fig.add_subplot(111)&#xa;ax.set_title('')&#xa;ax.plot(self.aramis_data.step_time,self.aramis_data.force)&#xa;ax.set_xlabel('Time')&#xa;ax.set_ylabel('Force')&#xa;if self.show_plot:&#xa;  fig.canvas.draw()&#xa;&#xa;" id="pyRrGZOhp7es"/>
+    <sourcecode value="aramis_cdt=self.aramis_cdt&#xa;fig=self.figure&#xa;fig.clf()&#xa;ax=fig.add_subplot(111)&#xa;y=aramis_cdt.number_of_missing_facets_t&#xa;ax.plot(self.aramis_info.step_idx_list,y)&#xa;ax.set_xlabel('step')&#xa;ax.set_ylabel('number of missing facets')&#xa;ax.set_title('missing facets in time')&#xa;if self.save_plot:&#xa;  fig.savefig(os.path.join(self.save_dir,'number_of_missing_facets.png'))&#xa;&#xa;if self.show_plot:&#xa;  fig.canvas.draw()&#xa;&#xa;" id="WnpJuT9WfLUA"/>
+    <sourcecode value="aramis_cdt=self.aramis_cdt&#xa;fig=self.figure&#xa;fig.clf()&#xa;ax=fig.add_subplot(111,aspect='equal')&#xa;ax.set_title(aramis_cdt.aramis_info.specimen_name+' - %d'%self.aramis_data.evaluated_step_idx)&#xa;plot3d_var=getattr(aramis_cdt,'d_ux_arr')&#xa;mask=np.logical_or(np.isnan(self.aramis_data.x_arr_undeformed),&#xa;self.aramis_data.data_array_undeformed_mask[0,:,:])mask=None&#xa;print plot3d_var[mask].shape&#xa;CS=ax.contourf(self.aramis_data.x_arr_undeformed,&#xa;self.aramis_data.y_arr_undeformed,plot3d_var,256,cmap=plt.get_cmap('jet'))ax.vlines(self.aramis_data.x_arr_undeformed[0,:][self.aramis_cdt.crack_filter_avg],&#xa;[0],np.nanmax(self.aramis_data.y_arr_undeformed),color='white',zorder=10,linewidth=2)ax.set_xlabel('x [mm]')&#xa;ax.set_ylabel('y [mm]')&#xa;fig.colorbar(CS,orientation='horizontal')&#xa;if self.save_plot:&#xa;  fig.savefig(os.path.join(self.save_dir,'strain_crack_avg.png'))&#xa;&#xa;if self.show_plot:&#xa;  fig.canvas.draw()&#xa;&#xa;" id="p2rSLJayphHr"/>
+    <sourcecode value="aramis_cdt=self.aramis_cdt&#xa;fig=self.figure&#xa;fig.clf()&#xa;ax=fig.add_subplot(111,aspect='equal')&#xa;ax.set_title(aramis_cdt.aramis_info.specimen_name+' - %d'%self.aramis_data.evaluated_step_idx)&#xa;plot3d_var=getattr(aramis_cdt,'d_ux_arr')&#xa;mask=np.logical_or(np.isnan(self.aramis_data.x_arr_undeformed),&#xa;self.aramis_data.data_array_undeformed_mask[0,:,:])mask=None&#xa;print plot3d_var[mask].shape&#xa;CS=ax.contourf(self.aramis_data.x_arr_undeformed,&#xa;self.aramis_data.y_arr_undeformed,plot3d_var,2,cmap=plt.get_cmap('binary'))ax.plot(self.aramis_data.x_arr_undeformed,self.aramis_data.y_arr_undeformed,'ko')&#xa;ax.plot(self.aramis_data.x_arr_undeformed[aramis_cdt.crack_filter],&#xa;self.aramis_data.y_arr_undeformed[aramis_cdt.crack_filter],linestyle='None',marker='.',color='white')ax.vlines(self.aramis_data.x_arr_undeformed[0,:][aramis_cdt.crack_filter_avg],&#xa;[0],np.nanmax(self.aramis_data.y_arr_undeformed[mask]),color='magenta',zorder=100,linewidth=2)ax.set_xlabel('x [mm]')&#xa;ax.set_ylabel('y [mm]')&#xa;if self.save_plot:&#xa;  fig.savefig(os.path.join(self.save_dir,'crack_filter_crack_avg.png'))&#xa;&#xa;if self.show_plot:&#xa;  fig.canvas.draw()&#xa;&#xa;" id="oqQcWgTtVJDo"/>
+    <sourcecode value="aramis_cdt=self.aramis_cdt&#xa;if self.test_figure==None:&#xa;  self.test_figure=plt.figure(figsize=(12,6),dpi=100)&#xa;  self.test_figure.canvas.mpl_connect('close_event',self.handle_close)&#xa;&#xa;fig=self.test_figure&#xa;fig.clf()&#xa;fig.suptitle(aramis_cdt.aramis_info.specimen_name+' - %d'%self.aramis_data.evaluated_step_idx,y=1)&#xa;ax_diag=plt.subplot2grid((2,3),(0,0))&#xa;ax_diag.locator_params(nbins=4)&#xa;ax_hist=plt.subplot2grid((2,3),(1,0))&#xa;ax_hist.locator_params(nbins=4)&#xa;ax_area=plt.subplot2grid((2,3),(0,1),rowspan=2,colspan=2,&#xa;adjustable='box',aspect='equal')ax_diag.plot(self.aramis_cdt.control_strain_t,self.aramis_data.stress)&#xa;ax_diag.plot(aramis_cdt.control_strain_t[self.aramis_data.evaluated_step_idx],&#xa;self.aramis_data.stress[self.aramis_data.evaluated_step_idx],'ro')ax_diag.set_xlabel('control strain [-]')&#xa;ax_diag.set_ylabel('nominal stress [MPa]')&#xa;ax_diag.set_xlim(0,ax_diag.get_xlim()[1])&#xa;if aramis_cdt.crack_arr.size!=0:&#xa;  ax_hist.hist(aramis_cdt.crack_arr,bins=40,normed=True)&#xa;&#xa;ax_hist.set_xlabel('crack_width [mm]')&#xa;ax_hist.set_ylabel('frequency [-]')&#xa;ax_hist_2=ax_hist.twinx()&#xa;if aramis_cdt.crack_arr.size!=0:&#xa;  ax_hist_2.hist(aramis_cdt.crack_arr,normed=True,&#xa;  histtype='step',color='black',cumulative=True,bins=40,linewidth=2)&#xa;ax_hist_2.set_ylabel('probability [-]')&#xa;ax_hist_2.set_ylim(0,1)&#xa;ax_hist.set_xlim(0,0.15)&#xa;ax_hist.set_ylim(0,100)&#xa;plot3d_var=getattr(aramis_cdt,'d_ux_arr')&#xa;CS=ax_area.contourf(self.aramis_data.x_arr_undeformed,&#xa;self.aramis_data.y_arr_undeformed,plot3d_var,2,cmap=plt.get_cmap('binary'))ax_area.plot(self.aramis_data.x_arr_undeformed,self.aramis_data.y_arr_undeformed,'ko')&#xa;ax_area.plot(self.aramis_data.x_arr_undeformed[aramis_cdt.crack_filter],&#xa;self.aramis_data.y_arr_undeformed[aramis_cdt.crack_filter],linestyle='None',marker='.',color='white')ax_area.set_xlabel('x [mm]')&#xa;ax_area.set_ylabel('y [mm]')&#xa;fig.tight_layout()&#xa;fig.canvas.draw()&#xa;if self.save_plot:&#xa;  fig.savefig(os.path.join(self.save_dir,'%s%04d.png'&#xa;  %(aramis_cdt.aramis_info.specimen_name,self.aramis_data.evaluated_step_idx)))&#xa;if self.show_plot:&#xa;  fig.show()&#xa;&#xa;" id="ylbS3oGn2q9W"/>
+    <sourcecode value="print'Closed Figure!'&#xa;import gc&#xa;print gc.collect()&#xa;self.test_figure=None&#xa;" id="25c4ujaQuVJI"/>
+    <sourcecode value="aramis_cdt=self.aramis_cdt&#xa;save_plot,show_plot=self.save_plot,self.show_plot&#xa;self.save_plot=False&#xa;self.show_plot=False&#xa;start_step_idx=self.aramis_data.evaluated_step_idx&#xa;fname_pattern='%s%04d'&#xa;for step_idx in self.aramis_info.step_idx_list:&#xa;  self.aramis_data.evaluated_step_idx=step_idx&#xa;  self.plot_test=True&#xa;  self.test_figure.savefig(os.path.join(self.temp_dir,fname_pattern&#xa;  %(aramis_cdt.aramis_info.specimen_name,self.aramis_data.evaluated_step_idx)))&#xa;try:&#xa;  os.system('ffmpeg -framerate 3 -i %s.png -vcodec ffv1 -sameq %s.avi'%&#xa;  (os.path.join(self.temp_dir,fname_pattern.replace('%s',aramis_cdt.aramis_info.specimen_name)),os.path.join(self.save_dir,aramis_cdt.aramis_info.specimen_name)))&#xa;except:&#xa;  print'Cannot create video in avi format. Check if you have &quot;ffmpeg&quot; in in your system path.'&#xa;&#xa;try:&#xa;  os.system('convert -verbose -delay 25 %s* %s.gif'%&#xa;  (os.path.join(self.temp_dir,aramis_cdt.aramis_info.specimen_name),os.path.join(self.save_dir,aramis_cdt.aramis_info.specimen_name)))&#xa;except:&#xa;  print'Cannot create animated gif. Check if you have &quot;convert&quot; in in your system path.'&#xa;&#xa;self.save_plot=save_plot&#xa;self.show_plot=show_plot&#xa;self.aramis_data.evaluated_step_idx=start_step_idx&#xa;" id="NCWiByVC3d1M"/>
+    <sourcecode value="'''Plot array of variable using colormap;''';self.scene.mlab.clf()&#xa;m=self.scene.mlab&#xa;m.fgcolor=(0,0,0)&#xa;m.bgcolor=(1,1,1)&#xa;self.scene.scene.disable_render=True&#xa;plot3d_var=getattr(getattr(self,self.plot3d_var_[0]),self.plot3d_var_[1])&#xa;mask=np.logical_or(np.isnan(self.aramis_data.x_arr_undeformed),&#xa;self.aramis_data.data_array_undeformed_mask[0,:,:])mask=None&#xa;m.points3d(self.aramis_data.x_arr_undeformed[mask],&#xa;self.aramis_data.y_arr_undeformed[mask],self.aramis_data.z_arr_undeformed[mask],plot3d_var[mask],mode='cube',scale_mode='none',scale_factor=1)m.view(0,0)&#xa;self.scene.scene.parallel_projection=True&#xa;self.scene.scene.disable_render=False&#xa;if self.plot_title:&#xa;  m.title('step no. %d'%self.aramis_data.evaluated_step_idx,size=0.3)&#xa;&#xa;m.scalarbar(orientation='horizontal',title=self.plot3d_var_[1])&#xa;m.axes()&#xa;" id="xJ03WEvpCvSO"/>
+    <sourcecode value="'''Plot arrays of variables in 3d relief;''';aramis_cdt=self.aramis_cdt&#xa;self.scene.mlab.clf()&#xa;m=self.scene.mlab&#xa;m.fgcolor=(0,0,0)&#xa;m.bgcolor=(1,1,1)&#xa;self.scene.scene.disable_render=True&#xa;z_arr=np.zeros_like(self.aramis_data.z_arr_undeformed)&#xa;plot3d_var=getattr(getattr(self,self.plot3d_var_[0]),self.plot3d_var_[1])&#xa;m.points3d(z_arr,self.aramis_data.x_arr_undeformed,self.aramis_data.y_arr_undeformed,plot3d_var,&#xa;mode='cube',colormap=&quot;blue-red&quot;,scale_mode='scalar')glyph=self.scene.engine.scenes[0].children[0].children[0].children[0]&#xa;glyph.glyph.glyph_source.glyph_position='tail'&#xa;glyph.glyph.glyph_source.glyph_source.x_length=self.glyph_x_length_cr&#xa;glyph.glyph.glyph_source.glyph_source.y_length=self.glyph_y_length_cr&#xa;glyph.glyph.glyph_source.glyph_source.z_length=self.glyph_z_length_cr&#xa;plot3d_var=getattr(getattr(self,self.plot3d_var_[0]),self.plot3d_var_[1])&#xa;m.points3d(z_arr,self.aramis_data.x_arr_undeformed,self.aramis_data.y_arr_undeformed,plot3d_var,mode='cube',&#xa;colormap=&quot;blue-red&quot;,scale_mode='none')glyph1=self.scene.engine.scenes[0].children[1].children[0].children[0]&#xa;glyph1.glyph.glyph_source.glyph_source.x_length=self.glyph_z_length&#xa;glyph1.glyph.glyph_source.glyph_source.y_length=self.glyph_x_length&#xa;glyph1.glyph.glyph_source.glyph_source.z_length=self.glyph_y_length&#xa;self.scene.scene.parallel_projection=True&#xa;m.view(0,90)&#xa;glyph.glyph.glyph_source.glyph_position='head'&#xa;glyph.glyph.glyph_source.glyph_position='tail'&#xa;module_manager=self.scene.engine.scenes[0].children[1].children[0]&#xa;module_manager.scalar_lut_manager.show_scalar_bar=True&#xa;module_manager.scalar_lut_manager.show_legend=True&#xa;module_manager.scalar_lut_manager.scalar_bar.orientation='horizontal'&#xa;module_manager.scalar_lut_manager.scalar_bar.title=self.plot3d_var_[1]&#xa;module_manager.scalar_lut_manager.scalar_bar_representation.position=(0.10,0.05)&#xa;module_manager.scalar_lut_manager.scalar_bar_representation.position2=(0.8,0.15)&#xa;self.scene.scene.disable_render=False&#xa;if self.plot_title:&#xa;  m.title('step no. %d'%self.aramis_data.evaluated_step_idx,size=0.3)&#xa;&#xa;m.axes()&#xa;" id="1WfDP6aAdK5u"/>
+    <sourcecode value="'''Plot cracks in 3D;''';aramis_cdt=self.aramis_cdt&#xa;self.scene.mlab.clf()&#xa;m=self.scene.mlab&#xa;m.fgcolor=(0,0,0)&#xa;m.bgcolor=(1,1,1)&#xa;self.scene.scene.disable_render=True&#xa;z_arr=np.zeros_like(self.aramis_data.z_arr_undeformed)&#xa;plot3d_var=aramis_cdt.crack_field_arr&#xa;m.points3d(z_arr,self.aramis_data.x_arr_undeformed,self.aramis_data.y_arr_undeformed,plot3d_var,&#xa;mode='cube',colormap=&quot;blue-red&quot;,scale_mode='scalar')glyph=self.scene.engine.scenes[0].children[0].children[0].children[0]&#xa;glyph.glyph.glyph_source.glyph_position='tail'&#xa;glyph.glyph.glyph_source.glyph_source.x_length=self.glyph_x_length_cr&#xa;glyph.glyph.glyph_source.glyph_source.y_length=self.glyph_y_length_cr&#xa;glyph.glyph.glyph_source.glyph_source.z_length=self.glyph_z_length_cr&#xa;plot3d_var=getattr(aramis_cdt,'crack_field_arr')&#xa;m.points3d(z_arr,self.aramis_data.x_arr_undeformed,self.aramis_data.y_arr_undeformed,plot3d_var,mode='cube',&#xa;colormap=&quot;blue-red&quot;,scale_mode='none')glyph1=self.scene.engine.scenes[0].children[1].children[0].children[0]&#xa;glyph1.glyph.glyph_source.glyph_source.x_length=self.glyph_z_length&#xa;glyph1.glyph.glyph_source.glyph_source.y_length=self.glyph_x_length&#xa;glyph1.glyph.glyph_source.glyph_source.z_length=self.glyph_y_length&#xa;scene=self.scene.engine.scenes[0]&#xa;scene.scene.parallel_projection=True&#xa;m.view(0,90)&#xa;glyph.glyph.glyph_source.glyph_position='head'&#xa;glyph.glyph.glyph_source.glyph_position='tail'&#xa;module_manager=self.scene.engine.scenes[0].children[1].children[0]&#xa;module_manager.scalar_lut_manager.show_scalar_bar=True&#xa;module_manager.scalar_lut_manager.show_legend=True&#xa;module_manager.scalar_lut_manager.scalar_bar.orientation='horizontal'&#xa;module_manager.scalar_lut_manager.scalar_bar.title='crack_field'&#xa;module_manager.scalar_lut_manager.scalar_bar_representation.position=(0.10,0.05)&#xa;module_manager.scalar_lut_manager.scalar_bar_representation.position2=(0.8,0.15)&#xa;scene.scene.disable_render=False&#xa;if self.plot_title:&#xa;  m.title('step no. %d'%self.aramis_data.evaluated_step_idx,size=0.3)&#xa;&#xa;" id="mvpNFuGr0p0n"/>
+    <sourcecode value="self.scene.mlab.clf()&#xa;" id="t2irpgeYllHf"/>
+    <sourcecode value="self.transport=paramiko.Transport((host,port))&#xa;privatekeyfile=os.path.expanduser('~/.ssh/id_rsa')&#xa;mykey=paramiko.RSAKey.from_private_key_file(privatekeyfile)&#xa;try:&#xa;  if password=='':&#xa;    self.transport.connect(username=username,pkey=mykey)&#xa;&#xa;  else:&#xa;    self.transport.connect(username=username,password=password)&#xa;&#xa;  self.sftp=paramiko.SFTPClient.from_transport(self.transport)&#xa;&#xa;except paramiko.ssh_exception.AuthenticationException,e:&#xa;  print e&#xa;  print'Check if you have access to remote server over ssh-key'&#xa;&#xa;" id="95dakewYw4X9"/>
+    <sourcecode value="self.sftp.put(local,remote,self._printTotals)&#xa;" id="LPCPGH5YhaQ1"/>
+    <sourcecode value="self.sftp.get(remote,local,self._printTotals)&#xa;" id="galDDYw5RDev"/>
+    <sourcecode value="if self.transport.is_active():&#xa;  self.sftp.close()&#xa;  self.transport.close()&#xa;&#xa;" id="RJkcxC08ZRlA"/>
+    <sourcecode value="print&quot;Transferred: {0}\tStill to send: {1}\tProcent: {2}&quot;.format(transferred,toBeTransferred,transferred/float(toBeTransferred)*100)&#xa;" id="DsVnKGvpVYe0"/>
+    <sourcecode value="return self&#xa;" id="v0AdHwglbVlm"/>
+    <sourcecode value="self.close()" id="i4rHXa1TIeIv"/>
+   </codegenerator>
+  </codegeneration>
+ </XMI.extensions>
+</XMI>
