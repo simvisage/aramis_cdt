@@ -75,9 +75,10 @@ if __name__ == '__main__':
                     evaluated_step_idx=10)
     AC = AramisBSA(aramis_info=AI,
                    aramis_data=AD,
-                   integ_radius=15)
+                   integ_radius=50)
 
     for step in [5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 225]:
+        print 'shape', AC.d_ux_arr2.shape
         AD.evaluated_step_idx = step
         x = np.mean(AC.d_ux_arr2[:, 70:90], axis=1)
         print AC.d_ux_arr2.shape
