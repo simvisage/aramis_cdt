@@ -84,6 +84,9 @@ class AramisPlot2D(HasTraits):
         ax2 = fig.add_subplot(2, 2, 2)
         ax2.plot(aramis_data.x_idx_undeformed.T, aramis_data.ux_arr.T, color='green')
         ax2.plot(aramis_data.x_idx_undeformed[0, :], aramis_data.ux_arr_avg, color='red', linewidth=2)
+        y_max_lim = ax2.get_ylim()[-1]
+        ax2.vlines(aramis_data.x_idx_undeformed[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
+                 color='magenta', linewidth=1, zorder=10)
 
         ax3 = fig.add_subplot(2, 2, 3)
         ax3.plot(aramis_data.x_idx_undeformed[0, :], aramis_cdt.dd_ux_arr_avg, color='black')
@@ -92,7 +95,18 @@ class AramisPlot2D(HasTraits):
         ax3.vlines(aramis_data.x_idx_undeformed[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
                  color='magenta', linewidth=1, zorder=10)
 
-        # ax4 = add_subplot(2, 2, 4)
+        ax = fig.add_subplot(2, 2, 4)
+        from aramis_cdt import get_d
+        ir = aramis_cdt.integ_radius
+#         ax.plot(aramis_data.x_arr_undeformed.T[ir:-ir, :],
+#                 (get_d(aramis_data.x_arr_undeformed + aramis_data.ux_arr, ir).T - get_d(aramis_data.x_arr_undeformed, ir).T)[ir:-ir, :], color='black')
+#        ax.plot(aramis_data.x_arr_undeformed.T[ir:-ir, :],
+#                 get_d(aramis_data.x_arr_undeformed + aramis_data.ux_arr, ir).T[ir:-ir, :], color='black')
+        xx = get_d(aramis_data.x_arr_undeformed + aramis_data.ux_arr, ir)
+        print xx[:, ir]
+        print xx[:, ir][:, None] * np.ones(xx.shape[1])[None, :]
+        ax.plot(aramis_data.x_arr_undeformed.T[ir:-ir, :],
+                (xx - xx[:, ir][:, None] * np.ones(xx.shape[1])[None, :]).T[ir:-ir, :] * 1000, color='black')
 
         plt.suptitle(self.aramis_info.specimen_name + ' - %d' % aramis_data.evaluated_step_idx)
 

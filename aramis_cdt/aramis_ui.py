@@ -25,6 +25,10 @@ from matplotlib.figure import Figure
 import os
 import sys
 
+from mayavi.tools.mlab_scene_model import MlabSceneModel
+from mayavi.core.ui.mayavi_scene import MayaviScene
+from tvtk.pyface.scene_editor import SceneEditor
+
 import platform
 import time
 if platform.system() == 'Linux':
@@ -76,7 +80,8 @@ class AramisUI(HasTraits):
     aramis_view3d = Instance(AramisView3D)
     def _aramis_view3d_default(self):
         return AramisView3D(aramis_data=self.aramis_data,
-                            aramis_cdt=self.aramis_cdt)
+                            aramis_cdt=self.aramis_cdt,
+                            scene=self.scene)
 
     figure = Instance(Figure)
     def _figure_default(self):
@@ -84,6 +89,8 @@ class AramisUI(HasTraits):
         # figure.add_subplot(111)
         # figure.add_axes([0.15, 0.15, 0.75, 0.75])
         return figure
+
+    scene = Instance(MlabSceneModel, ())
 
     load_data = Button()
     def _load_data_fired(self):
@@ -121,6 +128,12 @@ class AramisUI(HasTraits):
                             id='aramisCDT.figure',
                             dock='tab',
                             ),
+                            Item(name='scene',
+                                 editor=SceneEditor(scene_class=MayaviScene),
+                                 show_label=False,
+                                 label='Mayavi sheet',
+                                 id='aramisCDT.scene',
+                                 dock='tab',),
                        id='aramisCDT.hsplit',
                        ),
                 title='Aramis CDT',
@@ -136,10 +149,10 @@ if __name__ == '__main__':
     home = expanduser("~")
 
 #     data_dir = os.path.join(home, '.simdb_cache', 'exdata/bending_tests',
-#                             'three_point', '2013-07-09_BT-6c-2cm-0-TU_bs4-Aramis3d',
-#                             'aramis', 'BT-6c-V4-bs4-Xf19s1-Yf19s4')
-
-    # AI = AramisInfo(data_dir=data_dir)
+#                              'three_point', '2013-07-09_BT-6c-2cm-0-TU_bs4-Aramis3d',
+#                              'aramis', 'BT-6c-V4-bs4-Xf19s1-Yf19s4')
+#
+#     AI = AramisInfo(data_dir=data_dir)
     AI = AramisInfo()
     AUI = AramisUI(aramis_info=AI)
     AUI.configure_traits()
