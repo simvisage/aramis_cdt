@@ -110,13 +110,13 @@ class AramisRemote(HasTraits):
     '''Local path to the directory contained selected Aramis data
     '''
     def _get_local_dir(self):
-        return os.path.join(self.simdb_cache_dir, self.relative_path, 'aramis')
+        return os.path.join(self.simdb_cache_dir, self.experiment_selected, 'aramis')
 
     server_dir = Property(File)
     '''Remote path to the directory containing selected Aramis data
     '''
     def _get_server_dir(self):
-        return os.path.join(self.simdb_cache_remote_dir, self.relative_path, 'aramis')
+        return os.path.join(self.simdb_cache_remote_dir, self.experiment_selected, 'aramis')
 
     zip_filename = Property(Str)
     '''Name of the *.zip file of the selected item
