@@ -63,19 +63,19 @@ if __name__ == '__main__':
                              'three_point', '2013-07-09_BT-6c-2cm-0-TU_bs4-Aramis3d',
                              'aramis', 'BT-6c-V4-bs4-Xf19s15-Yf19s15')
 
-    data_dir = os.path.join(home, '.simdb_cache', 'exdata/bending_tests',
-                             'three_point', '2013-07-09_BT-6c-2cm-0-TU_bs4-Aramis3d',
-                             'aramis', 'BT-6c-V4-bs4-Xf19s1-Yf19s4')
+    data_dir = os.path.join(home, '.simdb_cache', 'exdata',
+                             'bending_tensile_test', '2014-06-12_BTT-4c-2cm-0-TU_MxN2',
+                             'aramis', 'A2d_BTT-4c-2cm-TU-0-V02_MxN2-Xf15s3-Yf15s3')
 
     AI = AramisInfo(data_dir=data_dir)
     # AI = AramisInfo()
     AD = AramisData(aramis_info=AI,
-                    evaluated_step_idx=10)
+                    evaluated_step_idx=50)
     AC = AramisBSA(aramis_info=AI,
                    aramis_data=AD,
                    integ_radius=10)
 
-    for step in range(0, 300, 5):  # [225]:
+    for step in range(0, 85, 5):  # [225]:
         AD.evaluated_step_idx = step
         mid_idx = AC.d_ux_arr2.shape[1] / 2
         x = np.mean(AC.d_ux_arr2[:, mid_idx - 0:mid_idx + 1], axis=1)
@@ -86,7 +86,7 @@ if __name__ == '__main__':
         import matplotlib.pyplot as plt
         plt.plot(x, y)
 
-    plt.plot([-0.004, 0.014], [0, 0], color='black')
-    plt.plot([0, 0], [-10, 10], color='black')
+#     plt.plot([-0.004, 0.014], [0, 0], color='black')
+#     plt.plot([0, 0], [-10, 10], color='black')
     plt.show()
     # AC.configure_traits()
