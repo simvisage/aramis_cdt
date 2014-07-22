@@ -37,17 +37,22 @@ if platform.system() == 'Linux':
 elif platform.system() == 'Windows':
     sysclock = time.clock
 
-from aramis_info import AramisInfo
-
 class AramisRemote(HasTraits):
-
-    aramis_info = Instance(AramisInfo)
+    '''Class managing the interaction with the remote server
+    containing the processed aramis data.
+    '''
 
     simdb = Instance(SimDB, ())
+    '''Access to simdb used to derive the access to the remote server.
+    '''
 
     server_username = DelegatesTo('simdb')
+    '''User name used to access to the data at remote server.
+    '''
 
     server_host = DelegatesTo('simdb')
+    '''Host computer of the remote server.
+    '''
 
     simdb_cache_remote_dir = DelegatesTo('simdb')
 
@@ -56,10 +61,17 @@ class AramisRemote(HasTraits):
     simdb_cache_dir = DelegatesTo('simdb')
 
     extended_data_cfg_filename = Str('extended_data.cfg')
+    '''File name of a configuration file specifying the extended data for the
+    current test run at the server.
+    '''
 
     reload_experiments = Button
+    '''Event triggering the reloading of the test data to the local cache.
+    '''
 
     experiment_lst = Property(List(Str), depends_on='reload_experiments')
+    '''List of test runs obtained obtained by scanning the simdb directory tree.
+    '''
     @cached_property
     def _get_experiment_lst(self):
         experiment_lst = []
@@ -70,13 +82,13 @@ class AramisRemote(HasTraits):
         return experiment_lst
 
     experiment_selected = Str
-    '''Pointer to the current experiment
+    '''Specification of the current experiment from within the experiment_lst.
     '''
     def _experiment_selected_default(self):
         return self.experiment_lst[0]
 
     aramis_files = Property(List(Str), depends_on='experiment_selected')
-    '''Available Aramis files obtained from *.cfg file
+    '''Available aramis files obtained from configuration file for the currently selected experiment.
     '''
     @cached_property
     def _get_aramis_files(self):
@@ -91,23 +103,23 @@ class AramisRemote(HasTraits):
             return ['extended file does not exist']
 
     aramis_file_selected = Str
-    '''Selected Aramis file for analysis (download, unzip, analyze)
+    '''Aramis file currently selected for (download, unzip, analyze)
     '''
     def _aramis_file_selected_default(self):
         return self.aramis_files[0]
 
     @on_trait_change('experiment_selected')
-    def _reset_aramis_file_slected(self):
+    def _reset_aramis_file_selected(self):
         self.aramis_file_selected = self.aramis_files[0]
 
     local_dir = Property(File)
-    '''Local path to the directory contained selected Aramis data
+    '''Relative path to the directory containing the selected aramis data
     '''
     def _get_local_dir(self):
         return os.path.join(self.simdb_cache_dir, self.experiment_selected, 'aramis')
 
     aramis_file_path = Property(File)
-    '''Local path to the directory contained selected Aramis data
+    '''Absolute path to the directory containing the selected aramis data
     '''
     def _get_aramis_file_path(self):
         return os.path.join(self.local_dir, self.aramis_file_selected)
@@ -119,18 +131,15 @@ class AramisRemote(HasTraits):
         return os.path.join(self.simdb_cache_remote_dir, self.experiment_selected, 'aramis')
 
     zip_filename = Property(Str)
-    '''Name of the *.zip file of the selected item
+    '''Name of the zip file of the selected item
     '''
     def _get_zip_filename(self):
         return self.aramis_file_selected + '.zip'
 
     download = Button
-    '''Prepare local data structure and download the *.zip file from server
+    '''Prepare local data structure and download the zip file from server.
     '''
     def _download_fired(self):
-        print 'server', self.server_dir
-        print 'zip', self.zip_filename
-        print 'local', self.local_dir
         if not os.path.exists(self.local_dir):
             os.makedirs(self.local_dir)
         try:

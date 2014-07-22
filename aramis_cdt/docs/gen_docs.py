@@ -15,7 +15,7 @@
 #-------------------------------------------------------------------------------
 
 from etsproxy.traits.api import \
-    HasTraits, Str, Property, cached_property, \
+    HasTraits, Property, \
     Enum
 
 import os.path
@@ -65,4 +65,4 @@ if __name__ == '__main__':
     gd = GenDoc(build_mode='global')
     # gd.generate_examples() # kind = 'sampling_efficiency')
     gd.generate_html()
-    gd.push_html()
+    # gd.push_html()

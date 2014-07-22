@@ -16,14 +16,12 @@
 
 from etsproxy.traits.api import \
     HasTraits, Float, Property, cached_property, Int, Array, Bool, \
-    Instance, DelegatesTo, Tuple, Button, List, Str, Event, on_trait_change
+    Instance, DelegatesTo, Button, List, Event, on_trait_change
 
-from etsproxy.traits.ui.api import View, Item, HGroup, EnumEditor, Group, UItem, RangeEditor
+from etsproxy.traits.ui.api import View, Item, Group, UItem
 
 import numpy as np
-from scipy import stats
 import os
-import re
 
 import platform
 import time
@@ -245,7 +243,7 @@ class AramisCDT(HasTraits):
     '''
 
     init_step_avg_lst = List()
-    '''List of steps (list length is equal to number of cracks at the 
+    '''List of steps (list length is equal to number of cracks at the
     crack_detect_idx) when the crack initiate
     '''
     init_step_lst = List()
@@ -260,7 +258,7 @@ class AramisCDT(HasTraits):
                                            self.number_of_cracks_avg)
 
     crack_detect_mask_avg = Property(Array, depends_on='crack_detect_idx')
-    '''Mask of cracks identified in crack_detect_idx and used for backward 
+    '''Mask of cracks identified in crack_detect_idx and used for backward
     identification of the crack initialization.
     '''
     @cached_property
@@ -269,7 +267,7 @@ class AramisCDT(HasTraits):
         return self.crack_filter_avg
 
     crack_detect_mask = Property(Array, depends_on='crack_detect_idx')
-    '''Mask of cracks identified in crack_detect_idx and used for backward 
+    '''Mask of cracks identified in crack_detect_idx and used for backward
     identification of the crack initialization.
     '''
     @cached_property

@@ -28,6 +28,8 @@ import sys, os
 extensions = ['matplotlib.sphinxext.mathmpl',
               'matplotlib.sphinxext.only_directives',
               'matplotlib.sphinxext.plot_directive',
+              'sphinx.ext.inheritance_diagram',
+              'sphinx.ext.graphviz',
               'sphinx.ext.autodoc',
               'sphinx.ext.doctest',
               'sphinx.ext.todo',
