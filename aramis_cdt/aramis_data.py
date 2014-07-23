@@ -91,7 +91,7 @@ class AramisRawData(HasTraits):
         if os.path.exists(fname_npy):
             data_arr = np.load(fname_npy)
         else:
-            raise IOError, '*.npy data does not exist!'
+            raise IOError, '%s data does not exist!' % fname_npy
         print 'loading time =', sysclock() - start_t
         print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
         return data_arr

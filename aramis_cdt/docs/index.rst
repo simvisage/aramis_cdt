@@ -24,6 +24,13 @@ Tutorial
    aramis_cdt/aramis_cdt
    examples/examples
 
+Class reference
+---------------
+
+.. toctree::
+   :maxdepth: 1
+
+   class_reference
 
 Todo list
 ---------

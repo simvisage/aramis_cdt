@@ -42,7 +42,7 @@ class AramisInfo(HasTraits):
     from files placed in the data directory.
     '''
     data_dir = Directory(auto_set=False, enter_set=True)
-    '''Directory of data files (*.npy) exported by Aramis Software.
+    '''Directory of data files (.npy) exported by Aramis Software.
     '''
 
     npy_dir = Directory
