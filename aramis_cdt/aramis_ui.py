@@ -94,12 +94,15 @@ class AramisUI(HasTraits):
 
     load_data = Button()
     def _load_data_fired(self):
-        self.aramis_info.data_dir = self.data_dir
+        if os.path.exists(self.data_dir):
+            self.aramis_info.data_dir = self.data_dir
+        else:
+            raise IOError('Directory %s does not exists. Download and extract data.' % self.data_dir)
 
-    set_dir = Button
+    set_dir = Button('Use directory from remote')
     def _set_dir_fired(self):
         self.data_dir = os.path.join(self.aramis_remote.local_dir,
-                                                 self.aramis_remote.aramis_file_selected)
+                                     self.aramis_remote.aramis_file_selected)
 
     view = View(HSplit(
                     Group(
@@ -108,7 +111,7 @@ class AramisUI(HasTraits):
                         Tabbed(
                                Group(
                                 UItem('aramis_remote'),
-                               UItem('set_dir', label='Use directory from remote'),
+                               UItem('set_dir'),
                               'data_dir',
                               UItem('load_data'),
                               label='Load data',
