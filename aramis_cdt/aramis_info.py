@@ -14,10 +14,12 @@
 #
 #-------------------------------------------------------------------------------
 
-from etsproxy.traits.api import HasTraits, Int, Directory, Str, List, \
-                                on_trait_change, Dict
+from traits.api import \
+    HasTraits, Int, Directory, Str, List, \
+    on_trait_change, Dict, Property, cached_property
 
-from etsproxy.traits.ui.api import View, Item
+from traitsui.api import \
+    View, Item
 
 import numpy as np
 
@@ -36,7 +38,6 @@ elif platform.system() == 'Windows':
 
 simdb = SimDB()
 
-
 class AramisInfo(HasTraits):
     '''Basic informations of Aramis database obtained from directory name and
     from files placed in the data directory.
@@ -45,10 +46,10 @@ class AramisInfo(HasTraits):
     '''Directory of data files (.npy) exported by Aramis Software.
     '''
 
-    npy_dir = Directory
-    @on_trait_change('data_dir')
-    def _npy_dir_update(self):
-        self.npy_dir = os.path.join(self.data_dir, 'npy/')
+    npy_dir = Property(Directory, depends_on='data_dir')
+    @cached_property
+    def _get_npy_dir(self):
+        return os.path.join(self.data_dir, 'npy/')
 
 #     file_list = List(Str)
 #     '''List of names of *.txt data files contained in the directory.
@@ -82,12 +83,11 @@ class AramisInfo(HasTraits):
         except:
             self.step_list = []
 
-    number_of_steps = Int
+    number_of_steps = Property
     '''Number of time steps
     '''
-    @on_trait_change('step_list')
-    def _number_of_steps_update(self):
-        self.number_of_steps = len(self.step_list)
+    def _get_number_of_steps(self):
+        return len(self.step_list)
 
     step_idx_list = List(Int)
     '''List of step indexes

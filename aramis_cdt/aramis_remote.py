@@ -15,19 +15,14 @@
 #-------------------------------------------------------------------------------
 
 from etsproxy.traits.api import \
-    HasTraits, Float, Property, cached_property, Int, Array, Bool, Directory, \
-    Instance, DelegatesTo, Tuple, Button, List, Str, File, Enum, on_trait_change
+    HasTraits, Property, cached_property, \
+    Instance, DelegatesTo, Button, List, Str, File, on_trait_change
 
-from etsproxy.traits.ui.api import View, Item, HGroup, EnumEditor, Group, UItem, RangeEditor
+from etsproxy.traits.ui.api import View, Item, EnumEditor, UItem
 
-import numpy as np
-from scipy import stats
 import os
-import re
 import ConfigParser
-
-from matresdev.db.simdb import SimDB
-from sftp_server import SFTPServer
+from matresdev.db.simdb import SimDB, SFTPServer
 import zipfile
 
 import platform
@@ -40,6 +35,8 @@ elif platform.system() == 'Windows':
 class AramisRemote(HasTraits):
     '''Class managing the interaction with the remote server
     containing the processed aramis data.
+
+    This class provides the source information for AramisData class.
     '''
 
     simdb = Instance(SimDB, ())
