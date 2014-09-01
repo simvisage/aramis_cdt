@@ -42,11 +42,11 @@ class AramisBSA(AramisCDT):
     '''Crack Detection Tool for detection of cracks, etc. from Aramis data.
     '''
 
-    d_ux_arr2 = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    d_ux_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
     '''The first derivative of displacement in x-direction
     '''
     @cached_property
-    def _get_d_ux_arr2(self):
+    def _get_d_ux_arr(self):
         x_und = self.aramis_data.x_arr_undeformed
         ux = self.aramis_data.ux_arr
         du_arr = np.zeros_like(x_und)
