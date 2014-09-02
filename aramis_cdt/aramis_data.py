@@ -77,12 +77,13 @@ class AramisRawData(HasTraits):
     '''Array of values for undeformed state in the first step.
     '''
     @cached_property
-    def _get_input_array_undeformed(self):
+    def _get_input_array_undeformed(self, verbose=False):
         '''Load data for the first step from *.npy file.
         '''
         fname = self.aramis_info.undeformed_coords_filename
-        print '#' * 50
-        print 'loading', fname, '...'
+        if verbose:
+            print '#' * 50
+            print 'loading', fname, '...'
 
         start_t = sysclock()
         dir_npy = self.aramis_info.npy_dir
@@ -92,8 +93,9 @@ class AramisRawData(HasTraits):
             data_arr = np.load(fname_npy)
         else:
             raise IOError, '%s data does not exist!' % fname_npy
-        print 'loading time =', sysclock() - start_t
-        print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
+        if verbose:
+            print 'loading time =', sysclock() - start_t
+            print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
         return data_arr
 
     input_array = Property(Array, depends_on='aramis_info_changed, +params_changed')
@@ -101,10 +103,11 @@ class AramisRawData(HasTraits):
     [index_x, index_y, displ_x, displ_y, displ_z]
     '''
     @cached_property
-    def _get_input_array(self):
+    def _get_input_array(self, verbose=False):
         fname = '%s%d' % (self.aramis_info.displacements_basename,
                          self.aramis_info.step_list[self.evaluated_step_idx])
-        print 'loading', fname, '...'
+        if verbose:
+            print 'loading', fname, '...'
 
         start_t = sysclock()
         dir_npy = self.aramis_info.npy_dir
@@ -112,8 +115,9 @@ class AramisRawData(HasTraits):
             os.mkdir(dir_npy)
         fname_npy = os.path.join(dir_npy, fname + '.npy')
         data_arr = np.load(fname_npy)
-        print 'loading time =', sysclock() - start_t
-        print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
+        if verbose:
+            print 'loading time =', sysclock() - start_t
+            print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
         return data_arr
 
     ad_channels_arr = Property(Array, depends_on='aramis_info_changed')
@@ -320,7 +324,8 @@ class AramisData(AramisRawData):
     '''
     @cached_property
     def _get_force(self):
-        return self.ad_channels_arr[:, 1]
+        return np.array([10, 20])
+        # return self.ad_channels_arr[:, 1]
 
     # TODO: load from exp db
     area = Float(100.0 * 20.0)
