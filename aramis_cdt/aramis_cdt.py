@@ -165,7 +165,7 @@ class AramisCDT(HasTraits):
         ddd_ux_arr = self.ddd_ux_arr
         crack_filter = ((dd_ux_arr[:, 1:] * dd_ux_arr[:, :-1] < self.dd_ux_threshold) *
                         ((ddd_ux_arr[:, 1:] + ddd_ux_arr[:, :-1]) / 2.0 < self.ddd_ux_threshold))
-        print "number of cracks determined by 'crack_filter': ", np.sum(crack_filter, axis=1)
+        # print "number of cracks determined by 'crack_filter': ", np.sum(crack_filter, axis=1)
         return crack_filter
 
     number_of_subcracks = Property(Int, depends_on='aramis_info_changed, aramis_data.+params_changed')
@@ -181,7 +181,7 @@ class AramisCDT(HasTraits):
         ddd_ux_arr_avg = self.ddd_ux_arr_avg
         crack_filter_avg = ((dd_ux_arr_avg[1:] * dd_ux_arr_avg[:-1] < self.dd_ux_avg_threshold) *
                            ((ddd_ux_arr_avg[1:] + ddd_ux_arr_avg[:-1]) / 2.0 < self.ddd_ux_avg_threshold))
-        print "number of cracks determined by 'crack_filter_avg': ", np.sum(crack_filter_avg)
+        # print "number of cracks determined by 'crack_filter_avg': ", np.sum(crack_filter_avg)
         return crack_filter_avg
 
     number_of_cracks_avg = Property(Int, depends_on='aramis_info_changed, aramis_data.+params_changed')
@@ -195,7 +195,7 @@ class AramisCDT(HasTraits):
     def _get_crack_spacing_avg(self):
         n_cr_avg = np.sum(self.crack_filter_avg)
         s_cr_avg = self.aramis_data.length_x_undeformed / n_cr_avg
-        print "average crack spacing [mm]: %.1f" % (s_cr_avg)
+        # print "average crack spacing [mm]: %.1f" % (s_cr_avg)
         return s_cr_avg
 
     crack_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
