@@ -54,12 +54,12 @@ class AramisRawData(HasTraits):
         else:
             self.aramis_info_changed = True
 
-    evaluated_step_idx = Int(1, params_changed=True)
-    '''Time step used for the evaluation.
-    '''
-    @on_trait_change('aramis_info_changed')
-    def _evaluated_step_idx(self):
-        self.evaluated_step_idx = int(np.argwhere(self.force == self.force.max())[0])
+    evaluated_step_idx = Int(1)  # , params_changed=True)
+#    '''Time step used for the evaluation.
+#    '''
+#    @on_trait_change('aramis_info_changed')
+#    def _evaluated_step_idx(self):
+#        self.evaluated_step_idx = int(np.argwhere(self.force == self.force.max())[0])
 
     evaluated_step_idx_filename = Property(Str, depends_on='+params_changed')
     '''Filename for the evaluated step

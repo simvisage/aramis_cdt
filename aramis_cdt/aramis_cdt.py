@@ -66,12 +66,9 @@ class AramisCDT(HasTraits):
 #        return ceil( float( self.n_px_f / self.n_px_a )
     integ_radius = Int(2, params_changed=True)
 
-    crack_detect_idx = Int(params_changed=True)
+    crack_detect_idx = Int(0)
     '''Index of the step used to determine the initial crack pattern
     '''
-    @on_trait_change('aramis_info_changed')
-    def _crack_detect_idx(self):
-        self.crack_detect_idx = int(np.argwhere(self.aramis_data.force == self.aramis_data.force.max())[0])
 
     #===========================================================================
     # Crack detection
