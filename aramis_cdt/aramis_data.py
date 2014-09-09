@@ -46,7 +46,7 @@ class AramisRawData(HasTraits):
     aramis data prepred for further elaboration in subclasses
     load data from *.npy files
     '''
-    aramis_info = Instance(AramisInfo)
+    aramis_info = Instance(AramisInfo, params_changed=True)
 
     aramis_info_changed = Event
     @on_trait_change('aramis_info.data_dir')
@@ -134,8 +134,6 @@ class AramisRawData(HasTraits):
 class AramisData(AramisRawData):
     '''Aramis Data Structure
     '''
-
-    step_list = DelegatesTo('aramis_info')
 
     #===========================================================================
     # Parameters
