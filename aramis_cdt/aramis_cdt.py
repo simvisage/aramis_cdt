@@ -33,10 +33,15 @@ elif platform.system() == 'Windows':
 from aramis_info import AramisInfo
 from aramis_data import AramisData
 
-def get_d(u_arr, a_arr, integ_radius):
+def get_d(u_arr, r_arr, integ_radius):
+    '''Get the derivatives
+    u_arr: variable to differenciate
+    r_arr: spatial coordinates
+    integ_radius: length at which the normalization is performed
+    '''
     ir = integ_radius
     du_arr = np.zeros_like(u_arr)
-    du_arr[:, ir:-ir] = (u_arr[:, 2 * ir:] - u_arr[:, :-2 * ir]) / (a_arr[:, 2 * ir:] - a_arr[:, :-2 * ir])
+    du_arr[:, ir:-ir] = (u_arr[:, 2 * ir:] - u_arr[:, :-2 * ir]) / (r_arr[:, 2 * ir:] - r_arr[:, :-2 * ir])
     return du_arr
 
 
@@ -154,7 +159,7 @@ class AramisCDT(HasTraits):
     '''Average of he second derivative of displacement in x-direction threshold
     '''
 
-    ddd_ux_avg_threshold = Float(-0.0005, params_changed=True)
+    ddd_ux_avg_threshold = Float(-0.00005, params_changed=True)
     '''Average the third derivative of displacement in x-direction threshold
     '''
 

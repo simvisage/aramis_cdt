@@ -42,7 +42,9 @@ def get_d(u_arr, integ_radius):
 
 
 class AramisRawData(HasTraits):
-    '''Aramis Data Structure - load data from *.npy files
+    '''Basic array structure containing the measured
+    aramis data prepred for further elaboration in subclasses
+    load data from *.npy files
     '''
     aramis_info = Instance(AramisInfo)
 
@@ -55,11 +57,8 @@ class AramisRawData(HasTraits):
             self.aramis_info_changed = True
 
     evaluated_step_idx = Int(0, params_changed=True)
-#    '''Time step used for the evaluation.
-#    '''
-#    @on_trait_change('aramis_info_changed')
-#    def _evaluated_step_idx(self):
-#        self.evaluated_step_idx = int(np.argwhere(self.force == self.force.max())[0])
+    '''Current index of a stage for evaluation.
+    '''
 
     evaluated_step_idx_filename = Property(Str, depends_on='+params_changed')
     '''Filename for the evaluated step
@@ -75,6 +74,8 @@ class AramisRawData(HasTraits):
 
     input_array_undeformed = Property(Array, depends_on='aramis_info_changed')
     '''Array of values for undeformed state in the first step.
+
+    :math:`
     '''
     @cached_property
     def _get_input_array_undeformed(self, verbose=False):
@@ -99,7 +100,7 @@ class AramisRawData(HasTraits):
         return data_arr
 
     input_array = Property(Array, depends_on='aramis_info_changed, +params_changed')
-    '''Array of Aramis exported data
+    '''Array of data exported from Aramis
     [index_x, index_y, displ_x, displ_y, displ_z]
     '''
     @cached_property
