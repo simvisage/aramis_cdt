@@ -35,7 +35,7 @@ import numpy as np
 
 from aramis_cdt import AramisCDT
 from aramis_info import AramisInfo
-from aramis_data import AramisData
+from aramis_data import AramisFieldData
 
 import matplotlib
 # matplotlib.use('Qt4Agg')
@@ -49,7 +49,7 @@ class AramisPlot2D(HasTraits):
 
     aramis_info = Instance(AramisInfo)
 
-    aramis_data = Instance(AramisData)
+    aramis_data = Instance(AramisFieldData)
 
     aramis_cdt = Instance(AramisCDT)
 
@@ -588,7 +588,7 @@ if __name__ == '__main__':
     data_dir = os.path.join(home, '.simdb_cache', 'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15')
 
     AI = AramisInfo(data_dir=data_dir)
-    AD = AramisData(aramis_info=AI)
+    AD = AramisFieldData(aramis_info=AI)
     AC = AramisCDT(aramis_info=AI,
                    aramis_data=AD
                   )

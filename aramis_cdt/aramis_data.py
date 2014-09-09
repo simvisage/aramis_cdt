@@ -131,7 +131,7 @@ class AramisRawData(HasTraits):
             print 'File %s does not exists!' % ad_channels_file
 
 
-class AramisData(AramisRawData):
+class AramisFieldData(AramisRawData):
     '''Aramis Data Structure
     '''
 
@@ -352,10 +352,3 @@ class AramisData(AramisRawData):
                 id='aramisCDT.data',
                 )
 
-
-if __name__ == '__main__':
-
-    AI = AramisInfo()
-    AD = AramisData(aramis_info=AI)
-
-    AD.configure_traits()

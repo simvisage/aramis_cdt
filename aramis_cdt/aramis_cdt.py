@@ -31,7 +31,7 @@ elif platform.system() == 'Windows':
     sysclock = time.clock
 
 from aramis_info import AramisInfo
-from aramis_data import AramisData
+from aramis_data import AramisFieldData
 
 def get_d(u_arr, r_arr, integ_radius):
     '''Get the derivatives
@@ -59,7 +59,7 @@ class AramisCDT(HasTraits):
         else:
             self.aramis_info_changed = True
 
-    aramis_data = Instance(AramisData)
+    aramis_data = Instance(AramisFieldData)
 
     number_of_steps = DelegatesTo('aramis_info')
 
@@ -398,7 +398,7 @@ if __name__ == '__main__':
 #     data_dir = os.path.join(home, '.simdb_cache', 'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15')
 #
 #     AI = AramisInfo(data_dir=data_dir)
-#     AD = AramisData(aramis_info=AI)
+#     AD = AramisFieldData(aramis_info=AI)
 #     AC = AramisCDT(aramis_info=AI,
 #                    aramis_data=AD)
 

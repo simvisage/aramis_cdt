@@ -33,14 +33,14 @@ import os
 from mayavi.tools.mlab_scene_model import MlabSceneModel
 
 from aramis_info import AramisInfo
-from aramis_data import AramisData
+from aramis_data import AramisFieldData
 from aramis_cdt import AramisCDT
 
 class AramisView3D(HasTraits):
     '''This class manages 3D views for AramisCDT variables
     '''
 
-    aramis_data = Instance(AramisData)
+    aramis_data = Instance(AramisFieldData)
 
     aramis_cdt = Instance(AramisCDT)
 
@@ -274,7 +274,7 @@ if __name__ == '__main__':
     data_dir = os.path.join(home, '.simdb_cache', 'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15')
 
     AI = AramisInfo(data_dir=data_dir)
-    AD = AramisData(aramis_info=AI)
+    AD = AramisFieldData(aramis_info=AI)
     AC = AramisCDT(aramis_info=AI,
                    aramis_data=AD,
                 integ_radius=1
