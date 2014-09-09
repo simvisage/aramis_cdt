@@ -22,7 +22,6 @@ Tutorial
    intro
    aramis/aramis
    aramis_cdt/aramis_cdt
-   examples/examples
 
 Class reference
 ---------------

@@ -42,7 +42,7 @@ def get_d(u_arr, integ_radius):
 
 
 class AramisRawData(HasTraits):
-    '''Basic array structure containing the measured
+    r'''Basic array structure containing the measured
     aramis data prepred for further elaboration in subclasses
     load data from *.npy files
     '''
@@ -57,11 +57,11 @@ class AramisRawData(HasTraits):
             self.aramis_info_changed = True
 
     evaluated_step_idx = Int(0, params_changed=True)
-    '''Current index of a stage for evaluation.
+    r'''Current index of a stage for evaluation.
     '''
 
     evaluated_step_idx_filename = Property(Str, depends_on='+params_changed')
-    '''Filename for the evaluated step
+    r'''Filename for the evaluated step
     '''
     @cached_property
     def _get_evaluated_step_idx_filename(self):
@@ -69,18 +69,16 @@ class AramisRawData(HasTraits):
                          self.aramis_info.step_list[self.evaluated_step_idx])
 
     transform_data = Bool(False, params_changed=True)
-    '''Switch data transformation before analysis
+    r'''Switch data transformation before analysis
     '''
 
     input_array_undeformed = Property(Array, depends_on='aramis_info_changed')
-    '''Array of values for undeformed state in the first step.
-
-    :math:`
+    r'''Cordinates in the initial state formated as an array
+    with a first index representing the node number, the second indices
+    indicate the following: :math:`X_n = [i,j,x_0,y_0,z_0]`.
     '''
     @cached_property
     def _get_input_array_undeformed(self, verbose=False):
-        '''Load data for the first step from *.npy file.
-        '''
         fname = self.aramis_info.undeformed_coords_filename
         if verbose:
             print '#' * 50
@@ -100,8 +98,16 @@ class AramisRawData(HasTraits):
         return data_arr
 
     input_array = Property(Array, depends_on='aramis_info_changed, +params_changed')
-    '''Array of data exported from Aramis
-    [index_x, index_y, displ_x, displ_y, displ_z]
+    r'''Array of data exported from Aramis where for each node :math:`n`
+    a data record defined as
+
+    .. math::
+
+        U_n = [i, j, u, v, w]
+
+    specifying the
+    row and column index of the node within the aramis grid and the displacement
+    of the node in the :math:`x,y,z` directions.
     '''
     @cached_property
     def _get_input_array(self, verbose=False):
@@ -122,6 +128,9 @@ class AramisRawData(HasTraits):
         return data_arr
 
     ad_channels_arr = Property(Array, depends_on='aramis_info_changed')
+    '''Array of additional channel data including computer time and universal time
+    for synchronization with external data.
+    '''
     @cached_property
     def _get_ad_channels_arr(self):
         ad_channels_file = os.path.join(self.aramis_info.npy_dir, 'ad_channels.npy')
