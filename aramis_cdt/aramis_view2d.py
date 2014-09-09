@@ -102,11 +102,11 @@ class AramisPlot2D(HasTraits):
 #                 (get_d(aramis_data.x_arr_undeformed + aramis_data.ux_arr, ir).T - get_d(aramis_data.x_arr_undeformed, ir).T)[ir:-ir, :], color='black')
 #        ax.plot(aramis_data.x_arr_undeformed.T[ir:-ir, :],
 #                 get_d(aramis_data.x_arr_undeformed + aramis_data.ux_arr, ir).T[ir:-ir, :], color='black')
-        xx = get_d(aramis_data.x_arr_undeformed + aramis_data.ux_arr, ir)
-        print xx[:, ir]
-        print xx[:, ir][:, None] * np.ones(xx.shape[1])[None, :]
-        ax.plot(aramis_data.x_arr_undeformed.T[ir:-ir, :],
-                (xx - xx[:, ir][:, None] * np.ones(xx.shape[1])[None, :]).T[ir:-ir, :] * 1000, color='black')
+#         xx = get_d(aramis_data.x_arr_undeformed + aramis_data.ux_arr, ir)
+#         print xx[:, ir]
+#         print xx[:, ir][:, None] * np.ones(xx.shape[1])[None, :]
+#         ax.plot(aramis_data.x_arr_undeformed.T[ir:-ir, :],
+#                 (xx - xx[:, ir][:, None] * np.ones(xx.shape[1])[None, :]).T[ir:-ir, :] * 1000, color='black')
 
         plt.suptitle(self.aramis_info.specimen_name + ' - %d' % aramis_data.evaluated_step_idx)
 

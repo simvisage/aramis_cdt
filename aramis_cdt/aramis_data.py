@@ -54,7 +54,7 @@ class AramisRawData(HasTraits):
         else:
             self.aramis_info_changed = True
 
-    evaluated_step_idx = Int(1)  # , params_changed=True)
+    evaluated_step_idx = Int(1, params_changed=True)
 #    '''Time step used for the evaluation.
 #    '''
 #    @on_trait_change('aramis_info_changed')
