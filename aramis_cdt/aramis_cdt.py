@@ -33,10 +33,10 @@ elif platform.system() == 'Windows':
 from aramis_info import AramisInfo
 from aramis_data import AramisData
 
-def get_d(u_arr, integ_radius):
+def get_d(u_arr, a_arr, integ_radius):
     ir = integ_radius
     du_arr = np.zeros_like(u_arr)
-    du_arr[:, ir:-ir] = (u_arr[:, 2 * ir:] - u_arr[:, :-2 * ir])
+    du_arr[:, ir:-ir] = (u_arr[:, 2 * ir:] - u_arr[:, :-2 * ir]) / (a_arr[:, 2 * ir:] - a_arr[:, :-2 * ir])
     return du_arr
 
 
@@ -66,50 +66,50 @@ class AramisCDT(HasTraits):
 #        return ceil( float( self.n_px_f / self.n_px_a )
     integ_radius = Int(2, params_changed=True)
 
-    crack_detect_idx = Int(0, params_changed=True)
+    crack_detect_idx = Int(params_changed=True)
     '''Index of the step used to determine the initial crack pattern
     '''
 
     #===========================================================================
     # Crack detection
     #===========================================================================
-    d_ux_threshold = Float(0.0)
+    d_ux_threshold = Float(0.0, params_changed=True)
     '''The first derivative of displacement in x-direction threshold
     '''
 
-    d_ux_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    d_ux_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     '''The first derivative of displacement in x-direction
     '''
     @cached_property
     def _get_d_ux_arr(self):
-        d_arr = get_d(self.aramis_data.ux_arr, self.integ_radius)
+        d_arr = get_d(self.aramis_data.ux_arr, self.aramis_data.x_arr_undeformed, self.integ_radius)
         # cutoff the negative strains - noise
-        d_arr[ d_arr < 0.0 ] = 0.0
+        # d_arr[ d_arr < 0.0 ] = 0.0
         # eliminate displacement jumps smaller then specified tolerance
-        d_arr[ d_arr < self.d_ux_threshold ] = 0.0
+        # d_arr[ d_arr < self.d_ux_threshold ] = 0.0
         return d_arr
 
-    dd_ux_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    dd_ux_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     @cached_property
     def _get_dd_ux_arr(self):
-        return get_d(self.d_ux_arr, self.integ_radius)
+        return get_d(self.d_ux_arr, self.aramis_data.x_arr_undeformed, self.integ_radius)
 
-    dd_ux_arr_avg = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    dd_ux_arr_avg = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     @cached_property
     def _get_dd_ux_arr_avg(self):
         return np.average(self.dd_ux_arr, axis=0)
 
-    ddd_ux_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    ddd_ux_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     @cached_property
     def _get_ddd_ux_arr(self):
-        return get_d(self.dd_ux_arr, self.integ_radius)
+        return get_d(self.dd_ux_arr, self.aramis_data.x_arr_undeformed, self.integ_radius)
 
-    ddd_ux_arr_avg = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    ddd_ux_arr_avg = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     @cached_property
     def _get_ddd_ux_arr_avg(self):
         return np.average(self.ddd_ux_arr, axis=0)
 
-    d_ux_arr_avg = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    d_ux_arr_avg = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     '''Average of d_ux in y-direction
     '''
     @cached_property
@@ -118,47 +118,47 @@ class AramisCDT(HasTraits):
         d_avg = np.average(d_u, axis=0)
         return d_avg
 
-    d_uy_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    d_uy_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     '''The first derivative of displacement in x-direction
     '''
     @cached_property
     def _get_d_uy_arr(self):
-        d_arr = get_d(self.aramis_data.uy_arr, self.integ_radius)
+        d_arr = get_d(self.aramis_data.uy_arr, self.aramis_data.y_arr_undeformed, self.integ_radius)
         # cutoff the negative strains - noise
-        d_arr[ d_arr < 0.0 ] = 0.0
+        # d_arr[ d_arr < 0.0 ] = 0.0
         # eliminate displacement jumps smaller then specified tolerance
-        d_arr[ d_arr < self.d_ux_threshold ] = 0.0
+        # d_arr[ d_arr < self.d_ux_threshold ] = 0.0
         return d_arr
 
-    d_uz_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    d_uz_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     '''The first derivative of displacement in x-direction
     '''
     @cached_property
     def _get_d_uz_arr(self):
-        d_arr = get_d(self.aramis_data.uz_arr, self.integ_radius)
+        d_arr = get_d(self.aramis_data.uz_arr, self.aramis_data.z_arr_undeformed, self.integ_radius)
         # cutoff the negative strains - noise
-        d_arr[ d_arr < 0.0 ] = 0.0
+        # d_arr[ d_arr < 0.0 ] = 0.0
         # eliminate displacement jumps smaller then specified tolerance
-        d_arr[ d_arr < self.d_ux_threshold ] = 0.0
+        # d_arr[ d_arr < self.d_ux_threshold ] = 0.0
         return d_arr
 
-    dd_ux_threshold = Float(0.0)
+    dd_ux_threshold = Float(0.0, params_changed=True)
     '''The second derivative of displacement in x-direction threshold
     '''
 
-    ddd_ux_threshold = Float(-0.005)
+    ddd_ux_threshold = Float(-0.005, params_changed=True)
     '''The third derivative of displacement in x-direction threshold
     '''
 
-    dd_ux_avg_threshold = Float(0.0)
+    dd_ux_avg_threshold = Float(0.0, params_changed=True)
     '''Average of he second derivative of displacement in x-direction threshold
     '''
 
-    ddd_ux_avg_threshold = Float(-0.01)
+    ddd_ux_avg_threshold = Float(-0.0005, params_changed=True)
     '''Average the third derivative of displacement in x-direction threshold
     '''
 
-    crack_filter = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    crack_filter = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     @cached_property
     def _get_crack_filter(self):
         dd_ux_arr = self.dd_ux_arr
@@ -168,31 +168,30 @@ class AramisCDT(HasTraits):
         # print "number of cracks determined by 'crack_filter': ", np.sum(crack_filter, axis=1)
         return crack_filter
 
-    number_of_subcracks = Property(Int, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    number_of_subcracks = Property(Int, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     '''Number of sub-cracks
     '''
     def _get_number_of_subcracks(self):
         return np.sum(self.crack_filter)
 
-    crack_filter_avg = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    crack_filter_avg = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     @cached_property
     def _get_crack_filter_avg(self):
         dd_ux_arr_avg = self.dd_ux_arr_avg
         ddd_ux_arr_avg = self.ddd_ux_arr_avg
         crack_filter_avg = ((dd_ux_arr_avg[1:] * dd_ux_arr_avg[:-1] < self.dd_ux_avg_threshold) *
                            ((ddd_ux_arr_avg[1:] + ddd_ux_arr_avg[:-1]) / 2.0 < self.ddd_ux_avg_threshold))
-#        print 'evaluated step', self.aramis_data.evaluated_step_idx
-#        print 'crack detection step', self.crack_detect_idx
-#        print "number of cracks determined by 'crack_filter_avg': ", np.sum(crack_filter_avg)
+        print 'crack detection step', self.crack_detect_idx
+        print "number of cracks determined by 'crack_filter_avg': ", np.sum(crack_filter_avg)
         return crack_filter_avg
 
-    number_of_cracks_avg = Property(Int, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    number_of_cracks_avg = Property(Int, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     '''Number of cracks using averaging
     '''
     def _get_number_of_cracks_avg(self):
         return np.sum(self.crack_filter_avg)
 
-    crack_spacing_avg = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    crack_spacing_avg = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     @cached_property
     def _get_crack_spacing_avg(self):
         n_cr_avg = np.sum(self.crack_filter_avg)
@@ -200,25 +199,25 @@ class AramisCDT(HasTraits):
         # print "average crack spacing [mm]: %.1f" % (s_cr_avg)
         return s_cr_avg
 
-    crack_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    crack_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     @cached_property
     def _get_crack_arr(self):
         return self.d_ux_arr[np.where(self.crack_filter)]
 
-    crack_arr_mean = Property(Float, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    crack_arr_mean = Property(Float, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     def _get_crack_arr_mean(self):
         return self.crack_arr.mean()
 
-    crack_arr_std = Property(Float, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    crack_arr_std = Property(Float, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     def _get_crack_arr_std(self):
         return self.crack_arr.std()
 
-    crack_avg_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    crack_avg_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     @cached_property
     def _get_crack_avg_arr(self):
         return self.d_ux_arr_avg[np.where(self.crack_filter_avg)]
 
-    crack_field_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed')
+    crack_field_arr = Property(Array, depends_on='aramis_info_changed, aramis_data.+params_changed, +params_changed')
     @cached_property
     def _get_crack_field_arr(self):
         cf_w = np.zeros_like(self.d_ux_arr)
@@ -391,11 +390,13 @@ if __name__ == '__main__':
     from os.path import expanduser
     home = expanduser("~")
 
-    data_dir = os.path.join(home, '.simdb_cache', 'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15')
+#     data_dir = os.path.join(home, '.simdb_cache', 'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15')
+#
+#     AI = AramisInfo(data_dir=data_dir)
+#     AD = AramisData(aramis_info=AI)
+#     AC = AramisCDT(aramis_info=AI,
+#                    aramis_data=AD)
 
-    AI = AramisInfo(data_dir=data_dir)
-    AD = AramisData(aramis_info=AI)
-    AC = AramisCDT(aramis_info=AI,
-                   aramis_data=AD)
-
-    AC.configure_traits()
+    ac = AramisCDT()
+    print ac.__doc__
+#    AC.configure_traits()

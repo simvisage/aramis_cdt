@@ -151,11 +151,11 @@ if __name__ == '__main__':
     from os.path import expanduser
     home = expanduser("~")
 
-#     data_dir = os.path.join(home, '.simdb_cache', 'exdata/bending_tests',
-#                              'three_point', '2013-07-09_BT-6c-2cm-0-TU_bs4-Aramis3d',
-#                              'aramis', 'BT-6c-V4-bs4-Xf19s1-Yf19s4')
-#
-#     AI = AramisInfo(data_dir=data_dir)
-    AI = AramisInfo()
+    data_dir = os.path.join(home, '.simdb_cache', 'exdata',
+                             'bending_tensile_test',
+                             '2014-06-12_BTT-4c-2cm-0-TU_MxN2', 'aramis', 'A2d_BTT-4c-2cm-TU-0-V03_MxN2-Xf15s3-Yf15s3')
+
+    AI = AramisInfo(data_dir=data_dir)
+    # AI = AramisInfo()
     AUI = AramisUI(aramis_info=AI)
     AUI.configure_traits()
