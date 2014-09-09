@@ -24,6 +24,16 @@ AramisInfo
    :members:
    :undoc-members:
 
+AramisRawData
+-------------
+
+.. inheritance-diagram:: AramisRawData
+	:parts: 1
+
+.. autoclass:: AramisRawData
+   :members:
+   :undoc-members:
+
 AramisData
 ----------
 
@@ -34,4 +44,13 @@ AramisData
    :members:
    :undoc-members:
 
+AramisCDT
+---------
+
+.. inheritance-diagram:: AramisCDT
+	:parts: 1
+
+.. autoclass:: AramisCDT
+   :members:
+   :undoc-members:
 

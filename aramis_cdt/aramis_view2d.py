@@ -39,8 +39,8 @@ from aramis_data import AramisFieldData
 
 import matplotlib
 # matplotlib.use('Qt4Agg')
-matplotlib.use('WxAgg')
 import matplotlib.pyplot as plt
+matplotlib.use('WxAgg')
 
 
 class AramisPlot2D(HasTraits):
