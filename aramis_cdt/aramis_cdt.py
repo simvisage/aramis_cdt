@@ -181,7 +181,8 @@ class AramisCDT(HasTraits):
         ddd_ux_arr_avg = self.ddd_ux_arr_avg
         crack_filter_avg = ((dd_ux_arr_avg[1:] * dd_ux_arr_avg[:-1] < self.dd_ux_avg_threshold) *
                            ((ddd_ux_arr_avg[1:] + ddd_ux_arr_avg[:-1]) / 2.0 < self.ddd_ux_avg_threshold))
-        # print "number of cracks determined by 'crack_filter_avg': ", np.sum(crack_filter_avg)
+        print 'crack detection step', self.crack_detect_idx
+        print "number of cracks determined by 'crack_filter_avg': ", np.sum(crack_filter_avg)
         return crack_filter_avg
 
     number_of_cracks_avg = Property(Int, depends_on='aramis_info_changed, aramis_data.+params_changed')
@@ -389,11 +390,13 @@ if __name__ == '__main__':
     from os.path import expanduser
     home = expanduser("~")
 
-    data_dir = os.path.join(home, '.simdb_cache', 'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15')
+#     data_dir = os.path.join(home, '.simdb_cache', 'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15')
+#
+#     AI = AramisInfo(data_dir=data_dir)
+#     AD = AramisData(aramis_info=AI)
+#     AC = AramisCDT(aramis_info=AI,
+#                    aramis_data=AD)
 
-    AI = AramisInfo(data_dir=data_dir)
-    AD = AramisData(aramis_info=AI)
-    AC = AramisCDT(aramis_info=AI,
-                   aramis_data=AD)
-
-    AC.configure_traits()
+    ac = AramisCDT()
+    print ac.__doc__
+#    AC.configure_traits()

@@ -14,11 +14,6 @@
 #
 #-------------------------------------------------------------------------------
 
-from etsproxy.traits.api import \
-    HasTraits, Instance
-
-from etsproxy.traits.ui.api import UItem, View
-
 import os
 
 import numpy as np
@@ -32,23 +27,19 @@ elif platform.system() == 'Windows':
 
 from aramis_cdt.aramis_info import AramisInfo
 from aramis_cdt.aramis_cdt import AramisCDT
-from aramis_cdt.aramis_view2d import AramisPlot2D
-from aramis_cdt.aramis_view3d import AramisView3D
 from aramis_cdt.aramis_ui import AramisUI
 
-from aramis_cdt.report_gen import report_gen
-
-aramis_dir = '/media/data/_linux_data/aachen/Aramis_07_2013/'
+aramis_dir = '.'
 
 specimen_name = os.path.split(os.getcwd())[-1]
 
-data_dir = os.path.join(aramis_dir, 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15')
+data_dir = os.path.join(aramis_dir, 'sample_data-Xf19s15-Yf19s15')
 
 AI = AramisInfo(data_dir=data_dir)
 AC = AramisCDT(aramis_info=AI,
                integ_radius=1,
-               evaluated_step_idx=203,
-               crack_detect_idx=203,
+               evaluated_step_idx=0,
+               crack_detect_idx=0,
                transform_data=True)
 
 AUI = AramisUI(aramis_info=AI,
@@ -57,13 +48,13 @@ AUI = AramisUI(aramis_info=AI,
 AUI.aramis_view2d.save_plot = False
 AUI.aramis_view2d.show_plot = True
 
-AUI.aramis_view2d.plot_crack_filter_crack_avg = True
+# AUI.aramis_view2d.plot_crack_filter_crack_avg = True
 
-x = AUI.aramis_cdt.x_arr_undeformed[10, :]
-ux = AUI.aramis_cdt.ux_arr[10, :]
-d_ux = AUI.aramis_cdt.d_ux_arr[10, :]
-dd_ux = AUI.aramis_cdt.dd_ux_arr[10, :]
-ddd_ux = AUI.aramis_cdt.ddd_ux_arr[10, :]
+x = AUI.aramis_data.x_arr_undeformed[10, :]
+ux = AUI.aramis_data.ux_arr[10, :]
+d_ux = AUI.aramis_data.d_ux_arr[10, :]
+dd_ux = AUI.aramis_data.dd_ux_arr[10, :]
+ddd_ux = AUI.aramis_data.ddd_ux_arr[10, :]
 
 import matplotlib.pyplot as plt
 plt.subplot(611)
@@ -112,13 +103,12 @@ AUI.aramis_view2d.show_plot = True
 
 AUI.aramis_view2d.plot_crack_filter_crack_avg = True
 
-x = AUI.aramis_cdt.x_arr_undeformed[40, :]
-ux = AUI.aramis_cdt.ux_arr[40, :]
-d_ux = AUI.aramis_cdt.d_ux_arr[40, :]
-dd_ux = AUI.aramis_cdt.dd_ux_arr[40, :]
-ddd_ux = AUI.aramis_cdt.ddd_ux_arr[40, :]
+x = AUI.aramis_data.x_arr_undeformed[40, :]
+ux = AUI.aramis_data.ux_arr[40, :]
+d_ux = AUI.aramis_data.d_ux_arr[40, :]
+dd_ux = AUI.aramis_data.dd_ux_arr[40, :]
+ddd_ux = AUI.aramis_data.ddd_ux_arr[40, :]
 
-import matplotlib.pyplot as plt
 plt.subplot(611)
 plt.plot(x, ux)
 plt.subplot(612)
