@@ -66,7 +66,7 @@ class AramisCDT(HasTraits):
 #        return ceil( float( self.n_px_f / self.n_px_a )
     integ_radius = Int(2, params_changed=True)
 
-    crack_detect_idx = Int(0)
+    crack_detect_idx = Int(0, params_changed=True)
     '''Index of the step used to determine the initial crack pattern
     '''
 
@@ -181,7 +181,9 @@ class AramisCDT(HasTraits):
         ddd_ux_arr_avg = self.ddd_ux_arr_avg
         crack_filter_avg = ((dd_ux_arr_avg[1:] * dd_ux_arr_avg[:-1] < self.dd_ux_avg_threshold) *
                            ((ddd_ux_arr_avg[1:] + ddd_ux_arr_avg[:-1]) / 2.0 < self.ddd_ux_avg_threshold))
-        # print "number of cracks determined by 'crack_filter_avg': ", np.sum(crack_filter_avg)
+#        print 'evaluated step', self.aramis_data.evaluated_step_idx
+#        print 'crack detection step', self.crack_detect_idx
+#        print "number of cracks determined by 'crack_filter_avg': ", np.sum(crack_filter_avg)
         return crack_filter_avg
 
     number_of_cracks_avg = Property(Int, depends_on='aramis_info_changed, aramis_data.+params_changed')
