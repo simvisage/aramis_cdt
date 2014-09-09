@@ -36,43 +36,50 @@ specimen_name = os.path.split(os.getcwd())[-1]
 data_dir = os.path.join(aramis_dir, 'sample_data-Xf19s15-Yf19s15')
 
 AI = AramisInfo(data_dir=data_dir)
+
 AC = AramisCDT(aramis_info=AI,
                integ_radius=1,
-               evaluated_step_idx=0,
-               crack_detect_idx=0,
-               transform_data=True)
+               crack_detect_idx=0)
 
-AUI = AramisUI(aramis_info=AI,
-                aramis_cdt=AC)
+AUI = AramisUI(aramis_info=AI)
 
-AUI.aramis_view2d.save_plot = False
-AUI.aramis_view2d.show_plot = True
-
-# AUI.aramis_view2d.plot_crack_filter_crack_avg = True
 
 x = AUI.aramis_data.x_arr_undeformed[10, :]
 ux = AUI.aramis_data.ux_arr[10, :]
-d_ux = AUI.aramis_data.d_ux_arr[10, :]
-dd_ux = AUI.aramis_data.dd_ux_arr[10, :]
-ddd_ux = AUI.aramis_data.ddd_ux_arr[10, :]
+d_ux = AUI.aramis_cdt.d_ux_arr[10, :]
+dd_ux = AUI.aramis_cdt.dd_ux_arr[10, :]
+ddd_ux = AUI.aramis_cdt.ddd_ux_arr[10, :]
 
 import matplotlib.pyplot as plt
 plt.subplot(611)
 plt.plot(x, ux)
+plt.locator_params(axis='y', nbins=3)
+
 plt.subplot(612)
 plt.plot(x, d_ux)
+plt.locator_params(axis='y', nbins=3)
+
 plt.subplot(613)
 plt.plot(x, dd_ux)
+plt.locator_params(axis='y', nbins=3)
+
 plt.subplot(614)
 plt.plot(x, ddd_ux)
+plt.locator_params(axis='y', nbins=3)
+
 plt.subplot(615)
 y = dd_ux[1:] * dd_ux[:-1]
 plt.plot((x[1:] + x[:-1]) / 2.0, y)
 plt.plot(((x[1:] + x[:-1]) / 2.0)[y < 0], y[y < 0], 'ro')
+plt.locator_params(axis='y', nbins=3)
+
 plt.subplot(616)
 y = (ddd_ux[1:] + ddd_ux[:-1]) / 2.0
 plt.plot(((x[1:] + x[:-1]) / 2.0), y)
-plt.plot(((x[1:] + x[:-1]) / 2.0)[y < -0.01], y[y < -0.01], 'ro')
+plt.plot(((x[1:] + x[:-1]) / 2.0)[y < -0.005], y[y < -0.005], 'ro')
+plt.locator_params(axis='y', nbins=3)
+
+plt.tight_layout()
 plt.show()
 
 
@@ -82,49 +89,43 @@ plt.show()
 #
 #===============================================================================
 
-data_dir = os.path.join(aramis_dir, 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s1-Yf19s4')
-
-AI = AramisInfo(data_dir=data_dir)
-AC = AramisCDT(aramis_info=AI,
-               n_px_facet_size_x=19,
-               n_px_facet_size_y=19,
-               n_px_facet_distance_x=15,
-               n_px_facet_distance_y=15,
-               integ_radius=4,
-               evaluated_step_idx=203,
-               crack_detect_idx=203,
-               transform_data=True)
-
-AUI = AramisUI(aramis_info=AI,
-                aramis_cdt=AC)
-
-AUI.aramis_view2d.save_plot = False
-AUI.aramis_view2d.show_plot = True
-
-AUI.aramis_view2d.plot_crack_filter_crack_avg = True
+AUI.aramis_cdt.integ_radius = 4
 
 x = AUI.aramis_data.x_arr_undeformed[40, :]
 ux = AUI.aramis_data.ux_arr[40, :]
-d_ux = AUI.aramis_data.d_ux_arr[40, :]
-dd_ux = AUI.aramis_data.dd_ux_arr[40, :]
-ddd_ux = AUI.aramis_data.ddd_ux_arr[40, :]
+d_ux = AUI.aramis_cdt.d_ux_arr[40, :]
+dd_ux = AUI.aramis_cdt.dd_ux_arr[40, :]
+ddd_ux = AUI.aramis_cdt.ddd_ux_arr[40, :]
 
 plt.subplot(611)
 plt.plot(x, ux)
+plt.locator_params(axis='y', nbins=3)
+
 plt.subplot(612)
 plt.plot(x, d_ux)
+plt.locator_params(axis='y', nbins=3)
+
 plt.subplot(613)
 plt.plot(x, dd_ux)
+plt.locator_params(axis='y', nbins=3)
+
 plt.subplot(614)
 plt.plot(x, ddd_ux)
+plt.locator_params(axis='y', nbins=3)
+
 plt.subplot(615)
 y = dd_ux[1:] * dd_ux[:-1]
 plt.plot((x[1:] + x[:-1]) / 2.0, y)
 plt.plot((x[1:] + x[:-1]) / 2.0, np.zeros_like(y))
 # plt.plot(((x[1:] + x[:-1]) / 2.0)[y < 0], y[y < 0], 'rx')
+plt.locator_params(axis='y', nbins=3)
+
 plt.subplot(616)
 y = (ddd_ux[1:] + ddd_ux[:-1]) / 2.0
 plt.plot(((x[1:] + x[:-1]) / 2.0), y)
 plt.plot((x[1:] + x[:-1]) / 2.0, np.zeros_like(y) - 0.01)
 # plt.plot(((x[1:] + x[:-1]) / 2.0)[y < -0.01], y[y < -0.01], 'rx')
+plt.locator_params(axis='y', nbins=3)
+plt.tight_layout()
+
 plt.show()
