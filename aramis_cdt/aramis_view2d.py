@@ -183,7 +183,7 @@ class AramisPlot2D(HasTraits):
         ax = fig.add_subplot(111)
 
         ax.set_title('')
-        ax.plot(self.aramis_info.step_idx_list, self.aramis_data.force)
+        ax.plot(self.aramis_info.step_list, self.aramis_data.force)
 
         ax.set_xlabel('step')
         ax.set_ylabel('force_t [kN]')
@@ -324,7 +324,7 @@ class AramisPlot2D(HasTraits):
         ax = fig.add_subplot(111)
 
         y = aramis_cdt.number_of_missing_facets_t
-        ax.plot(self.aramis_info.step_idx_list, y)
+        ax.plot(self.aramis_info.step_list, y)
 
         ax.set_xlabel('step')
         ax.set_ylabel('number of missing facets')
@@ -530,7 +530,7 @@ class AramisPlot2D(HasTraits):
         self.show_plot = False
         start_step_idx = self.aramis_data.evaluated_step_idx
         fname_pattern = '%s%04d'
-        for step_idx in self.aramis_info.step_idx_list:
+        for step_idx in self.aramis_info.step_list:
             self.aramis_data.evaluated_step_idx = step_idx
             self.plot_test = True
             self.test_figure.savefig(os.path.join(self.temp_dir, fname_pattern

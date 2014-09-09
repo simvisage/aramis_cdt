@@ -144,7 +144,7 @@ class AramisNPyGen(HasTraits):
     '''
     def _generate_npy_fired(self):
         self.ad_channels_lst = []
-        for step_idx in self.aramis_info.step_idx_list:
+        for step_idx in self.aramis_info.step_list:
             self._load_step_data(step_idx)
             self.__decompile_ad_channels(step_idx)
         np.save(os.path.join(self.aramis_info.npy_dir, 'ad_channels.npy'),
@@ -160,7 +160,7 @@ class AramisNPyGen(HasTraits):
         (improve speed of loading)
         '''
         fname = '%s%d' % (self.aramis_info.displacements_basename,
-                         self.aramis_info.step_list[step_idx])
+                         self.aramis_info.aramis_stage_list[step_idx])
         print 'loading', fname, '...'
 
         start_t = sysclock()
@@ -211,7 +211,7 @@ class AramisNPyGen(HasTraits):
 
     def __decompile_ad_channels(self, step_idx):
         fname = '%s%d' % (self.aramis_info.displacements_basename,
-                         self.aramis_info.step_list[step_idx])
+                         self.aramis_info.aramis_stage_list[step_idx])
         with open(os.path.join(self.aramis_info.data_dir, fname + '.txt')) as infile:
             for i in range(30):
                 line = infile.readline()

@@ -51,137 +51,105 @@ class AramisInfo(HasTraits):
     def _get_npy_dir(self):
         return os.path.join(self.data_dir, 'npy/')
 
-#     file_list = List(Str)
-#     '''List of names of *.txt data files contained in the directory.
-#     '''
-
-    step_list = List(Int)
-    '''List of available steps.
+    aramis_stage_list = Property(List(Int), depends_on='data_dir')
+    '''List of stage numbers in filenames from Aramis
     '''
-    @on_trait_change('data_dir')
-    def _file_step_list_update(self):
-        '''Update values of file_list and step_list. Sorted by the step number.
-        '''
+    @cached_property
+    def _get_aramis_stage_list(self):
         try:
             if os.path.exists(self.npy_dir):
                 file_list = [v for v in os.listdir(self.npy_dir) if os.path.splitext(v)[1] == ".npy"]
             else:
                 file_list = [v for v in os.listdir(self.data_dir) if os.path.splitext(v)[1] == ".txt"]
-            step_list = []
+            aramis_stage_list = []
             pat = r'displ.*-(?P<step>\d+).*'
             for f in file_list:
                 m = re.match(pat, f)
                 if m:
-                    step_list.append(int(m.groupdict()['step']))
+                    aramis_stage_list.append(int(m.groupdict()['step']))
             # sort filenames by the step number
             # file_arr = np.array(file_list, dtype=str)
-            # idx = np.argsort(step_list)
-            step_list.sort()
+            # idx = np.argsort(aramis_stage_list)
+            aramis_stage_list.sort()
 
             # self.file_list = file_arr[idx].tolist()
-            self.step_list = step_list
+            return aramis_stage_list
         except:
-            self.step_list = []
+            return []
 
-    number_of_steps = Property
+    number_of_steps = Property(Int, depends_on='data_dir')
     '''Number of time steps
     '''
+    @cached_property
     def _get_number_of_steps(self):
-        return len(self.step_list)
+        return len(self.aramis_stage_list)
 
-    step_idx_list = List(Int)
+    step_list = Property(List(Int), depends_on='data_dir')
     '''List of step indexes
     '''
-    @on_trait_change('number_of_steps')
-    def _step_idx_list_update(self):
-        self.step_idx_list = np.arange(self.number_of_steps, dtype=int).tolist()
+    @cached_property
+    def _get_step_list(self):
+        return np.arange(self.number_of_steps, dtype=int).tolist()
 
-    specimen_name = Str
+    specimen_name = Property(Str, depends_on='data_dir')
     '''Specimen name obtained from the folder name
     '''
-    @on_trait_change('data_dir')
-    def _specimen_name_update(self):
-        self.specimen_name = os.path.split(self.data_dir)[-1]
+    @cached_property
+    def _get_specimen_name(self):
+        return os.path.split(self.data_dir)[-1]
 
     undeformed_coords_filename = Str('undeformed_coords-Stage-0-0')
 
     displacements_basename = Str('displ-Stage-0-')
 
-    facet_params_dict = Dict
+    facet_params_dict = Property(Dict, depends_on='data_dir')
     '''Facet parameters obtained by decompilation of the specimen_name
     '''
-    @on_trait_change('specimen_name')
-    def _facet_params_dict_update(self):
+    @cached_property
+    def _get_facet_params_dict(self):
         pat = r'.*Xf(?P<fsz_x>\d+)s(?P<fst_x>\d+)-Yf(?P<fsz_y>\d+)s(?P<fst_y>\d+).*'
         m = re.match(pat, self.specimen_name)
-        self.facet_params_dict = m.groupdict()
+        return m.groupdict()
 
-    n_px_facet_size_x = Int
+    n_px_facet_size_x = Property(Int, depends_on='data_dir')
     '''Size of a facet in x-direction defined in numbers of pixels
     '''
-    @on_trait_change('facet_params_dict')
-    def _n_px_facet_size_x_update(self):
-        self.n_px_facet_size_x = int(self.facet_params_dict['fsz_x'])
+    @cached_property
+    def _get_n_px_facet_size_x(self):
+        return int(self.facet_params_dict['fsz_x'])
 
-    n_px_facet_step_x = Int
+    n_px_facet_step_x = Property(Int, depends_on='data_dir')
     '''Distance between the mid-points of two facets in x-direction
     '''
-    @on_trait_change('facet_params_dict')
-    def _n_px_facet_step_x_update(self):
-        self.n_px_facet_step_x = int(self.facet_params_dict['fst_x'])
+    @cached_property
+    def _get_n_px_facet_step_x(self):
+        return int(self.facet_params_dict['fst_x'])
 
-    n_px_facet_size_y = Int
+    n_px_facet_size_y = Property(Int, depends_on='data_dir')
     '''Size of a facet in y-direction defined in numbers of pixels
     '''
-    @on_trait_change('facet_params_dict')
-    def _n_px_facet_size_y_update(self):
-        self.n_px_facet_size_y = int(self.facet_params_dict['fsz_y'])
+    @cached_property
+    def _get_n_px_facet_size_y(self):
+        return int(self.facet_params_dict['fsz_y'])
 
-    n_px_facet_step_y = Int
+    n_px_facet_step_y = Property(Int, depends_on='data_dir')
     '''Distance between the mid-points of two facets in y-direction
     '''
-    @on_trait_change('facet_params_dict')
-    def _n_px_facet_step_y_update(self):
-        self.n_px_facet_step_y = int(self.facet_params_dict['fst_y'])
-
-    first_step = Int
-    '''Number of the first step.
-    '''
-    @on_trait_change('step_list')
-    def _first_step_update(self):
-        self.first_step = np.min(self.step_list)
-
-    last_step = Int
-    '''Number of the last step.
-    '''
-    @on_trait_change('step_list')
-    def _last_step_update(self):
-        self.last_step = np.max(self.step_list)
+    @cached_property
+    def _get_n_px_facet_step_y(self):
+        return int(self.facet_params_dict['fst_y'])
 
     view = View(
                 # Item('data_dir'),
                 Item('specimen_name', style='readonly'),
-                Item('first_step', style='readonly'),
-                Item('last_step', style='readonly'),
                 Item('number_of_steps', style='readonly'),
                 Item('n_px_facet_size_x', style='readonly'),
                 Item('n_px_facet_size_y', style='readonly'),
                 Item('n_px_facet_step_x', style='readonly'),
                 Item('n_px_facet_step_y', style='readonly'),
-#                 HGroup(
-#                        Item('step_selected', editor=EnumEditor(name='step_list'),
-#                             springy=True),
-#                        Item('step_selected', style='text', show_label=False,
-#                             springy=True),
-#                        ),
                 id='aramisCDT.info',
                 resizable=True
                 )
 
-
-if __name__ == '__main__':
-
-    AI = AramisInfo()
-    AI.configure_traits()
 
 

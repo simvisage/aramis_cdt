@@ -61,7 +61,7 @@ class AramisCDT(HasTraits):
 
     aramis_data = Instance(AramisData)
 
-    step_list = DelegatesTo('aramis_info')
+    number_of_steps = DelegatesTo('aramis_info')
 
     # integration radius for the non-local average of the measured strain
     # defined as integer value of the number of facets (or elements)
@@ -287,7 +287,7 @@ class AramisCDT(HasTraits):
         self.number_of_missing_facets_t = []
         self.control_strain_t = np.array([])
 
-        for step_idx in self.aramis_info.step_idx_list:
+        for step_idx in self.aramis_info.step_list:
             self.aramis_data.evaluated_step_idx = step_idx
             if self.number_of_cracks_t_analyse:
                 self.__number_of_cracks_t()
@@ -314,13 +314,13 @@ class AramisCDT(HasTraits):
         crack_step[self.crack_detect_mask] = step
         step -= 1
         self.crack_width_avg_t = np.zeros((np.sum(self.crack_detect_mask_avg),
-                                       len(self.aramis_info.step_list)))
+                                       self.number_of_steps))
 
         self.crack_width_t = np.zeros((np.sum(self.crack_detect_mask),
-                                       len(self.aramis_info.step_list)))
+                                       self.number_of_steps))
 
         self.crack_stress_t = np.zeros((np.sum(self.crack_detect_mask_avg),
-                                       len(self.aramis_info.step_list)))
+                                       self.number_of_steps))
         # plt.figure()
         while step:
             self.aramis_data.evaluated_step_idx = step

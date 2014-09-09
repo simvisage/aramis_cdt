@@ -46,7 +46,7 @@ class AramisRawData(HasTraits):
     aramis data prepred for further elaboration in subclasses
     load data from *.npy files
     '''
-    aramis_info = Instance(AramisInfo)
+    aramis_info = Instance(AramisInfo, params_changed=True)
 
     aramis_info_changed = Event
     @on_trait_change('aramis_info.data_dir')
@@ -66,7 +66,7 @@ class AramisRawData(HasTraits):
     @cached_property
     def _get_evaluated_step_idx_filename(self):
         return '%s%d' % (self.aramis_info.displacements_basename,
-                         self.aramis_info.step_list[self.evaluated_step_idx])
+                         self.aramis_info.aramis_stage_list[self.evaluated_step_idx])
 
     transform_data = Bool(False, params_changed=True)
     '''Switch data transformation before analysis
@@ -106,7 +106,7 @@ class AramisRawData(HasTraits):
     @cached_property
     def _get_input_array(self, verbose=False):
         fname = '%s%d' % (self.aramis_info.displacements_basename,
-                         self.aramis_info.step_list[self.evaluated_step_idx])
+                         self.aramis_info.aramis_stage_list[self.evaluated_step_idx])
         if verbose:
             print 'loading', fname, '...'
 
@@ -135,8 +135,6 @@ class AramisData(AramisRawData):
     '''Aramis Data Structure
     '''
 
-    step_list = DelegatesTo('aramis_info')
-
     #===========================================================================
     # Parameters
     #===========================================================================
@@ -151,7 +149,7 @@ class AramisData(AramisRawData):
     @cached_property
     def _get_evaluated_step_idx_filename(self):
         return '%s%d' % (self.aramis_info.displacements_basename,
-                         self.aramis_info.step_list[self.evaluated_step_idx])
+                         self.aramis_info.aramis_stage_list[self.evaluated_step_idx])
 
     #===========================================================================
     # Undeformed state variables
