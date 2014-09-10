@@ -53,7 +53,10 @@ class AramisRawData(HasTraits):
     X = Property(Array, depends_on='aramis_info.+params_changed')
     r'''Cordinates in the initial state formated as an array
     with a first index representing the node number, the second indices
-    indicate the following: :math:`X_n = [i,j,x_0,y_0,z_0]`.
+    indicate the following: 
+    
+    .. math::
+            X_n = [i,j,x_0,y_0,z_0].
     '''
     @cached_property
     def _get_X(self, verbose=False):
@@ -243,10 +246,10 @@ class AramisFieldData(AramisRawData):
 
     x_arr_stats = Property(depends_on='aramis_info.+params_changed')
     '''
-    mu_mm - mean value of facet midpoint distance [mm]
-    std_mm - standard deviation of facet midpoint distance [mm]
-    mu_px_mm - mean value of one pixel size [mm]
-    std_px_mm - standard deviation of one pixel size [mm]
+    * mu_mm - mean value of facet midpoint distance [mm]
+    * std_mm - standard deviation of facet midpoint distance [mm]
+    * mu_px_mm - mean value of one pixel size [mm]
+    * std_px_mm - standard deviation of one pixel size [mm]
     '''
     @cached_property
     def _get_x_arr_stats(self):
