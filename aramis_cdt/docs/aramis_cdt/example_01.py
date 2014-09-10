@@ -25,6 +25,8 @@ if platform.system() == 'Linux':
 elif platform.system() == 'Windows':
     sysclock = time.clock
 
+import matplotlib.pyplot as plt
+
 from aramis_cdt.aramis_info import AramisInfo
 from aramis_cdt.aramis_cdt import AramisCDT
 from aramis_cdt.aramis_ui import AramisUI
@@ -50,7 +52,6 @@ d_ux = AUI.aramis_cdt.d_ux_arr[10, :]
 dd_ux = AUI.aramis_cdt.dd_ux_arr[10, :]
 ddd_ux = AUI.aramis_cdt.ddd_ux_arr[10, :]
 
-import matplotlib.pyplot as plt
 plt.subplot(611)
 plt.plot(x, ux)
 plt.locator_params(axis='y', nbins=3)

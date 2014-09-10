@@ -24,7 +24,7 @@ from os.path import expanduser
 
 HOME_DIR = expanduser("~")
 # build directory
-BUILD_DIR = os.path.join(HOME_DIR, 'aramis_cdt', 'docs')
+BUILD_DIR = os.path.join(HOME_DIR, '.aramis_cdt', 'docs')
 # output directory for the documentation
 DOCS_DIR = os.path.join('..', 'docs',)
 # output directory for the example documentation
