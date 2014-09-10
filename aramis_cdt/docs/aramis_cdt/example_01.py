@@ -48,9 +48,9 @@ AUI = AramisUI(aramis_info=AI)
 
 x = AUI.aramis_data.x_arr_0[10, :]
 ux = AUI.aramis_data.ux_arr[10, :]
-d_ux = AUI.aramis_cdt.d_ux_arr[10, :]
-dd_ux = AUI.aramis_cdt.dd_ux_arr[10, :]
-ddd_ux = AUI.aramis_cdt.ddd_ux_arr[10, :]
+d_ux = AUI.aramis_cdt.d_ux[10, :]
+dd_ux = AUI.aramis_cdt.dd_ux[10, :]
+ddd_ux = AUI.aramis_cdt.ddd_ux[10, :]
 
 plt.subplot(611)
 plt.plot(x, ux)
@@ -94,9 +94,9 @@ AUI.aramis_cdt.integ_radius = 4
 
 x = AUI.aramis_data.x_arr_0[40, :]
 ux = AUI.aramis_data.ux_arr[40, :]
-d_ux = AUI.aramis_cdt.d_ux_arr[40, :]
-dd_ux = AUI.aramis_cdt.dd_ux_arr[40, :]
-ddd_ux = AUI.aramis_cdt.ddd_ux_arr[40, :]
+d_ux = AUI.aramis_cdt.d_ux[40, :]
+dd_ux = AUI.aramis_cdt.dd_ux[40, :]
+ddd_ux = AUI.aramis_cdt.ddd_ux[40, :]
 
 plt.subplot(611)
 plt.plot(x, ux)

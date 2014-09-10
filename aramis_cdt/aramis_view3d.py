@@ -48,13 +48,13 @@ class AramisView3D(HasTraits):
 
     plot_title = Bool(True)
 
-    plot3d_var = Trait('07 d_ux_arr [mm]', {'01 x_arr [mm]':['aramis_data', 'x_arr_0'],
+    plot3d_var = Trait('07 d_ux [mm]', {'01 x_arr [mm]':['aramis_data', 'x_arr_0'],
                                             '02 y_arr [mm]':['aramis_data', 'y_arr_0'],
                                             '03 z_arr [mm]':['aramis_data', 'z_arr_0'],
                                             '04 ux_arr [mm]':['aramis_data', 'ux_arr'],
                                             '05 uy_arr [mm]':['aramis_data', 'uy_arr'],
                                             '06 uz_arr [mm]':['aramis_data', 'uz_arr'],
-                                            '07 d_ux_arr [mm]':['aramis_cdt', 'd_ux_arr'],
+                                            '07 d_ux [mm]':['aramis_cdt', 'd_ux'],
                                             '08 crack_filed_arr [mm]': ['aramis_cdt', 'crack_field_arr']})
 
     plot3d_points_flat = Button
@@ -73,7 +73,7 @@ class AramisView3D(HasTraits):
         plot3d_var = getattr(getattr(self, self.plot3d_var_[0]), self.plot3d_var_[1])
 
         mask = np.logical_or(np.isnan(self.aramis_data.x_arr_0),
-                             self.aramis_data.data_array_0_mask[0, :, :])
+                             self.aramis_data.x_0_mask[0, :, :])
         mask = None
         m.points3d(self.aramis_data.x_arr_0[mask],
                    self.aramis_data.y_arr_0[mask],
@@ -267,20 +267,3 @@ class AramisView3D(HasTraits):
                )
 
 
-if __name__ == '__main__':
-    from os.path import expanduser
-    home = expanduser("~")
-
-    data_dir = os.path.join(home, '.simdb_cache', 'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15')
-
-    AI = AramisInfo(data_dir=data_dir)
-    AD = AramisFieldData(aramis_info=AI)
-    AC = AramisCDT(aramis_info=AI,
-                   aramis_data=AD,
-                integ_radius=1
-                  )
-    AramisView3D(
-                 aramis_info=AI,
-                 aramis_data=AD,
-                 aramis_cdt=AC
-                 ).configure_traits()
