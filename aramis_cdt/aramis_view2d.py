@@ -75,29 +75,29 @@ class AramisPlot2D(HasTraits):
         fig.clf()
         ax = fig.add_subplot(2, 2, 1)
 
-        ax.plot(aramis_data.x_idx_0.T, aramis_cdt.d_ux_arr.T, color='black')
-        ax.plot(aramis_data.x_idx_0[0, :], aramis_cdt.d_ux_arr_avg, color='red', linewidth=2)
+        ax.plot(aramis_data.i.T, aramis_data.d_ux.T, color='black')
+        ax.plot(aramis_data.i[0, :], aramis_data.d_ux_avg, color='red', linewidth=2)
         y_max_lim = ax.get_ylim()[-1]
-        ax.vlines(aramis_data.x_idx_0[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
+        ax.vlines(aramis_data.i[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
                  color='magenta', linewidth=1, zorder=10)
 
         ax2 = fig.add_subplot(2, 2, 2)
-        ax2.plot(aramis_data.x_idx_0.T, aramis_data.ux_arr.T, color='green')
-        ax2.plot(aramis_data.x_idx_0[0, :], aramis_data.ux_arr_avg, color='red', linewidth=2)
+        ax2.plot(aramis_data.i.T, aramis_data.ux_arr.T, color='green')
+        ax2.plot(aramis_data.i[0, :], aramis_data.ux_arr_avg, color='red', linewidth=2)
         y_max_lim = ax2.get_ylim()[-1]
-        ax2.vlines(aramis_data.x_idx_0[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
+        ax2.vlines(aramis_data.i[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
                  color='magenta', linewidth=1, zorder=10)
 
         ax3 = fig.add_subplot(2, 2, 3)
-        ax3.plot(aramis_data.x_idx_0[0, :], aramis_cdt.dd_ux_arr_avg, color='black')
-        ax3.plot(aramis_data.x_idx_0[0, :], aramis_cdt.ddd_ux_arr_avg, color='blue')
+        ax3.plot(aramis_data.i[0, :], aramis_data.dd_ux_avg, color='black')
+        ax3.plot(aramis_data.i[0, :], aramis_data.ddd_ux_avg, color='blue')
         y_max_lim = ax3.get_ylim()[-1]
-        ax3.vlines(aramis_data.x_idx_0[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
+        ax3.vlines(aramis_data.i[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
                  color='magenta', linewidth=1, zorder=10)
 
         ax = fig.add_subplot(2, 2, 4)
-        from aramis_cdt import get_d
-        ir = aramis_cdt.integ_radius
+        from aramis_data import get_d
+        ir = aramis_data.integ_radius
 #         ax.plot(aramis_data.x_arr_0.T[ir:-ir, :],
 #                 (get_d(aramis_data.x_arr_0 + aramis_data.ux_arr, ir).T - get_d(aramis_data.x_arr_0, ir).T)[ir:-ir, :], color='black')
 #        ax.plot(aramis_data.x_arr_0.T[ir:-ir, :],
@@ -308,7 +308,7 @@ class AramisPlot2D(HasTraits):
         ax = fig.add_subplot(111)
 
         ax.set_title('')
-        ax.plot(self.aramis_data.step_time, self.aramis_data.force)
+        ax.plot(self.aramis_data.step_times, self.aramis_data.force)
         ax.set_xlabel('Time')
         ax.set_ylabel('Force')
 
@@ -340,16 +340,17 @@ class AramisPlot2D(HasTraits):
     def _plot_strain_crack_avg_fired(self):
 
         aramis_cdt = self.aramis_cdt
+        aramis_data = self.aramis_data
 
         fig = self.figure
         fig.clf()
         ax = fig.add_subplot(111, aspect='equal')
         ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.current_step)
 
-        plot3d_var = getattr(aramis_cdt, 'd_ux_arr')
+        plot3d_var = getattr(aramis_data, 'd_ux')
 
         mask = np.logical_or(np.isnan(self.aramis_data.x_arr_0),
-                             self.aramis_data.data_array_0_mask[0, :, :])
+                             self.aramis_data.x_0_mask[0, :, :])
         mask = None
 #         plt.scatter(aramis_cdt.x_arr_0[mask],
 #                    aramis_cdt.y_arr_0[mask], c=plot3d_var[mask], cmap=my_cmap_lin,
@@ -383,16 +384,17 @@ class AramisPlot2D(HasTraits):
     plot_crack_filter_crack_avg = Button
     def _plot_crack_filter_crack_avg_fired(self):
         aramis_cdt = self.aramis_cdt
+        aramis_data = self.aramis_data
 
         fig = self.figure
         fig.clf()
         ax = fig.add_subplot(111, aspect='equal')
         ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.current_step)
 
-        plot3d_var = getattr(aramis_cdt, 'd_ux_arr')
+        plot3d_var = getattr(aramis_data, 'd_ux')
 
         mask = np.logical_or(np.isnan(self.aramis_data.x_arr_0),
-                             self.aramis_data.data_array_0_mask[0, :, :])
+                             self.aramis_data.x_0_mask[0, :, :])
         mask = None
 #         plt.scatter(aramis_cdt.x_arr_0[mask],
 #                    aramis_cdt.y_arr_0[mask], c=plot3d_var[mask], cmap=my_cmap_lin,
@@ -483,7 +485,7 @@ class AramisPlot2D(HasTraits):
         ax_hist.set_xlim(0, 0.15)
         ax_hist.set_ylim(0, 100)
 
-        plot3d_var = getattr(aramis_cdt, 'd_ux_arr')
+        plot3d_var = getattr(aramis_cdt, 'd_ux')
 
         CS = ax_area.contourf(self.aramis_data.x_arr_0,
                          self.aramis_data.y_arr_0,
@@ -581,22 +583,3 @@ class AramisPlot2D(HasTraits):
                 id='aramisCDT.view2d',
                 )
 
-if __name__ == '__main__':
-    from os.path import expanduser
-    home = expanduser("~")
-
-    data_dir = os.path.join(home, '.simdb_cache', 'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15')
-
-    AI = AramisInfo(data_dir=data_dir)
-    AD = AramisFieldData(aramis_info=AI)
-    AC = AramisCDT(aramis_info=AI,
-                   aramis_data=AD
-                  )
-    AC.run_t = True
-    AC.run_back = True
-    AD.current_step = 203
-    AramisPlot2D(
-                 aramis_info=AI,
-                 aramis_data=AD,
-                 aramis_cdt=AC
-                 ).configure_traits()

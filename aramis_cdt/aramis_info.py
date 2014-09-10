@@ -39,7 +39,7 @@ elif platform.system() == 'Windows':
 simdb = SimDB()
 
 class AramisInfo(HasTraits):
-    '''Basic informations of Aramis database obtained from directory name and
+    '''Basic information of Aramis database obtained from directory name and
     from files placed in the data directory.
     '''
     data_dir = Directory(auto_set=False, enter_set=True)
