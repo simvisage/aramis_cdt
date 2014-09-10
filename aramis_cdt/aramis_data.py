@@ -34,12 +34,6 @@ elif platform.system() == 'Windows':
 
 from aramis_info import AramisInfo
 
-def get_d(u_arr, integ_radius):
-    ir = integ_radius
-    du_arr = np.zeros_like(u_arr)
-    du_arr[:, ir:-ir] = (u_arr[:, 2 * ir:] - u_arr[:, :-2 * ir])
-    return du_arr
-
 
 class AramisRawData(HasTraits):
     r'''Basic array structure containing the measured
@@ -48,37 +42,21 @@ class AramisRawData(HasTraits):
     '''
     aramis_info = Instance(AramisInfo, params_changed=True)
 
-    aramis_info_changed = Event
-    @on_trait_change('aramis_info.data_dir')
-    def aramis_info_change(self):
-        if self.aramis_info.data_dir == '':
-            print 'Data directory in UI is not defined!'
-        else:
-            self.aramis_info_changed = True
-
-    evaluated_step_idx = Int(0, params_changed=True)
-    r'''Current index of a stage for evaluation.
+    current_step = Int(0, params_changed=True)
+    r'''Number of current step for evaluation.
     '''
-
-    evaluated_step_idx_filename = Property(Str, depends_on='+params_changed')
-    r'''Filename for the evaluated step
-    '''
-    @cached_property
-    def _get_evaluated_step_idx_filename(self):
-        return '%s%d' % (self.aramis_info.displacements_basename,
-                         self.aramis_info.aramis_stage_list[self.evaluated_step_idx])
 
     transform_data = Bool(False, params_changed=True)
     r'''Switch data transformation before analysis
     '''
 
-    input_array_undeformed = Property(Array, depends_on='aramis_info_changed')
+    X = Property(Array, depends_on='aramis_info.+params_changed')
     r'''Cordinates in the initial state formated as an array
     with a first index representing the node number, the second indices
     indicate the following: :math:`X_n = [i,j,x_0,y_0,z_0]`.
     '''
     @cached_property
-    def _get_input_array_undeformed(self, verbose=False):
+    def _get_X(self, verbose=False):
         fname = self.aramis_info.undeformed_coords_filename
         if verbose:
             print '#' * 50
@@ -97,7 +75,15 @@ class AramisRawData(HasTraits):
             print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
         return data_arr
 
-    input_array = Property(Array, depends_on='aramis_info_changed, +params_changed')
+    current_step_filename = Property(Str, depends_on='+params_changed')
+    r'''Filename for the evaluated step
+    '''
+    @cached_property
+    def _get_current_step_filename(self):
+        return '%s%d' % (self.aramis_info.displacements_basename,
+                         self.aramis_info.aramis_stage_list[self.current_step])
+
+    U = Property(Array, depends_on='aramis_info.+params_changed, +params_changed')
     r'''Array of data exported from Aramis where for each node :math:`n`
     a data record defined as
 
@@ -110,9 +96,8 @@ class AramisRawData(HasTraits):
     of the node in the :math:`x,y,z` directions.
     '''
     @cached_property
-    def _get_input_array(self, verbose=False):
-        fname = '%s%d' % (self.aramis_info.displacements_basename,
-                         self.aramis_info.aramis_stage_list[self.evaluated_step_idx])
+    def _get_U(self, verbose=False):
+        fname = self.current_step_filename
         if verbose:
             print 'loading', fname, '...'
 
@@ -127,7 +112,7 @@ class AramisRawData(HasTraits):
             print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
         return data_arr
 
-    ad_channels_arr = Property(Array, depends_on='aramis_info_changed')
+    ad_channels_arr = Property(Array, depends_on='aramis_info.+params_changed')
     '''Array of additional channel data including computer time and universal time
     for synchronization with external data.
     '''
@@ -141,7 +126,7 @@ class AramisRawData(HasTraits):
 
 
 class AramisFieldData(AramisRawData):
-    '''Aramis Data Structure
+    '''Field data structure for AramisCDT
     '''
 
     #===========================================================================
@@ -152,138 +137,140 @@ class AramisFieldData(AramisRawData):
     '''Switch data transformation before analysis
     '''
 
-    evaluated_step_idx_filename = Property(Str, depends_on='+params_changed')
-    '''Filename for the evaluated step
+    #===========================================================================
+    # Initial state arrays - coordinates
+    #===========================================================================
+    data_array_0 = Property(Array, depends_on='aramis_info.+params_changed')
+    '''Array of values for initial state in the first step 
     '''
     @cached_property
-    def _get_evaluated_step_idx_filename(self):
-        return '%s%d' % (self.aramis_info.displacements_basename,
-                         self.aramis_info.aramis_stage_list[self.evaluated_step_idx])
-
-    #===========================================================================
-    # Undeformed state variables
-    #===========================================================================
-    data_array_undeformed = Property(Array, depends_on='aramis_info_changed')
-    '''Array of values for undeformed state in the first step.
-    '''
-    @cached_property
-    def _get_data_array_undeformed(self):
-        '''Load data for the first step from *.npy file. If file *.npy does
-        not exist the data is load from *.txt and saved as *.npy.
-        (improve speed of loading)
-        '''
+    def _get_data_array_0(self):
         if self.transform_data:
-            return self._transform_coord(self.input_array_undeformed)
+            return self.X
         else:
-            return self.input_array_undeformed
+            return self.X
 
-    data_array_undeformed_shape = Property(Tuple, depends_on='input_array_undeformed')
-    '''Shape of undeformed data array.
-    '''
-    @cached_property
-    def _get_data_array_undeformed_shape(self):
-        if self.aramis_info.data_dir == '':
-            return (0, 0, 0)
-        else:
-            return (3, self.n_y_undeformed, self.n_x_undeformed)
-
-    data_array_undeformed_mask = Property(Tuple, depends_on='input_array_undeformed')
+    data_array_0_mask = Property(Tuple, depends_on='X')
     '''Default mask in undeformed state
     '''
     @cached_property
-    def _get_data_array_undeformed_mask(self):
-        return np.isnan(self.input_array_undeformed)
+    def _get_data_array_0_mask(self):
+        return np.isnan(self.X)
 
-    n_x_undeformed = Property(Int, depends_on='aramis_info_changed')
+    n_x_0 = Property(Int, depends_on='aramis_info.+params_changed')
     '''Number of facets in x-direction
     '''
     @cached_property
-    def _get_n_x_undeformed(self):
-        return self.input_array_undeformed.shape[2]
+    def _get_n_x_0(self):
+        return self.X.shape[2]
 
-    n_y_undeformed = Property(Int, depends_on='aramis_info_changed')
+    n_y_0 = Property(Int, depends_on='aramis_info.+params_changed')
     '''Number of facets in y-direction
     '''
     @cached_property
-    def _get_n_y_undeformed(self):
-        return self.input_array_undeformed.shape[1]
+    def _get_n_y_0(self):
+        return self.X.shape[1]
 
-    x_idx_undeformed = Property(Int, depends_on='input_array_undeformed')
+    x_idx_0 = Property(Int, depends_on='X')
     '''Indices in the first column of the undeformed state starting with zero.
     '''
     @cached_property
-    def _get_x_idx_undeformed(self):
-        return (np.arange(self.n_x_undeformed)[np.newaxis, :] *
-                np.ones(self.n_y_undeformed)[:, np.newaxis]).astype(int)
+    def _get_x_idx_0(self):
+        return (np.arange(self.n_x_0)[np.newaxis, :] *
+                np.ones(self.n_y_0)[:, np.newaxis]).astype(int)
 
-    y_idx_undeformed = Property(Int, depends_on='input_array_undeformed')
+    y_idx_0 = Property(Int, depends_on='X')
     '''Indices in the first column of the undeformed state starting with zero.
     '''
     @cached_property
-    def _get_y_idx_undeformed(self):
-        return (np.arange(self.n_y_undeformed)[np.newaxis, :] *
-                np.ones(self.n_x_undeformed)[:, np.newaxis]).T
+    def _get_y_idx_0(self):
+        return (np.arange(self.n_y_0)[np.newaxis, :] *
+                np.ones(self.n_x_0)[:, np.newaxis]).T
 
-    x_arr_undeformed = Property(Array, depends_on='aramis_info_changed')
+    x_arr_0 = Property(Array, depends_on='aramis_info.+params_changed')
     '''Array of x-coordinates in undeformed state
     '''
     @cached_property
-    def _get_x_arr_undeformed(self):
-        return self.data_array_undeformed[0, :, :]
+    def _get_x_arr_0(self):
+        return self.data_array_0[0, :, :]
 
-    y_arr_undeformed = Property(Array, depends_on='aramis_info_changed')
+    y_arr_0 = Property(Array, depends_on='aramis_info.+params_changed')
     '''Array of y-coordinates in undeformed state
     '''
     @cached_property
-    def _get_y_arr_undeformed(self):
-        return self.data_array_undeformed[1, :, :]
+    def _get_y_arr_0(self):
+        return self.data_array_0[1, :, :]
 
-    z_arr_undeformed = Property(Array, depends_on='aramis_info_changed')
+    z_arr_0 = Property(Array, depends_on='aramis_info.+params_changed')
     '''Array of z-coordinates in undeformed state
     '''
     @cached_property
-    def _get_z_arr_undeformed(self):
-        return self.data_array_undeformed[2, :, :]
+    def _get_z_arr_0(self):
+        return self.data_array_0[2, :, :]
 
-    length_x_undeformed = Property(Array, depends_on='aramis_info_changed')
-    '''Length of the specimen in x-direction
+    #------------- measuring field parameters in initial state
+
+    data_array_0_shape = Property(Tuple, depends_on='X')
+    '''Shape of undeformed data array.
     '''
     @cached_property
-    def _get_length_x_undeformed(self):
-        return np.nanmax(self.x_arr_undeformed) - np.nanmin(self.x_arr_undeformed)
-
-    length_y_undeformed = Property(Array, depends_on='aramis_info_changed')
-    '''Length of the specimen in y-direction
-    '''
-    @cached_property
-    def _get_length_y_undeformed(self):
-        return self.y_arr_undeformed.max() - self.y_arr_undeformed.min()
-
-    length_z_undeformed = Property(Array, depends_on='aramis_info_changed')
-    '''Length of the specimen in z-direction
-    '''
-    @cached_property
-    def _get_length_z_undeformed(self):
-        return self.z_arr_undeformed.max() - self.z_arr_undeformed.min()
-
-    #===========================================================================
-    # Data array
-    #===========================================================================
-    data_array = Property(Array, depends_on='aramis_info_changed, +params_changed')
-    '''Array of Aramis exported data
-    [index_x, index_y, displ_x, displ_y, displ_z]
-    '''
-    @cached_property
-    def _get_data_array(self):
-        if self.transform_data:
-            return self.input_array
+    def _get_data_array_0_shape(self):
+        if self.aramis_info.data_dir == '':
+            return (0, 0, 0)
         else:
-            return self.input_array
+            return (3, self.n_y_0, self.n_x_0)
+
+    length_x_0 = Property(Array, depends_on='aramis_info.+params_changed')
+    '''Length of the measuring area in x-direction
+    '''
+    @cached_property
+    def _get_length_x_0(self):
+        return np.nanmax(self.x_arr_0) - np.nanmin(self.x_arr_0)
+
+    length_y_0 = Property(Array, depends_on='aramis_info.+params_changed')
+    '''Length of the measuring area in y-direction
+    '''
+    @cached_property
+    def _get_length_y_0(self):
+        return self.y_arr_0.max() - self.y_arr_0.min()
+
+    length_z_0 = Property(Array, depends_on='aramis_info.+params_changed')
+    '''Length of the measuring area in z-direction
+    '''
+    @cached_property
+    def _get_length_z_0(self):
+        return self.z_arr_0.max() - self.z_arr_0.min()
+
+    x_arr_stats = Property(depends_on='aramis_info.+params_changed')
+    '''
+    mu_mm - mean value of facet midpoint distance [mm]
+    std_mm - standard deviation of facet midpoint distance [mm]
+    mu_px_mm - mean value of one pixel size [mm]
+    std_px_mm - standard deviation of one pixel size [mm]
+    '''
+    @cached_property
+    def _get_x_arr_stats(self):
+        x_diff = np.diff(self.x_arr_0, axis=1)
+        mu_mm = np.mean(x_diff)
+        std_mm = np.std(x_diff)
+        mu_px_mm = np.mean(x_diff / self.aramis_info.n_px_facet_step_x)
+        std_px_mm = np.std(x_diff / self.aramis_info.n_px_facet_step_x)
+        return mu_mm, std_mm, mu_px_mm, std_px_mm
 
     #===========================================================================
     # Displacement arrays
     #===========================================================================
-    ux_arr = Property(Array, depends_on='aramis_info_changed, +params_changed')
+    data_array = Property(Array, depends_on='aramis_info.+params_changed, +params_changed')
+    '''Array of displacements for current step
+    '''
+    @cached_property
+    def _get_data_array(self):
+        if self.transform_data:
+            return self.U
+        else:
+            return self.U
+
+    ux_arr = Property(Array, depends_on='aramis_info.+params_changed, +params_changed')
     '''Array of displacements in x-direction
     '''
     @cached_property
@@ -298,7 +285,7 @@ class AramisFieldData(AramisRawData):
         # ux_arr[ux_arr < 0.01] = 0
         return ux_arr
 
-    ux_arr_avg = Property(Array, depends_on='aramis_info_changed, +params_changed')
+    ux_arr_avg = Property(Array, depends_on='aramis_info.+params_changed, +params_changed')
     '''Average array of displacements in x-direction
     '''
     @cached_property
@@ -308,55 +295,42 @@ class AramisFieldData(AramisRawData):
         ux_avg = np.average(ux_arr, axis=0)
         return ux_avg
 
-    uy_arr = Property(Array, depends_on='aramis_info_changed, +params_changed')
+    uy_arr = Property(Array, depends_on='aramis_info.+params_changed, +params_changed')
     '''Array of displacements in y-direction
     '''
     @cached_property
     def _get_uy_arr(self):
         return self.data_array[1, :, :]
 
-    uz_arr = Property(Array, depends_on='aramis_info_changed, +params_changed')
+    uz_arr = Property(Array, depends_on='aramis_info.+params_changed, +params_changed')
     '''Array of displacements in z-direction
     '''
     @cached_property
     def _get_uz_arr(self):
         return self.data_array[2, :, :]
 
-    step_time = Property(Array, depends_on='aramis_info_changed')
+    step_time = Property(Array, depends_on='aramis_info.+params_changed')
+    '''Time of the step obtained from Aramis 
+    '''
     @cached_property
     def _get_step_time(self):
         return self.ad_channels_arr[:, 0]
 
-    force = Property(Array, depends_on='aramis_info_changed')
-    '''Force obtained from AD channel value
-    '''
+    step_max = Property(Int, depends_on='aramis_info.+params_changed')
     @cached_property
-    def _get_force(self):
-        return np.array([10, 20])
-        # return self.ad_channels_arr[:, 1]
-
-    # TODO: load from exp db
-    area = Float(100.0 * 20.0)
-
-    stress = Property(Array, depends_on='aramis_info_changed')
-    @cached_property
-    def _get_stress(self):
-        return self.force / self.area
-
-    step_idx_max = Property(Int, depends_on='aramis_info_changed')
-    @cached_property
-    def _get_step_idx_max(self):
-        if hasattr(self.aramis_info, 'number_of_steps'):
-            return self.aramis_info.number_of_steps - 1
-        else:
-            return 1
+    def _get_step_max(self):
+        return self.aramis_info.number_of_steps - 1
 
 
     view = View(
-                Item('evaluated_step_idx',
-                     editor=RangeEditor(low=0, high_name='step_idx_max', mode='slider'),
+                Item('current_step',
+                     editor=RangeEditor(low=0, high_name='step_max', mode='slider'),
                                         springy=True),
-                Item('data_array_undeformed_shape', label='data shape', style='readonly'),
+                Item('data_array_0_shape', label='data shape', style='readonly'),
+                Item('length_x_0', label='l_x', style='readonly'),
+                Item('length_y_0', label='l_y', style='readonly'),
+                Item('length_z_0', label='l_z', style='readonly'),
+                Item('x_arr_stats', label='(mu_x, std_x, mu_px_x, std_px_x)', style='readonly'),
                 # 'transform_data',
                 id='aramisCDT.data',
                 )

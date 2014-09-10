@@ -37,10 +37,10 @@ AramisRawData
 AramisData
 ----------
 
-.. inheritance-diagram:: AramisData
+.. inheritance-diagram:: AramisFieldData
 	:parts: 1
 
-.. autoclass:: AramisData
+.. autoclass:: AramisFieldData
    :members:
    :undoc-members:
 

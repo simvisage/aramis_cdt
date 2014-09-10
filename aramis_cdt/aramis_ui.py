@@ -156,6 +156,6 @@ if __name__ == '__main__':
                              '2014-06-12_BTT-4c-2cm-0-TU_MxN2', 'aramis', 'A2d_BTT-4c-2cm-TU-0-V03_MxN2-Xf15s3-Yf15s3')
 
     AI = AramisInfo(data_dir=data_dir)
-    AI = AramisInfo()
+    # AI = AramisInfo()
     AUI = AramisUI(aramis_info=AI)
     AUI.configure_traits()

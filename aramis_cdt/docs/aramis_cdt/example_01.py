@@ -41,12 +41,12 @@ AI = AramisInfo(data_dir=data_dir)
 
 AC = AramisCDT(aramis_info=AI,
                integ_radius=1,
-               crack_detect_idx=0)
+               crack_detection_step=0)
 
 AUI = AramisUI(aramis_info=AI)
 
 
-x = AUI.aramis_data.x_arr_undeformed[10, :]
+x = AUI.aramis_data.x_arr_0[10, :]
 ux = AUI.aramis_data.ux_arr[10, :]
 d_ux = AUI.aramis_cdt.d_ux_arr[10, :]
 dd_ux = AUI.aramis_cdt.dd_ux_arr[10, :]
@@ -92,7 +92,7 @@ plt.show()
 
 AUI.aramis_cdt.integ_radius = 4
 
-x = AUI.aramis_data.x_arr_undeformed[40, :]
+x = AUI.aramis_data.x_arr_0[40, :]
 ux = AUI.aramis_data.ux_arr[40, :]
 d_ux = AUI.aramis_cdt.d_ux_arr[40, :]
 dd_ux = AUI.aramis_cdt.dd_ux_arr[40, :]

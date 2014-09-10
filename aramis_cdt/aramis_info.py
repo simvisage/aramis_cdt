@@ -43,16 +43,18 @@ class AramisInfo(HasTraits):
     from files placed in the data directory.
     '''
     data_dir = Directory(auto_set=False, enter_set=True)
-    '''Directory of data files (.npy) exported by Aramis Software.
+    '''Directory containing experiment data files exported by Aramis Software.
     '''
 
     npy_dir = Property(Directory, depends_on='data_dir')
+    '''Directory containing data files converted to .npy. 
+    '''
     @cached_property
     def _get_npy_dir(self):
         return os.path.join(self.data_dir, 'npy/')
 
     aramis_stage_list = Property(List(Int), depends_on='data_dir')
-    '''List of stage numbers in filenames from Aramis
+    '''List of stage numbers obtained from filenames of Aramis files
     '''
     @cached_property
     def _get_aramis_stage_list(self):
@@ -78,14 +80,14 @@ class AramisInfo(HasTraits):
             return []
 
     number_of_steps = Property(Int, depends_on='data_dir')
-    '''Number of time steps
+    '''Number of steps - can differ from max value in aramis_stage_list
     '''
     @cached_property
     def _get_number_of_steps(self):
         return len(self.aramis_stage_list)
 
     step_list = Property(List(Int), depends_on='data_dir')
-    '''List of step indexes
+    '''List of step numbers
     '''
     @cached_property
     def _get_step_list(self):
@@ -99,11 +101,16 @@ class AramisInfo(HasTraits):
         return os.path.split(self.data_dir)[-1]
 
     undeformed_coords_filename = Str('undeformed_coords-Stage-0-0')
+    '''Name of the file containing coordinates in initial state
+    '''
 
     displacements_basename = Str('displ-Stage-0-')
+    '''Name of the file containing displacement of facets
+    '''
 
     facet_params_dict = Property(Dict, depends_on='data_dir')
-    '''Facet parameters obtained by decompilation of the specimen_name
+    '''Dictionary containing facet parameters obtained by decompilation of 
+    the specimen_name. 
     '''
     @cached_property
     def _get_facet_params_dict(self):
@@ -112,32 +119,34 @@ class AramisInfo(HasTraits):
         return m.groupdict()
 
     n_px_facet_size_x = Property(Int, depends_on='data_dir')
-    '''Size of a facet in x-direction defined in numbers of pixels
+    '''Size of a facet in x-direction [pixel]
     '''
     @cached_property
     def _get_n_px_facet_size_x(self):
         return int(self.facet_params_dict['fsz_x'])
 
     n_px_facet_step_x = Property(Int, depends_on='data_dir')
-    '''Distance between the mid-points of two facets in x-direction
+    '''Distance between the mid-points of two facets in x-direction [pixel]
     '''
     @cached_property
     def _get_n_px_facet_step_x(self):
         return int(self.facet_params_dict['fst_x'])
 
     n_px_facet_size_y = Property(Int, depends_on='data_dir')
-    '''Size of a facet in y-direction defined in numbers of pixels
+    '''Size of a facet in y-direction [pixel]
     '''
     @cached_property
     def _get_n_px_facet_size_y(self):
         return int(self.facet_params_dict['fsz_y'])
 
     n_px_facet_step_y = Property(Int, depends_on='data_dir')
-    '''Distance between the mid-points of two facets in y-direction
+    '''Distance between the mid-points of two facets in y-direction [pixel]
     '''
     @cached_property
     def _get_n_px_facet_step_y(self):
         return int(self.facet_params_dict['fst_y'])
+
+
 
     view = View(
                 # Item('data_dir'),

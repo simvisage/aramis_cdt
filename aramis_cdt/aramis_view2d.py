@@ -75,40 +75,40 @@ class AramisPlot2D(HasTraits):
         fig.clf()
         ax = fig.add_subplot(2, 2, 1)
 
-        ax.plot(aramis_data.x_idx_undeformed.T, aramis_cdt.d_ux_arr.T, color='black')
-        ax.plot(aramis_data.x_idx_undeformed[0, :], aramis_cdt.d_ux_arr_avg, color='red', linewidth=2)
+        ax.plot(aramis_data.x_idx_0.T, aramis_cdt.d_ux_arr.T, color='black')
+        ax.plot(aramis_data.x_idx_0[0, :], aramis_cdt.d_ux_arr_avg, color='red', linewidth=2)
         y_max_lim = ax.get_ylim()[-1]
-        ax.vlines(aramis_data.x_idx_undeformed[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
+        ax.vlines(aramis_data.x_idx_0[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
                  color='magenta', linewidth=1, zorder=10)
 
         ax2 = fig.add_subplot(2, 2, 2)
-        ax2.plot(aramis_data.x_idx_undeformed.T, aramis_data.ux_arr.T, color='green')
-        ax2.plot(aramis_data.x_idx_undeformed[0, :], aramis_data.ux_arr_avg, color='red', linewidth=2)
+        ax2.plot(aramis_data.x_idx_0.T, aramis_data.ux_arr.T, color='green')
+        ax2.plot(aramis_data.x_idx_0[0, :], aramis_data.ux_arr_avg, color='red', linewidth=2)
         y_max_lim = ax2.get_ylim()[-1]
-        ax2.vlines(aramis_data.x_idx_undeformed[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
+        ax2.vlines(aramis_data.x_idx_0[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
                  color='magenta', linewidth=1, zorder=10)
 
         ax3 = fig.add_subplot(2, 2, 3)
-        ax3.plot(aramis_data.x_idx_undeformed[0, :], aramis_cdt.dd_ux_arr_avg, color='black')
-        ax3.plot(aramis_data.x_idx_undeformed[0, :], aramis_cdt.ddd_ux_arr_avg, color='blue')
+        ax3.plot(aramis_data.x_idx_0[0, :], aramis_cdt.dd_ux_arr_avg, color='black')
+        ax3.plot(aramis_data.x_idx_0[0, :], aramis_cdt.ddd_ux_arr_avg, color='blue')
         y_max_lim = ax3.get_ylim()[-1]
-        ax3.vlines(aramis_data.x_idx_undeformed[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
+        ax3.vlines(aramis_data.x_idx_0[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
                  color='magenta', linewidth=1, zorder=10)
 
         ax = fig.add_subplot(2, 2, 4)
         from aramis_cdt import get_d
         ir = aramis_cdt.integ_radius
-#         ax.plot(aramis_data.x_arr_undeformed.T[ir:-ir, :],
-#                 (get_d(aramis_data.x_arr_undeformed + aramis_data.ux_arr, ir).T - get_d(aramis_data.x_arr_undeformed, ir).T)[ir:-ir, :], color='black')
-#        ax.plot(aramis_data.x_arr_undeformed.T[ir:-ir, :],
-#                 get_d(aramis_data.x_arr_undeformed + aramis_data.ux_arr, ir).T[ir:-ir, :], color='black')
-#         xx = get_d(aramis_data.x_arr_undeformed + aramis_data.ux_arr, ir)
+#         ax.plot(aramis_data.x_arr_0.T[ir:-ir, :],
+#                 (get_d(aramis_data.x_arr_0 + aramis_data.ux_arr, ir).T - get_d(aramis_data.x_arr_0, ir).T)[ir:-ir, :], color='black')
+#        ax.plot(aramis_data.x_arr_0.T[ir:-ir, :],
+#                 get_d(aramis_data.x_arr_0 + aramis_data.ux_arr, ir).T[ir:-ir, :], color='black')
+#         xx = get_d(aramis_data.x_arr_0 + aramis_data.ux_arr, ir)
 #         print xx[:, ir]
 #         print xx[:, ir][:, None] * np.ones(xx.shape[1])[None, :]
-#         ax.plot(aramis_data.x_arr_undeformed.T[ir:-ir, :],
+#         ax.plot(aramis_data.x_arr_0.T[ir:-ir, :],
 #                 (xx - xx[:, ir][:, None] * np.ones(xx.shape[1])[None, :]).T[ir:-ir, :] * 1000, color='black')
 
-        plt.suptitle(self.aramis_info.specimen_name + ' - %d' % aramis_data.evaluated_step_idx)
+        plt.suptitle(self.aramis_info.specimen_name + ' - %d' % aramis_data.current_step)
 
         aramis_cdt.crack_spacing_avg
 
@@ -138,7 +138,7 @@ class AramisPlot2D(HasTraits):
                  cumulative=True, bins=40, linewidth=2)
         ax2.set_ylabel('probability [-]')
 
-        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.evaluated_step_idx)
+        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.current_step)
 
         mu = aramis_cdt.crack_arr.mean()
         sigma = aramis_cdt.crack_arr.std()
@@ -344,29 +344,29 @@ class AramisPlot2D(HasTraits):
         fig = self.figure
         fig.clf()
         ax = fig.add_subplot(111, aspect='equal')
-        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.evaluated_step_idx)
+        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.current_step)
 
         plot3d_var = getattr(aramis_cdt, 'd_ux_arr')
 
-        mask = np.logical_or(np.isnan(self.aramis_data.x_arr_undeformed),
-                             self.aramis_data.data_array_undeformed_mask[0, :, :])
+        mask = np.logical_or(np.isnan(self.aramis_data.x_arr_0),
+                             self.aramis_data.data_array_0_mask[0, :, :])
         mask = None
-#         plt.scatter(aramis_cdt.x_arr_undeformed[mask],
-#                    aramis_cdt.y_arr_undeformed[mask], c=plot3d_var[mask], cmap=my_cmap_lin,
+#         plt.scatter(aramis_cdt.x_arr_0[mask],
+#                    aramis_cdt.y_arr_0[mask], c=plot3d_var[mask], cmap=my_cmap_lin,
 #                    marker='s')
 
         print plot3d_var[mask].shape
         # contour the data, plotting dots at the nonuniform data points.
-#         CS = plt.contour(aramis_cdt.x_arr_undeformed[mask][0, :, :],
-#                          aramis_cdt.y_arr_undeformed[mask][0, :, :],
+#         CS = plt.contour(aramis_cdt.x_arr_0[mask][0, :, :],
+#                          aramis_cdt.y_arr_0[mask][0, :, :],
 #                          plot3d_var[mask][0, :, :], 25, linewidths=.5, colors='k')
         # plotting filled contour
-        CS = ax.contourf(self.aramis_data.x_arr_undeformed,
-                         self.aramis_data.y_arr_undeformed,
+        CS = ax.contourf(self.aramis_data.x_arr_0,
+                         self.aramis_data.y_arr_0,
                          plot3d_var, 256, cmap=plt.get_cmap('jet'))
 
-        ax.vlines(self.aramis_data.x_arr_undeformed[0, :][self.aramis_cdt.crack_filter_avg],
-                   [0], np.nanmax(self.aramis_data.y_arr_undeformed),
+        ax.vlines(self.aramis_data.x_arr_0[0, :][self.aramis_cdt.crack_filter_avg],
+                   [0], np.nanmax(self.aramis_data.y_arr_0),
                    color='white', zorder=10, linewidth=2)
 
         ax.set_xlabel('x [mm]')
@@ -387,41 +387,41 @@ class AramisPlot2D(HasTraits):
         fig = self.figure
         fig.clf()
         ax = fig.add_subplot(111, aspect='equal')
-        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.evaluated_step_idx)
+        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.current_step)
 
         plot3d_var = getattr(aramis_cdt, 'd_ux_arr')
 
-        mask = np.logical_or(np.isnan(self.aramis_data.x_arr_undeformed),
-                             self.aramis_data.data_array_undeformed_mask[0, :, :])
+        mask = np.logical_or(np.isnan(self.aramis_data.x_arr_0),
+                             self.aramis_data.data_array_0_mask[0, :, :])
         mask = None
-#         plt.scatter(aramis_cdt.x_arr_undeformed[mask],
-#                    aramis_cdt.y_arr_undeformed[mask], c=plot3d_var[mask], cmap=my_cmap_lin,
+#         plt.scatter(aramis_cdt.x_arr_0[mask],
+#                    aramis_cdt.y_arr_0[mask], c=plot3d_var[mask], cmap=my_cmap_lin,
 #                    marker='s')
 
         print plot3d_var[mask].shape
         # contour the gridded data, plotting dots at the nonuniform data points.
-#         CS = plt.contour(aramis_cdt.x_arr_undeformed[mask][0, :, :],
-#                          aramis_cdt.y_arr_undeformed[mask][0, :, :],
+#         CS = plt.contour(aramis_cdt.x_arr_0[mask][0, :, :],
+#                          aramis_cdt.y_arr_0[mask][0, :, :],
 #                          plot3d_var[mask][0, :, :], 25, linewidths=.5, colors='k')
         # plotting filled contour
-        CS = ax.contourf(self.aramis_data.x_arr_undeformed,
-                         self.aramis_data.y_arr_undeformed,
+        CS = ax.contourf(self.aramis_data.x_arr_0,
+                         self.aramis_data.y_arr_0,
                          plot3d_var, 2, cmap=plt.get_cmap('binary'))
-        ax.plot(self.aramis_data.x_arr_undeformed, self.aramis_data.y_arr_undeformed, 'ko')
+        ax.plot(self.aramis_data.x_arr_0, self.aramis_data.y_arr_0, 'ko')
 
-        ax.plot(self.aramis_data.x_arr_undeformed[aramis_cdt.crack_filter],
-                 self.aramis_data.y_arr_undeformed[aramis_cdt.crack_filter], linestyle='None',
+        ax.plot(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
+                 self.aramis_data.y_arr_0[aramis_cdt.crack_filter], linestyle='None',
                  marker='.', color='white')
-#         CS = ax.contourf(aramis_cdt.x_arr_undeformed,
-#                          aramis_cdt.y_arr_undeformed,
+#         CS = ax.contourf(aramis_cdt.x_arr_0,
+#                          aramis_cdt.y_arr_0,
 #                          plot3d_var, 256, cmap=plt.get_cmap('jet'))
 #
-#         ax.plot(aramis_cdt.x_arr_undeformed[aramis_cdt.crack_filter],
-#                  aramis_cdt.y_arr_undeformed[aramis_cdt.crack_filter],
+#         ax.plot(aramis_cdt.x_arr_0[aramis_cdt.crack_filter],
+#                  aramis_cdt.y_arr_0[aramis_cdt.crack_filter],
 #                  'k.')
 
-        ax.vlines(self.aramis_data.x_arr_undeformed[0, :][aramis_cdt.crack_filter_avg],
-                   [0], np.nanmax(self.aramis_data.y_arr_undeformed[mask]),
+        ax.vlines(self.aramis_data.x_arr_0[0, :][aramis_cdt.crack_filter_avg],
+                   [0], np.nanmax(self.aramis_data.y_arr_0[mask]),
                    color='magenta', zorder=100, linewidth=2)
 
         ax.set_xlabel('x [mm]')
@@ -448,7 +448,7 @@ class AramisPlot2D(HasTraits):
         fig = self.test_figure
         fig.clf()
 
-        fig.suptitle(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.evaluated_step_idx, y=1)
+        fig.suptitle(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.current_step, y=1)
 
         ax_diag = plt.subplot2grid((2, 3), (0, 0))
         ax_diag.locator_params(nbins=4)
@@ -458,8 +458,8 @@ class AramisPlot2D(HasTraits):
                                    adjustable='box', aspect='equal')
 
         ax_diag.plot(self.aramis_cdt.control_strain_t, self.aramis_data.stress)
-        ax_diag.plot(aramis_cdt.control_strain_t[self.aramis_data.evaluated_step_idx],
-                 self.aramis_data.stress[self.aramis_data.evaluated_step_idx], 'ro')
+        ax_diag.plot(aramis_cdt.control_strain_t[self.aramis_data.current_step],
+                 self.aramis_data.stress[self.aramis_data.current_step], 'ro')
 
         ax_diag.set_xlabel('control strain [-]')
         ax_diag.set_ylabel('nominal stress [MPa]')
@@ -485,17 +485,17 @@ class AramisPlot2D(HasTraits):
 
         plot3d_var = getattr(aramis_cdt, 'd_ux_arr')
 
-        CS = ax_area.contourf(self.aramis_data.x_arr_undeformed,
-                         self.aramis_data.y_arr_undeformed,
+        CS = ax_area.contourf(self.aramis_data.x_arr_0,
+                         self.aramis_data.y_arr_0,
                          plot3d_var, 2, cmap=plt.get_cmap('binary'))
-        ax_area.plot(self.aramis_data.x_arr_undeformed, self.aramis_data.y_arr_undeformed, 'ko')
+        ax_area.plot(self.aramis_data.x_arr_0, self.aramis_data.y_arr_0, 'ko')
 
-        ax_area.plot(self.aramis_data.x_arr_undeformed[aramis_cdt.crack_filter],
-                 self.aramis_data.y_arr_undeformed[aramis_cdt.crack_filter], linestyle='None',
+        ax_area.plot(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
+                 self.aramis_data.y_arr_0[aramis_cdt.crack_filter], linestyle='None',
                  marker='.', color='white')
 
-#         ax_area.vlines(aramis_cdt.x_arr_undeformed[10, :-1][aramis_cdt.crack_filter_avg],
-#                    [0], np.nanmax(aramis_cdt.y_arr_undeformed),
+#         ax_area.vlines(aramis_cdt.x_arr_0[10, :-1][aramis_cdt.crack_filter_avg],
+#                    [0], np.nanmax(aramis_cdt.y_arr_0),
 #                    color='red', zorder=100, linewidth=1)
 
         ax_area.set_xlabel('x [mm]')
@@ -511,7 +511,7 @@ class AramisPlot2D(HasTraits):
 
         if self.save_plot:
             fig.savefig(os.path.join(self.save_dir, '%s%04d.png'
-                                     % (aramis_cdt.aramis_info.specimen_name, self.aramis_data.evaluated_step_idx)))
+                                     % (aramis_cdt.aramis_info.specimen_name, self.aramis_data.current_step)))
 
         if self.show_plot:
             fig.show()
@@ -528,13 +528,13 @@ class AramisPlot2D(HasTraits):
         save_plot, show_plot = self.save_plot, self.show_plot
         self.save_plot = False
         self.show_plot = False
-        start_step_idx = self.aramis_data.evaluated_step_idx
+        start_step_idx = self.aramis_data.current_step
         fname_pattern = '%s%04d'
         for step_idx in self.aramis_info.step_list:
-            self.aramis_data.evaluated_step_idx = step_idx
+            self.aramis_data.current_step = step_idx
             self.plot_test = True
             self.test_figure.savefig(os.path.join(self.temp_dir, fname_pattern
-                                     % (aramis_cdt.aramis_info.specimen_name, self.aramis_data.evaluated_step_idx)))
+                                     % (aramis_cdt.aramis_info.specimen_name, self.aramis_data.current_step)))
 
         try:
             os.system('ffmpeg -framerate 3 -i %s.png -vcodec ffv1 -sameq %s.avi' %
@@ -552,7 +552,7 @@ class AramisPlot2D(HasTraits):
 
         self.save_plot = save_plot
         self.show_plot = show_plot
-        self.aramis_data.evaluated_step_idx = start_step_idx
+        self.aramis_data.current_step = start_step_idx
 
     view = View(
                 Group(
@@ -594,7 +594,7 @@ if __name__ == '__main__':
                   )
     AC.run_t = True
     AC.run_back = True
-    AD.evaluated_step_idx = 203
+    AD.current_step = 203
     AramisPlot2D(
                  aramis_info=AI,
                  aramis_data=AD,
