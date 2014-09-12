@@ -48,9 +48,9 @@ AUI = AramisUI(aramis_info=AI)
 
 x = AUI.aramis_data.x_arr_0[10, :]
 ux = AUI.aramis_data.ux_arr[10, :]
-d_ux = AUI.aramis_cdt.d_ux[10, :]
-dd_ux = AUI.aramis_cdt.dd_ux[10, :]
-ddd_ux = AUI.aramis_cdt.ddd_ux[10, :]
+d_ux = AUI.aramis_data.d_ux[10, :]
+dd_ux = AUI.aramis_data.dd_ux[10, :]
+ddd_ux = AUI.aramis_data.ddd_ux[10, :]
 
 plt.subplot(611)
 plt.plot(x, ux)
@@ -58,6 +58,8 @@ plt.locator_params(axis='y', nbins=3)
 
 plt.subplot(612)
 plt.plot(x, d_ux)
+plt.plot(x, np.convolve(d_ux, np.ones(10) / 10., 'same'))
+plt.plot(x, np.convolve(d_ux, np.ones(3) / 3., 'same'))
 plt.locator_params(axis='y', nbins=3)
 
 plt.subplot(613)

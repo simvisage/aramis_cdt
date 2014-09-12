@@ -75,24 +75,27 @@ class AramisPlot2D(HasTraits):
         fig.clf()
         ax = fig.add_subplot(2, 2, 1)
 
-        ax.plot(aramis_data.i.T, aramis_data.d_ux.T, color='black')
-        ax.plot(aramis_data.i[0, :], aramis_data.d_ux_avg, color='red', linewidth=2)
+        ax.plot(aramis_data.i_cut.T, aramis_data.d_ux.T, color='black')
+        for x in aramis_data.d_ux:
+            ax.plot(aramis_data.i_cut.T, np.convolve(x, np.ones(10) / 10., 'same'), color='green', linewidth=0.3)
+        ax.plot(aramis_data.i_cut[0, :], aramis_data.d_ux_avg, color='red', linewidth=2)
         y_max_lim = ax.get_ylim()[-1]
-        ax.vlines(aramis_data.i[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
+        ax.vlines(aramis_data.i_cut[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
                  color='magenta', linewidth=1, zorder=10)
 
         ax2 = fig.add_subplot(2, 2, 2)
-        ax2.plot(aramis_data.i.T, aramis_data.ux_arr.T, color='green')
-        ax2.plot(aramis_data.i[0, :], aramis_data.ux_arr_avg, color='red', linewidth=2)
-        y_max_lim = ax2.get_ylim()[-1]
-        ax2.vlines(aramis_data.i[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
+        ax2.plot(aramis_data.i_cut.T, aramis_data.ux_arr.T, color='green')
+        ax2.plot(aramis_data.i_cut[0, :], aramis_data.ux_arr_avg, color='red', linewidth=2)
+        y_min_lim = np.min(ax2.get_ylim())
+        y_max_lim = np.max(ax2.get_ylim())
+        ax2.vlines(aramis_data.i_cut[0, :-1], y_min_lim, aramis_cdt.crack_filter_avg * y_max_lim + ~aramis_cdt.crack_filter_avg * y_min_lim,
                  color='magenta', linewidth=1, zorder=10)
 
         ax3 = fig.add_subplot(2, 2, 3)
-        ax3.plot(aramis_data.i[0, :], aramis_data.dd_ux_avg, color='black')
-        ax3.plot(aramis_data.i[0, :], aramis_data.ddd_ux_avg, color='blue')
+        ax3.plot(aramis_data.i_cut[0, :], aramis_data.dd_ux_avg, color='black')
+        ax3.plot(aramis_data.i_cut[0, :], aramis_data.ddd_ux_avg, color='blue')
         y_max_lim = ax3.get_ylim()[-1]
-        ax3.vlines(aramis_data.i[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
+        ax3.vlines(aramis_data.i_cut[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
                  color='magenta', linewidth=1, zorder=10)
 
         ax = fig.add_subplot(2, 2, 4)

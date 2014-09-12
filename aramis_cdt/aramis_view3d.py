@@ -54,7 +54,7 @@ class AramisView3D(HasTraits):
                                             '04 ux_arr [mm]':['aramis_data', 'ux_arr'],
                                             '05 uy_arr [mm]':['aramis_data', 'uy_arr'],
                                             '06 uz_arr [mm]':['aramis_data', 'uz_arr'],
-                                            '07 d_ux [mm]':['aramis_cdt', 'd_ux'],
+                                            '07 d_ux [mm]':['aramis_data', 'd_ux'],
                                             '08 crack_filed_arr [mm]': ['aramis_cdt', 'crack_field_arr']})
 
     plot3d_points_flat = Button

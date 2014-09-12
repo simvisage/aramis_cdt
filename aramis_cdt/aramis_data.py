@@ -18,7 +18,7 @@ from etsproxy.traits.api import \
     HasTraits, Float, Property, cached_property, Int, Array, Bool, \
     Instance, DelegatesTo, Tuple, Button, List, Str, Event, on_trait_change
 
-from etsproxy.traits.ui.api import View, Item, HGroup, EnumEditor, Group, UItem, RangeEditor
+from etsproxy.traits.ui.api import View, Item, HGroup, EnumEditor, Group, UItem, RangeEditor, TextEditor
 
 import numpy as np
 from scipy import stats
@@ -152,25 +152,8 @@ class AramisFieldData(AramisRawData):
     '''
 
     #===========================================================================
-    # Initial state arrays - coordinates
+    #
     #===========================================================================
-    x_0 = Property(Array, depends_on='aramis_info.+params_changed')
-    '''Array of values for initial state in the first step 
-    '''
-    @cached_property
-    def _get_x_0(self):
-        if self.transform_data:
-            return self.X
-        else:
-            return self.X
-
-    x_0_mask = Property(Tuple, depends_on='X')
-    '''Default mask in initial state
-    '''
-    @cached_property
-    def _get_x_0_mask(self):
-        return np.isnan(self.x_0)
-
     ni = Property(Int, depends_on='aramis_info.+params_changed')
     '''Number of facets in x-direction
     '''
@@ -185,7 +168,7 @@ class AramisFieldData(AramisRawData):
     def _get_nj(self):
         return self.X.shape[1]
 
-    i = Property(Int, depends_on='X')
+    i = Property(Array(Int), depends_on='X')
     '''Indices of the facet field starting with zero in x-direction
     '''
     @cached_property
@@ -193,7 +176,7 @@ class AramisFieldData(AramisRawData):
         return (np.arange(self.ni)[np.newaxis, :] *
                 np.ones(self.nj)[:, np.newaxis]).astype(int)
 
-    j = Property(Int, depends_on='X')
+    j = Property(Array(Int), depends_on='X')
     '''Indices of the facet field starting with zero in y-direction
     '''
     @cached_property
@@ -201,21 +184,142 @@ class AramisFieldData(AramisRawData):
         return (np.arange(self.nj)[np.newaxis, :] *
                 np.ones(self.ni)[:, np.newaxis]).T
 
-    x_arr_0 = Property(Array, depends_on='aramis_info.+params_changed')
+    #===========================================================================
+    # Slider
+    #===========================================================================
+    i_min = Property(Int, depends_on='X')
+    '''Minimum of i
+    '''
+    @cached_property
+    def _get_i_min(self):
+        return np.min(self.i).astype(int)
+
+    i_max = Property(Int, depends_on='X')
+    '''Maximum of i
+    '''
+    @cached_property
+    def _get_i_max(self):
+        return np.max(self.i).astype(int)
+
+    i_min_right = Property(Int, depends_on='X')
+    '''Minimum of i
+    '''
+    @cached_property
+    def _get_i_min_right(self):
+        return np.min(self.i).astype(int) + 1
+
+    i_max_right = Property(Int, depends_on='X')
+    '''Maximum of i
+    '''
+    @cached_property
+    def _get_i_max_right(self):
+        return np.max(self.i).astype(int) + 1
+
+    j_min = Property(Int, depends_on='X')
+    '''Minimum of j
+    '''
+    @cached_property
+    def _get_j_min(self):
+        return np.min(self.j).astype(int)
+
+    j_max = Property(Int, depends_on='X')
+    '''Maximum of j
+    '''
+    @cached_property
+    def _get_j_max(self):
+        return np.max(self.j).astype(int)
+
+    j_min_top = Property(Int, depends_on='X')
+    '''Minimum of j
+    '''
+    @cached_property
+    def _get_j_min_top(self):
+        return np.min(self.j).astype(int) + 1
+
+    j_max_top = Property(Int, depends_on='X')
+    '''Maximum of j
+    '''
+    @cached_property
+    def _get_j_max_top(self):
+        return np.max(self.j).astype(int) + 1
+
+    left_i = Int(params_changed=True)
+    def _left_i_default(self):
+        return self.i_min
+
+    right_i = Int(params_changed=True)
+    def _right_i_default(self):
+        return self.i_max
+
+    def _left_i_changed(self):
+        if self.left_i >= self.right_i:
+            self.right_i = self.left_i + 1
+
+    def _right_i_changed(self):
+        if self.right_i <= self.left_i:
+            self.left_i = self.right_i - 1
+
+    top_j = Int(params_changed=True)
+    def _top_j_default(self):
+        return self.j_max
+
+    bottom_j = Int(params_changed=True)
+    def _bottom_j_default(self):
+        return self.j_min
+
+    def _bottom_j_changed(self):
+        if self.bottom_j >= self.top_j:
+            self.top_j = self.bottom_j + 1
+
+    def _top_j_changed(self):
+        if self.top_j <= self.bottom_j:
+            self.bottom_j = self.top_j - 1
+
+    i_cut = Property(depends_on='+params_changed')
+    def _get_i_cut(self):
+        return self.i[self.bottom_j:self.top_j, self.left_i:self.right_i]
+
+    j_cut = Property(depends_on='+params_changed')
+    def _get_j_cut(self):
+        return self.j[self.bottom_j:self.top_j, self.left_i:self.right_i]
+
+
+    #===========================================================================
+    # Initial state arrays - coordinates
+    #===========================================================================
+    x_0 = Property(Array, depends_on='aramis_info.+params_changed, +params_changed')
+    '''Array of values for initial state in the first step 
+    '''
+    @cached_property
+    def _get_x_0(self):
+        X = self.X[:, self.bottom_j:self.top_j, self.left_i:self.right_i]
+        if self.transform_data:
+            return X
+        else:
+            return X
+
+    x_0_mask = Property(Tuple, depends_on='+params_changed')
+    '''Default mask in initial state
+    '''
+    @cached_property
+    def _get_x_0_mask(self):
+        return np.isnan(self.x_0)
+
+    x_arr_0 = Property(Array, depends_on='aramis_info.+params_changed, +params_changed')
     '''Array of x-coordinates in undeformed state
     '''
     @cached_property
     def _get_x_arr_0(self):
         return self.x_0[0, :, :]
 
-    y_arr_0 = Property(Array, depends_on='aramis_info.+params_changed')
+    y_arr_0 = Property(Array, depends_on='aramis_info.+params_changed, +params_changed')
     '''Array of y-coordinates in undeformed state
     '''
     @cached_property
     def _get_y_arr_0(self):
         return self.x_0[1, :, :]
 
-    z_arr_0 = Property(Array, depends_on='aramis_info.+params_changed')
+    z_arr_0 = Property(Array, depends_on='aramis_info.+params_changed, +params_changed')
     '''Array of z-coordinates in undeformed state
     '''
     @cached_property
@@ -234,28 +338,28 @@ class AramisFieldData(AramisRawData):
         else:
             return (3, self.nj, self.ni)
 
-    lx_0 = Property(Array, depends_on='aramis_info.+params_changed')
+    lx_0 = Property(Float, depends_on='aramis_info.+params_changed, +params_changed')
     '''Length of the measuring area in x-direction
     '''
     @cached_property
     def _get_lx_0(self):
         return np.nanmax(self.x_arr_0) - np.nanmin(self.x_arr_0)
 
-    ly_0 = Property(Array, depends_on='aramis_info.+params_changed')
+    ly_0 = Property(Float, depends_on='aramis_info.+params_changed, +params_changed')
     '''Length of the measuring area in y-direction
     '''
     @cached_property
     def _get_ly_0(self):
         return self.y_arr_0.max() - self.y_arr_0.min()
 
-    lz_0 = Property(Array, depends_on='aramis_info.+params_changed')
+    lz_0 = Property(Float, depends_on='aramis_info.+params_changed, +params_changed')
     '''Length of the measuring area in z-direction
     '''
     @cached_property
     def _get_lz_0(self):
         return self.z_arr_0.max() - self.z_arr_0.min()
 
-    x_0_stats = Property(depends_on='aramis_info.+params_changed')
+    x_0_stats = Property(depends_on='aramis_info.+params_changed, +params_changed')
     '''
     * mu_mm - mean value of facet midpoint distance [mm]
     * std_mm - standard deviation of facet midpoint distance [mm]
@@ -279,10 +383,11 @@ class AramisFieldData(AramisRawData):
     '''
     @cached_property
     def _get_u(self):
+        U = self.U[:, self.bottom_j:self.top_j, self.left_i:self.right_i]
         if self.transform_data:
-            return self.U
+            return U
         else:
-            return self.U
+            return U
 
     ux_arr = Property(Array, depends_on='aramis_info.+params_changed, +params_changed')
     '''Array of displacements in x-direction
@@ -398,6 +503,33 @@ class AramisFieldData(AramisRawData):
                      editor=RangeEditor(low=0, high_name='step_max', mode='slider'),
                                         springy=True),
                 Item('integ_radius'),
+                HGroup(Group(Item('left_i',
+                                   editor=RangeEditor(low_name='i_min',
+                                                         high_name='i_max',
+                                                         format='%d',
+                                                         label_width=28,
+                                                         mode='slider')),
+                            Item('right_i',
+                               editor=RangeEditor(low_name='i_min_right',
+                                                     high_name='i_max_right',
+                                                     format='%d',
+                                                     label_width=28,
+                                                     mode='slider')),
+                             ),
+                       Group(Item('bottom_j',
+                               editor=RangeEditor(low_name='j_min',
+                                                     high_name='j_max',
+                                                     format='%d',
+                                                     label_width=28,
+                                                     mode='slider')),
+                             Item('top_j',
+                                   editor=RangeEditor(low_name='j_min_top',
+                                                         high_name='j_max_top',
+                                                         format='%d',
+                                                         label_width=28,
+                                                         mode='slider')),
+                             ),
+                       ),
                 Item('x_0_shape', label='data shape', style='readonly'),
                 Item('lx_0', label='l_x', style='readonly'),
                 Item('ly_0', label='l_y', style='readonly'),
