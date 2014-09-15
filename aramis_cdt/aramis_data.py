@@ -147,7 +147,7 @@ class AramisFieldData(AramisRawData):
     # Parameters
     #===========================================================================
 
-    transform_data = Bool(False, params_changed=True)
+    transform_data = Bool(True, params_changed=True)
     '''Switch data transformation before analysis
     '''
 
@@ -229,18 +229,18 @@ class AramisFieldData(AramisRawData):
     def _get_j_max(self):
         return np.max(self.j).astype(int)
 
-    j_min_top = Property(Int, depends_on='X')
+    j_min_bottom = Property(Int, depends_on='X')
     '''Minimum of j
     '''
     @cached_property
-    def _get_j_min_top(self):
+    def _get_j_min_bottom(self):
         return np.min(self.j).astype(int) + 1
 
-    j_max_top = Property(Int, depends_on='X')
+    j_max_bottom = Property(Int, depends_on='X')
     '''Maximum of j
     '''
     @cached_property
-    def _get_j_max_top(self):
+    def _get_j_max_bottom(self):
         return np.max(self.j).astype(int) + 1
 
     left_i = Int(params_changed=True)
@@ -259,29 +259,29 @@ class AramisFieldData(AramisRawData):
         if self.right_i <= self.left_i:
             self.left_i = self.right_i - 1
 
-    top_j = Int(params_changed=True)
-    def _top_j_default(self):
-        return self.j_max
-
     bottom_j = Int(params_changed=True)
     def _bottom_j_default(self):
+        return self.j_max
+
+    top_j = Int(params_changed=True)
+    def _top_j_default(self):
         return self.j_min
 
-    def _bottom_j_changed(self):
-        if self.bottom_j >= self.top_j:
-            self.top_j = self.bottom_j + 1
-
     def _top_j_changed(self):
-        if self.top_j <= self.bottom_j:
-            self.bottom_j = self.top_j - 1
+        if self.top_j >= self.bottom_j:
+            self.bottom_j = self.top_j + 1
+
+    def _bottom_j_changed(self):
+        if self.bottom_j <= self.top_j:
+            self.top_j = self.bottom_j - 1
 
     i_cut = Property(depends_on='+params_changed')
     def _get_i_cut(self):
-        return self.i[self.bottom_j:self.top_j, self.left_i:self.right_i]
+        return self.i[self.top_j:self.bottom_j, self.left_i:self.right_i]
 
     j_cut = Property(depends_on='+params_changed')
     def _get_j_cut(self):
-        return self.j[self.bottom_j:self.top_j, self.left_i:self.right_i]
+        return self.j[self.top_j:self.bottom_j, self.left_i:self.right_i]
 
 
     #===========================================================================
@@ -292,8 +292,11 @@ class AramisFieldData(AramisRawData):
     '''
     @cached_property
     def _get_x_0(self):
-        X = self.X[:, self.bottom_j:self.top_j, self.left_i:self.right_i]
+        X = self.X[:, self.top_j:self.bottom_j, self.left_i:self.right_i]
         if self.transform_data:
+            # move to 0,0
+            X[0, :, :] = X[0, :, :] - np.min(X[0, :, :])
+            X[1, :, :] = X[1, :, :] - np.min(X[1, :, :])
             return X
         else:
             return X
@@ -383,7 +386,7 @@ class AramisFieldData(AramisRawData):
     '''
     @cached_property
     def _get_u(self):
-        U = self.U[:, self.bottom_j:self.top_j, self.left_i:self.right_i]
+        U = self.U[:, self.top_j:self.bottom_j, self.left_i:self.right_i]
         if self.transform_data:
             return U
         else:
@@ -516,15 +519,15 @@ class AramisFieldData(AramisRawData):
                                                      label_width=28,
                                                      mode='slider')),
                              ),
-                       Group(Item('bottom_j',
+                       Group(Item('top_j',
                                editor=RangeEditor(low_name='j_min',
                                                      high_name='j_max',
                                                      format='%d',
                                                      label_width=28,
                                                      mode='slider')),
-                             Item('top_j',
-                                   editor=RangeEditor(low_name='j_min_top',
-                                                         high_name='j_max_top',
+                             Item('bottom_j',
+                                   editor=RangeEditor(low_name='j_min_bottom',
+                                                         high_name='j_max_bottom',
                                                          format='%d',
                                                          label_width=28,
                                                          mode='slider')),
@@ -534,7 +537,7 @@ class AramisFieldData(AramisRawData):
                 Item('lx_0', label='l_x', style='readonly'),
                 Item('ly_0', label='l_y', style='readonly'),
                 Item('lz_0', label='l_z', style='readonly'),
-                Item('x_0_stats', label='(mu_x, std_x, mu_px_x, std_px_x)', style='readonly'),
+                # Item('x_0_stats', label='(mu_x, std_x, mu_px_x, std_px_x)', style='readonly'),
                 # 'transform_data',
                 id='aramisCDT.data',
                 )
