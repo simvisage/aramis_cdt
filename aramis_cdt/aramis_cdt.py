@@ -298,19 +298,3 @@ class AramisCDT(HasTraits):
                       ),
                 id='aramisCDT.cdt',
                 )
-
-
-if __name__ == '__main__':
-    from os.path import expanduser
-    home = expanduser("~")
-
-#     data_dir = os.path.join(home, '.simdb_cache', 'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15')
-#
-#     AI = AramisInfo(data_dir=data_dir)
-#     AD = AramisFieldData(aramis_info=AI)
-#     AC = AramisCDT(aramis_info=AI,
-#                    aramis_data=AD)
-
-    ac = AramisCDT()
-    print ac.__doc__
-#    AC.configure_traits()

@@ -96,9 +96,9 @@ AUI.aramis_cdt.integ_radius = 4
 
 x = AUI.aramis_data.x_arr_0[40, :]
 ux = AUI.aramis_data.ux_arr[40, :]
-d_ux = AUI.aramis_cdt.d_ux[40, :]
-dd_ux = AUI.aramis_cdt.dd_ux[40, :]
-ddd_ux = AUI.aramis_cdt.ddd_ux[40, :]
+d_ux = AUI.aramis_data.d_ux[40, :]
+dd_ux = AUI.aramis_data.dd_ux[40, :]
+ddd_ux = AUI.aramis_data.ddd_ux[40, :]
 
 plt.subplot(611)
 plt.plot(x, ux)

@@ -54,3 +54,6 @@ AramisCDT
    :members:
    :undoc-members:
 
+Methods
+-------
+.. autofunction:: get_d
