@@ -576,16 +576,13 @@ class AramisFieldData(AramisRawData):
 
     def current_time_changed(self):
         self.on_trait_change(self.current_step_changed, 'current_step', remove=True)
-        print self.current_time
         self.current_step = np.abs(self.step_times - self.current_time).argmin()
         self.on_trait_change(self.current_time_changed, 'current_time', remove=True)
         self.current_time = self.step_times[self.current_step]
         self.on_trait_change(self.current_time_changed, 'current_time')
-        print self.current_time
         self.on_trait_change(self.current_step_changed, 'current_step')
 
     def current_step_changed(self):
-        print 'jsem tu'
         self.on_trait_change(self.current_time_changed, 'current_time', remove=True)
         self.current_time = self.step_times[self.current_step]
         self.on_trait_change(self.current_time_changed, 'current_time')
