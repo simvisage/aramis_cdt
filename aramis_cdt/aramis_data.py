@@ -52,8 +52,12 @@ class AramisRawData(HasTraits):
     '''
     aramis_info = Instance(AramisInfo, params_changed=True)
 
-    current_step = Int(0, params_changed=True)
+    current_step = Int(0, params_changed=True, auto_set=False)
     r'''Number of current step for evaluation.
+    '''
+
+    current_time = Float(0, params_changed=True, auto_set=False)
+    r'''Current time for evaluation.
     '''
 
     # integration radius for the non-local average of the measured strain
@@ -493,6 +497,26 @@ class AramisFieldData(AramisRawData):
     def _get_step_times(self):
         return self.ad_channels_arr[:, 0]
 
+    time_min = Property(Float, depends_on='aramis_info.+params_changed')
+    def _get_time_min(self):
+        return np.min(self.step_times)
+
+    time_max = Property(Float, depends_on='aramis_info.+params_changed')
+    def _get_time_max(self):
+        return np.max(self.step_times)
+
+    @on_trait_change('current_time')
+    def current_time_changed(self):
+        self.on_trait_change(self.current_time_changed, 'current_step', remove=True)
+        self.current_step = np.abs(self.step_times - self.current_time).argmin()
+        self.on_trait_change(self.current_time_changed, 'current_step')
+
+    @on_trait_change('current_step')
+    def current_step_changed(self):
+        self.on_trait_change(self.current_time_changed, 'current_time', remove=True)
+        self.current_time = self.step_times[self.current_step]
+        self.on_trait_change(self.current_time_changed, 'current_time')
+
     step_max = Property(Int, depends_on='aramis_info.+params_changed')
     '''Maximum step number
     '''
@@ -504,6 +528,9 @@ class AramisFieldData(AramisRawData):
     view = View(
                 Item('current_step',
                      editor=RangeEditor(low=0, high_name='step_max', mode='slider'),
+                                        springy=True),
+                Item('current_time',
+                     editor=RangeEditor(low_name='time_min', high_name='time_max', mode='slider'),
                                         springy=True),
                 Item('integ_radius'),
                 HGroup(Group(Item('left_i',
