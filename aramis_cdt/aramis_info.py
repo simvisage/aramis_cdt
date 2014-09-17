@@ -151,11 +151,11 @@ class AramisInfo(HasTraits):
     view = View(
                 # Item('data_dir'),
                 Item('specimen_name', style='readonly'),
-                Item('number_of_steps', style='readonly'),
-                Item('n_px_facet_size_x', style='readonly'),
-                Item('n_px_facet_size_y', style='readonly'),
-                Item('n_px_facet_step_x', style='readonly'),
-                Item('n_px_facet_step_y', style='readonly'),
+                # Item('number_of_steps', style='readonly'),
+                # Item('n_px_facet_size_x', style='readonly'),
+                # Item('n_px_facet_size_y', style='readonly'),
+                # Item('n_px_facet_step_x', style='readonly'),
+                # Item('n_px_facet_step_y', style='readonly'),
                 id='aramisCDT.info',
                 resizable=True
                 )

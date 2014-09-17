@@ -55,7 +55,7 @@ class InfoViewer(HasTraits):
     view = View(Item('text', editor=HTMLEditor(format_text=True), style='readonly', show_label=False),
                 resizable=True,
                 width=0.3,
-                height=0.2)
+                height=0.3)
 
 class AramisRawData(HasTraits):
     r'''Basic array structure containing the measured
@@ -159,7 +159,10 @@ class AramisRawData(HasTraits):
 class AramisFieldData(AramisRawData):
     '''Field data structure for AramisCDT
     '''
-
+    def __init__(self, *args, **kwargs):
+        super(AramisFieldData, self).__init__(*args, **kwargs)
+        self.on_trait_change(self.current_time_changed, 'current_time')
+        self.on_trait_change(self.current_step_changed, 'current_step')
     #===========================================================================
     # Parameters
     #===========================================================================
@@ -420,6 +423,10 @@ class AramisFieldData(AramisRawData):
         <tr><td>Pixel size (mean):</td> <td> %.3g mm </td></tr>
         <tr><td>Pixel size (std):</td> <td> %.3g mm </td></tr>
         <tr><td>Data shape:</td> <td> %s </td></tr>
+        <tr><td>Facet size in x-direction:</td> <td> %d px </td></tr>
+        <tr><td>Facet step in x-direction:</td> <td> %d px </td></tr>
+        <tr><td>Facet size in y-direction:</td> <td> %d px </td></tr>
+        <tr><td>Facet step in y-direction:</td> <td> %d px </td></tr>
         </table>
         ''' % (self.lx_0,
                self.ly_0,
@@ -428,7 +435,12 @@ class AramisFieldData(AramisRawData):
                self.x_0_stats[1],
                self.x_0_stats[2],
                self.x_0_stats[3],
-               str(self.x_0_shape))
+               str(self.x_0_shape),
+               self.aramis_info.n_px_facet_size_x,
+               self.aramis_info.n_px_facet_step_x,
+               self.aramis_info.n_px_facet_size_y,
+               self.aramis_info.n_px_facet_step_y,
+               )
         return t
 
     show_stats = Button
@@ -562,15 +574,21 @@ class AramisFieldData(AramisRawData):
     def _get_step_times_max(self):
         return np.max(self.step_times)
 
-    def _current_time_changed(self):
-        self.on_trait_change(self._current_time_changed, 'current_step', remove=True)
+    def current_time_changed(self):
+        self.on_trait_change(self.current_step_changed, 'current_step', remove=True)
+        print self.current_time
         self.current_step = np.abs(self.step_times - self.current_time).argmin()
-        self.on_trait_change(self._current_time_changed, 'current_step')
-
-    def _current_step_changed(self):
-        self.on_trait_change(self._current_time_changed, 'current_time', remove=True)
+        self.on_trait_change(self.current_time_changed, 'current_time', remove=True)
         self.current_time = self.step_times[self.current_step]
-        self.on_trait_change(self._current_time_changed, 'current_time')
+        self.on_trait_change(self.current_time_changed, 'current_time')
+        print self.current_time
+        self.on_trait_change(self.current_step_changed, 'current_step')
+
+    def current_step_changed(self):
+        print 'jsem tu'
+        self.on_trait_change(self.current_time_changed, 'current_time', remove=True)
+        self.current_time = self.step_times[self.current_step]
+        self.on_trait_change(self.current_time_changed, 'current_time')
 
     step_max = Property(Int, depends_on='aramis_info.+params_changed')
     '''Maximum step number
@@ -587,6 +605,7 @@ class AramisFieldData(AramisRawData):
                 Item('current_time',
                      editor=RangeEditor(low_name='step_times_min', high_name='step_times_max', mode='slider', format='%.1f', label_width=35),
                                         springy=True),
+                Item('current_time', label='Current time exact', style='readonly'),
                 Item('integ_radius'),
                 HGroup(Group(Item('left_i',
                                    editor=RangeEditor(low_name='i_min',
