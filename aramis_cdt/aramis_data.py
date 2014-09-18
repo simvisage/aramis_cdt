@@ -556,13 +556,16 @@ class AramisFieldData(AramisRawData):
     def _get_d_uz(self):
         return get_d(self.uz_arr, self.z_arr_0, self.integ_radius)
 
+    start_time = Float(0.0, params_changed=True)
+    '''Time offset according to real time of experiment start 
+    '''
 
-    step_times = Property(Array, depends_on='aramis_info.+params_changed')
+    step_times = Property(Array, depends_on='aramis_info.+params_changed, +params_changed')
     '''Capture time of each step
     '''
     @cached_property
     def _get_step_times(self):
-        return self.ad_channels_arr[:, 0]
+        return self.start_time + self.ad_channels_arr[:, 0]
 
     step_times_min = Property(Float, depends_on='aramis_info.+params_changed')
     '''Minimum value of capture time
