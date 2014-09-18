@@ -88,7 +88,7 @@ Numerical results
            AUI.aramis_info.n_px_facet_step_x,
            AUI.aramis_info.n_px_facet_step_y,
            AUI.aramis_cdt.integ_radius,
-           AUI.aramis_cdt.crack_detect_idx,
+           AUI.aramis_cdt.crack_detection_step,
            AUI.aramis_cdt.transform_data,
            AUI.aramis_cdt.d_ux_threshold,
            AUI.aramis_cdt.dd_ux_threshold,

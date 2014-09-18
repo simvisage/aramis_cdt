@@ -37,7 +37,7 @@ elif platform.system() == 'Windows':
     sysclock = time.clock
 
 from aramis_info import AramisInfo
-from aramis_data import AramisData
+from aramis_data import AramisFieldData
 from aramis_cdt import AramisCDT
 from aramis_view2d import AramisPlot2D
 from aramis_view3d import AramisView3D
@@ -57,9 +57,9 @@ class AramisUI(HasTraits):
 
     aramis_info = Instance(AramisInfo, ())
 
-    aramis_data = Instance(AramisData)
+    aramis_data = Instance(AramisFieldData)
     def _aramis_data_default(self):
-        return AramisData(aramis_info=self.aramis_info)
+        return AramisFieldData(aramis_info=self.aramis_info)
 
     aramis_remote = Instance(AramisRemote)
     def _aramis_remote_default(self):
