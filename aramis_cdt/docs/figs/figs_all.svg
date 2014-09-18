@@ -13,7 +13,7 @@
    height="1052.3622047"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.2 r9819"
+   inkscape:version="0.48.3.1 r9886"
    sodipodi:docname="figs_all.svg">
   <defs
      id="defs4" />
@@ -24,14 +24,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="1525.8539"
-     inkscape:cy="236.89227"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="513.55832"
+     inkscape:cy="850.94282"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1600"
-     inkscape:window-height="851"
+     inkscape:window-width="1920"
+     inkscape:window-height="1024"
      inkscape:window-x="-2"
      inkscape:window-y="-3"
      inkscape:window-maximized="1"
@@ -173,7 +173,7 @@
          id="tspan4182"
          x="78.836929"
          y="65.751335"
-         style="font-size:25px">Undeformed coordinates</tspan></text>
+         style="font-size:25px">Initial coordinates</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:25px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -362,9 +362,8 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="g3783"
-       transform="translate(344.70903,-235.84237)"
-       inkscape:export-filename="/home/kelidas/workspace_git/aramis_cdt_restr/aramis_cdt/docs/aramis_cdt/data_structure.png"
+       id="g3125"
+       inkscape:export-filename="/home/kelidas/workspace_git/aramis_cdt/aramis_cdt/docs/figs/U.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
       <rect
@@ -372,15 +371,15 @@
          id="rect4472"
          width="245.87727"
          height="80.015694"
-         x="132.99881"
-         y="656.1767"
+         x="477.70782"
+         y="420.33432"
          rx="0"
          ry="0" />
       <rect
          ry="0"
          rx="0"
-         y="693.80212"
-         x="95.37339"
+         y="457.95975"
+         x="440.08243"
          height="80.015694"
          width="245.87727"
          id="rect3006-8-3-1"
@@ -388,8 +387,8 @@
       <rect
          ry="0"
          rx="0"
-         y="731.42755"
-         x="57.747967"
+         y="495.58517"
+         x="402.457"
          height="80.015694"
          width="245.87727"
          id="rect3006-8-3"
@@ -397,13 +396,13 @@
       <text
          sodipodi:linespacing="125%"
          id="text3974-5-9-2-0-0"
-         y="749.3244"
-         x="66.162659"
+         y="513.48206"
+         x="410.87167"
          style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
            style="font-size:20px;font-style:italic;-inkscape-font-specification:Sans Italic"
-           y="749.3244"
-           x="66.162659"
+           y="513.48206"
+           x="410.87167"
            id="tspan3976-2-8-7-7-20"
            sodipodi:role="line">u<tspan
    id="tspan4138-2"
@@ -411,13 +410,13 @@
       <text
          sodipodi:linespacing="125%"
          id="text3974-5-9-2-0-7-7"
-         y="711.69897"
-         x="102.92592"
+         y="475.8566"
+         x="447.63495"
          style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
            style="font-size:20px;font-style:italic;-inkscape-font-specification:Sans Italic"
-           y="711.69897"
-           x="102.92592"
+           y="475.8566"
+           x="447.63495"
            id="tspan3976-2-8-7-7-2-3"
            sodipodi:role="line">u<tspan
    id="tspan4140-9"
@@ -425,13 +424,13 @@
       <text
          sodipodi:linespacing="125%"
          id="text3974-5-9-2-0-7-6-3"
-         y="674.56854"
-         x="138.62943"
+         y="438.72617"
+         x="483.33844"
          style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
            style="font-size:20px;font-style:italic;-inkscape-font-specification:Sans Italic"
-           y="674.56854"
-           x="138.62943"
+           y="438.72617"
+           x="483.33844"
            id="tspan3976-2-8-7-7-2-1-8"
            sodipodi:role="line">u<tspan
    id="tspan4142-8"
@@ -439,89 +438,86 @@
       <text
          sodipodi:linespacing="125%"
          id="text3974-7-0-3"
-         y="772.07867"
-         x="22.581699"
+         y="539.77185"
+         x="389.91815"
          style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
-           style="font-size:20px;font-style:normal;-inkscape-font-specification:Sans"
-           y="772.07867"
-           x="22.581699"
+           style="font-size:20px;font-style:italic;-inkscape-font-specification:Sans"
+           y="539.77185"
+           x="389.91815"
            id="tspan3976-9-3-1"
-           sodipodi:role="line">id<tspan
-   id="tspan4135-3-6"
-   style="font-size:20px;font-style:italic;baseline-shift:sub;-inkscape-font-specification:Sans Italic">y</tspan></tspan></text>
+           sodipodi:role="line">j</tspan></text>
       <text
          sodipodi:linespacing="125%"
          id="text3974-0-6"
-         y="830.02185"
-         x="168.59796"
+         y="594.1795"
+         x="513.30701"
          style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
            style="font-size:20px;font-style:italic;-inkscape-font-specification:Sans Italic"
-           y="830.02185"
-           x="168.59796"
+           y="594.1795"
+           x="513.30701"
            id="tspan3976-0-2"
-           sodipodi:role="line"><tspan
-             id="tspan4104-9-6"
-             style="font-size:20px;font-style:normal;-inkscape-font-specification:Sans">id</tspan><tspan
-             id="tspan4106-6-8"
-             style="font-size:20px;baseline-shift:sub">x</tspan></tspan></text>
+           sodipodi:role="line">i<tspan
+   id="tspan4106-6-8"
+   style="font-size:20px;baseline-shift:sub" /></tspan></text>
     </g>
     <text
        xml:space="preserve"
        style="font-size:25.8422718px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="88.903778"
-       y="379.09869"
+       x="62.033722"
+       y="405.26166"
        id="text4180-8"
        sodipodi:linespacing="125%"
-       inkscape:export-filename="/home/kelidas/workspace_git/aramis_cdt_restr/aramis_cdt/docs/aramis_cdt/data_structure.png"
+       inkscape:export-filename="/home/kelidas/workspace_git/aramis_cdt/aramis_cdt/docs/figs/U.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan4182-22"
-         x="88.903778"
-         y="379.09869"
-         style="font-size:25px">Undeformed coordinates</tspan></text>
+         x="62.033722"
+         y="405.26166"
+         style="font-size:25px">Initial coordinates - <tspan
+   style="font-style:italic"
+   id="tspan3144">X</tspan></tspan></text>
     <text
        xml:space="preserve"
        style="font-size:20.66599464px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="443.83301"
-       y="376.54218"
+       x="465.0462"
+       y="396.34116"
        id="text4180-3-7"
        sodipodi:linespacing="125%"
-       inkscape:export-filename="/home/kelidas/workspace_git/aramis_cdt_restr/aramis_cdt/docs/aramis_cdt/data_structure.png"
+       inkscape:export-filename="/home/kelidas/workspace_git/aramis_cdt/aramis_cdt/docs/figs/U.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan4182-2-6"
-         x="443.83301"
-         y="376.54218"
-         style="font-size:25px">Displacements</tspan></text>
+         x="465.0462"
+         y="396.34116"
+         style="font-size:25px">Displacements <tspan
+   style="font-style:italic"
+   id="tspan3146">U</tspan></tspan></text>
     <g
-       id="g3804"
-       transform="translate(-8,0)"
-       inkscape:export-filename="/home/kelidas/workspace_git/aramis_cdt_restr/aramis_cdt/docs/aramis_cdt/data_structure.png"
+       id="g3093"
+       inkscape:export-filename="/home/kelidas/workspace_git/aramis_cdt/aramis_cdt/docs/figs/U.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
       <text
          sodipodi:linespacing="125%"
          id="text3974-7-0"
-         y="543.12311"
-         x="20.570322"
+         y="540.29468"
+         x="39.44038"
          style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
-           style="font-size:20px;font-style:normal;-inkscape-font-specification:Sans"
-           y="543.12311"
-           x="20.570322"
+           style="font-size:20px;font-style:italic;-inkscape-font-specification:Sans"
+           y="540.29468"
+           x="39.44038"
            id="tspan3976-9-3"
-           sodipodi:role="line">id<tspan
-   id="tspan4135-3"
-   style="font-size:20px;font-style:italic;baseline-shift:sub;-inkscape-font-specification:Sans Italic">y</tspan></tspan></text>
+           sodipodi:role="line">j</tspan></text>
       <rect
          ry="0"
          rx="0"
-         y="421.15378"
-         x="132.03397"
+         y="420.44669"
+         x="128.27661"
          height="80.328255"
          width="246.83772"
          id="rect3006-8-3-1-2"
@@ -529,8 +525,8 @@
       <rect
          ry="0"
          rx="0"
-         y="458.92615"
-         x="94.261574"
+         y="458.21906"
+         x="90.504211"
          height="80.328255"
          width="246.83772"
          id="rect3006-8-3-1-0"
@@ -540,62 +536,58 @@
          id="rect4474"
          width="246.83772"
          height="80.328255"
-         x="56.489182"
-         y="496.69858"
+         x="52.731823"
+         y="495.99149"
          rx="0"
          ry="0" />
       <text
          sodipodi:linespacing="125%"
          id="text3974-5-4"
-         y="517.27124"
-         x="65.79763"
+         y="516.56415"
+         x="62.040272"
          style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
            style="font-size:20px;font-style:italic;-inkscape-font-specification:Sans Italic"
-           y="517.27124"
-           x="65.79763"
+           y="516.56415"
+           x="62.040272"
            id="tspan3976-2-7"
            sodipodi:role="line">x</tspan></text>
       <text
          sodipodi:linespacing="125%"
          id="text3974-5-9-5"
-         y="477.88824"
-         x="105.02722"
+         y="477.18115"
+         x="101.26986"
          style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
            style="font-size:20px;font-style:italic;-inkscape-font-specification:Sans Italic"
-           y="477.88824"
-           x="105.02722"
+           y="477.18115"
+           x="101.26986"
            id="tspan3976-2-8-6"
            sodipodi:role="line">y</tspan></text>
       <text
          sodipodi:linespacing="125%"
          id="text3974-5-9-2-5"
-         y="440.36038"
-         x="142.03397"
+         y="439.65329"
+         x="138.27661"
          style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
            style="font-size:20px;font-style:italic;-inkscape-font-specification:Sans Italic"
-           y="440.36038"
-           x="142.03397"
+           y="439.65329"
+           x="138.27661"
            id="tspan3976-2-8-7-0"
            sodipodi:role="line">z</tspan></text>
       <text
          sodipodi:linespacing="125%"
          id="text3974-0-6-4"
-         y="596.45984"
-         x="155.43555"
+         y="595.75275"
+         x="151.67819"
          style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
            style="font-size:20px;font-style:italic;-inkscape-font-specification:Sans Italic"
-           y="596.45984"
-           x="155.43555"
+           y="595.75275"
+           x="151.67819"
            id="tspan3976-0-2-5"
-           sodipodi:role="line"><tspan
-             id="tspan4104-9-6-3"
-             style="font-size:20px;font-style:normal;-inkscape-font-specification:Sans">id</tspan><tspan
-             id="tspan4106-6-8-0"
-             style="font-size:20px;baseline-shift:sub">x</tspan></tspan></text>
+           sodipodi:role="line">i</tspan></text>
     </g>
   </g>
 </svg>
