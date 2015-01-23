@@ -326,11 +326,11 @@ class AramisFieldData(AramisRawData):
     '''
     @cached_property
     def _get_x_0(self):
-        X = self.X[:, self.top_j:self.bottom_j, self.left_i:self.right_i]
+        X = self.X[:, self.top_j:self.bottom_j, self.left_i:self.right_i].copy()
         if self.transform_data:
             # move to 0,0
-            X[0, :, :] = X[0, :, :] - np.min(X[0, :, :])
-            X[1, :, :] = X[1, :, :] - np.min(X[1, :, :])
+            X[0, :, :] = X[0, :, :] - np.nanmin(X[0, :, :])
+            X[1, :, :] = X[1, :, :] - np.nanmin(X[1, :, :])
             return X
         else:
             return X
@@ -387,14 +387,14 @@ class AramisFieldData(AramisRawData):
     '''
     @cached_property
     def _get_ly_0(self):
-        return self.y_arr_0.max() - self.y_arr_0.min()
+        return np.nanmax(self.y_arr_0) - np.nanmin(self.y_arr_0)
 
     lz_0 = Property(Float, depends_on='aramis_info.+params_changed, +params_changed')
     '''Length of the measuring area in z-direction
     '''
     @cached_property
     def _get_lz_0(self):
-        return self.z_arr_0.max() - self.z_arr_0.min()
+        return np.nanmax(self.z_arr_0) - np.nanmin(self.z_arr_0)
 
     x_0_stats = Property(depends_on='aramis_info.+params_changed, +params_changed')
     '''
@@ -406,10 +406,10 @@ class AramisFieldData(AramisRawData):
     @cached_property
     def _get_x_0_stats(self):
         x_diff = np.diff(self.x_arr_0, axis=1)
-        mu_mm = np.mean(x_diff)
-        std_mm = np.std(x_diff)
-        mu_px_mm = np.mean(x_diff / self.aramis_info.n_px_facet_step_x)
-        std_px_mm = np.std(x_diff / self.aramis_info.n_px_facet_step_x)
+        mu_mm = np.nanmean(x_diff)
+        std_mm = np.nanstd(x_diff)
+        mu_px_mm = np.nanmean(x_diff / self.aramis_info.n_px_facet_step_x)
+        std_px_mm = np.nanstd(x_diff / self.aramis_info.n_px_facet_step_x)
         return mu_mm, std_mm, mu_px_mm, std_px_mm
 
     stats_str = Property(Str, depends_on='aramis_info.+params_changed, +params_changed')
