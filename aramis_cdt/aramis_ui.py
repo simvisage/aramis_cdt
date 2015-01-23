@@ -152,8 +152,24 @@ if __name__ == '__main__':
     home = expanduser("~")
 
     data_dir = os.path.join(home, '.simdb_cache', 'exdata',
-                             'bending_tensile_test',
-                             '2014-06-12_BTT-4c-2cm-0-TU_MxN2', 'aramis', 'A2d_BTT-4c-2cm-TU-0-V05_MxN2-Xf15s3-Yf15s3')
+                             'bending_tests',
+                             'three_point', '2013-07-09_BT-6c-2cm-0-TU_bs4-Aramis3d',
+                              'aramis', 'BT-6c-V4-bs4-Xf19s15-Yf19s15')
+
+    data_dir = os.path.join(home, '.simdb_cache', 'exdata',
+                             'tensile_tests',
+                             'buttstrap_clamping', '2013-07-09_TTb-4c-2cm-0-TU_bs4-Aramis3d',
+                              'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s1-Yf19s4')
+
+    data_dir = os.path.join(home, '.simdb_cache', 'exdata',
+                             'tensile_tests',
+                             'buttstrap_clamping', '2013-12-01_TTb-4c-2cm-0-TU_Aramis2d_RR',
+                              'aramis', 'TTb-4c-2cm-0-TU-V1-Xf15s1-Yf15s4')
+
+#     data_dir = os.path.join(home, '.simdb_cache', 'exdata',
+#                              'tensile_tests',
+#                              'buttstrap_clamping', '2013-12-02_TTb-6c-2cm-0-TU_Aramis2d_RR',
+#                               'aramis', 'TTb-6c-2cm-0-TU-V5-Xf15s1-Yf15s4')
 
     AI = AramisInfo(data_dir=data_dir)
     # AI = AramisInfo()

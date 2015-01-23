@@ -49,6 +49,21 @@ def get_d(u_arr, r_arr, integ_radius):
     du_arr[:, ir:-ir] = (u_arr[:, 2 * ir:] - u_arr[:, :-2 * ir]) / (r_arr[:, 2 * ir:] - r_arr[:, :-2 * ir])
     return du_arr
 
+def get_d2(u_arr, integ_radius):
+    '''Get the derivatives
+    
+    Args:
+        u_arr: variable to differentiate
+        
+        r_arr: spatial coordinates
+        
+        integ_radius: radius at which the normalization is performed
+    '''
+    ir = integ_radius
+    du_arr = np.zeros_like(u_arr)
+    du_arr[:, ir:-ir] = (u_arr[:, 2 * ir:] - u_arr[:, :-2 * ir])
+    return du_arr
+
 class InfoViewer(HasTraits):
     text = Str()
 

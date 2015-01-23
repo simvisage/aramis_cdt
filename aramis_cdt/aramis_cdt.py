@@ -61,6 +61,10 @@ class AramisCDT(HasTraits):
     '''The third derivative of displacement in x-direction threshold
     '''
 
+    d_ux_avg_threshold = Float(0.0, params_changed=True)
+    '''The first derivative of displacement in x-direction threshold
+    '''
+
     dd_ux_avg_threshold = Float(0.0, params_changed=True)
     '''Average of he second derivative of displacement in x-direction threshold
     '''
@@ -117,6 +121,8 @@ class AramisCDT(HasTraits):
     crack_arr = Property(Array, depends_on='aramis_data.+params_changed, +params_changed')
     @cached_property
     def _get_crack_arr(self):
+        from aramis_data import get_d2
+        return (get_d2(self.aramis_data.ux_arr, self.aramis_data.integ_radius))[np.where(self.crack_filter)]
         return self.aramis_data.d_ux[np.where(self.crack_filter)]
 
     crack_arr_mean = Property(Float, depends_on='aramis_data.+params_changed, +params_changed')
@@ -212,8 +218,48 @@ class AramisCDT(HasTraits):
     '''Run analysis of all steps in time
     '''
     def _run_back_fired(self):
+        step = self.crack_detection_step
+        crack_step_avg = np.zeros_like(self.crack_detect_mask_avg, dtype=int)
+        crack_step_avg[self.crack_detect_mask_avg] = step
+
+        m = self.crack_detect_mask_avg.copy()
+        step -= 1
+
+        while step:
+            if step == 0:
+                break
+            print step
+            self.aramis_data.current_step = step
+            d_ux_avg_mask = (self.aramis_data.d_ux_avg[1:] + self.aramis_data.d_ux_avg[:-1]) * 0.5 > self.d_ux_avg_threshold
+            mask = d_ux_avg_mask * m
+            crack_step_avg[mask] = step
+
+            if np.sum(mask) == 0:
+                break
+
+            step -= 1
+
+        init_steps_avg = crack_step_avg[crack_step_avg > 0]
+
+        self.init_step_avg_lst = init_steps_avg.tolist()
+        print self.init_step_avg_lst
+        position_index = np.argwhere(self.crack_detect_mask_avg).flatten()
+        print 'position index', position_index
+        position = self.aramis_data.x_arr_0[0, :][self.crack_detect_mask_avg]
+        print 'position', position
+        time_of_init = self.aramis_data.step_times[self.init_step_avg_lst]
+        print 'time of initiation', time_of_init
+        force = self.aramis_data.ad_channels_arr[:, 1][self.init_step_avg_lst]
+        print 'force', force
+
+        data_to_save = np.vstack((position_index, position, time_of_init, force)).T
+
+        np.savetxt('%s.txt' % self.aramis_info.specimen_name, data_to_save, delimiter=';',
+                   header='position_index; position; time_of_init; force')
+
+        '''
         # todo: better
-        x = self.aramis_data.x_arr_0[20, :]
+        # x = self.aramis_data.x_arr_0[20, :]
 
         # import matplotlib.pyplot as plt
         # plt.rc('font', size=25)
@@ -232,9 +278,17 @@ class AramisCDT(HasTraits):
         self.crack_stress_t = np.zeros((np.sum(self.crack_detect_mask_avg),
                                        self.number_of_steps))
         # plt.figure()
+        m = self.crack_detect_mask_avg.copy()
+#         idx1 = np.argwhere(m == True) - 1
+#         idx1 = np.delete(idx1, np.argwhere(idx1 < 0))
+#         m[idx1] = True
+#         idx2 = np.argwhere(m == True) + 1
+#         idx2 = np.delete(idx1, np.argwhere(idx2 >= m.shape[0]))
+#         m[idx2] = True
         while step:
+            print 'step', step
             self.aramis_data.current_step = step
-            mask = self.crack_filter_avg * self.crack_detect_mask_avg
+            mask = self.crack_filter_avg  # * m
             crack_step_avg[mask] = step
             mask = self.crack_filter * self.crack_detect_mask
             crack_step[mask] = step
@@ -248,8 +302,8 @@ class AramisCDT(HasTraits):
             #    break
             if step == 0:
                 break
-            self.crack_width_avg_t[:, step] = self.aramis_data.d_ux_avg[crack_step_avg > 0]
-            self.crack_width_t[:, step] = self.aramis_data.d_ux[crack_step > 0]
+            # self.crack_width_avg_t[:, step] = self.aramis_data.d_ux_avg[crack_step_avg > 0]
+            # self.crack_width_t[:, step] = self.aramis_data.d_ux[crack_step > 0]
             # y = self.ad_channels_arr[:, :, 2] - self.ad_channels_arr[:, :, 1]
             # self.crack_stress_t[:, step] = y[:, 0][step] * 1e5 / (140 * 60)
             step -= 1
@@ -260,11 +314,22 @@ class AramisCDT(HasTraits):
 #         plt.ylim(0, 0.25)
 #         print 'initializationinit_steps time/step of the crack' , crack_step_avg[crack_step_avg > 0]
 #
+        print 'finished'
+
+#         for i in idx1:
+#             if crack_step_avg[i] < crack_step_avg[i + 1]:
+#                 crack_step_avg[i] = crack_step_avg[i + 1]
+#             crack_step_avg[i] = 0
+#         for i in idx2:
+#             if crack_step_avg[i] < crack_step_avg[i - 1]:
+#                 crack_step_avg[i] = crack_step_avg[i - 1]
+#             crack_step_avg[i] = 0
         init_steps_avg = crack_step_avg[crack_step_avg > 0]
         init_steps = crack_step[crack_step > 0]
 
         self.init_step_avg_lst = init_steps_avg.tolist()
         self.init_step_lst = init_steps.tolist()
+        print self.init_step_avg_lst
 #         init_steps_avg.sort()
 #         x = np.hstack((0, np.repeat(init_steps_avg, 2), self.aramis_info.last_step))
 #         y = np.repeat(np.arange(init_steps_avg.size + 1), 2)
@@ -282,13 +347,14 @@ class AramisCDT(HasTraits):
 #         plt.plot(x, y)
 
         # plt.show()
-
+        '''
 
     view = View(
                 Item('crack_detection_step'),
                 Item('d_ux_threshold'),
                 Item('dd_ux_threshold'),
                 Item('ddd_ux_threshold'),
+                Item('d_ux_avg_threshold'),
                 Item('dd_ux_avg_threshold'),
                 Item('ddd_ux_avg_threshold'),
                 Group(

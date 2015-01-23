@@ -76,12 +76,13 @@ class AramisPlot2D(HasTraits):
         ax = fig.add_subplot(2, 2, 1)
 
         ax.plot(aramis_data.i_cut.T, aramis_data.d_ux.T, color='black')
-        for x in aramis_data.d_ux:
-            ax.plot(aramis_data.i_cut.T, np.convolve(x, np.ones(10) / 10., 'same'), color='green', linewidth=0.3)
+        # for x in aramis_data.d_ux:
+        #    ax.plot(aramis_data.i_cut.T, np.convolve(x, np.ones(10) / 10., 'same'), color='green', linewidth=0.3)
         ax.plot(aramis_data.i_cut[0, :], aramis_data.d_ux_avg, color='red', linewidth=2)
         y_max_lim = ax.get_ylim()[-1]
         ax.vlines(aramis_data.i_cut[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
                  color='magenta', linewidth=1, zorder=10)
+        ax.set_title('d_ux')
 
         ax2 = fig.add_subplot(2, 2, 2)
         ax2.plot(aramis_data.i_cut.T, aramis_data.ux_arr.T, color='green')
@@ -90,6 +91,7 @@ class AramisPlot2D(HasTraits):
         y_max_lim = np.max(ax2.get_ylim())
         ax2.vlines(aramis_data.i_cut[0, :-1], y_min_lim, aramis_cdt.crack_filter_avg * y_max_lim + ~aramis_cdt.crack_filter_avg * y_min_lim,
                  color='magenta', linewidth=1, zorder=10)
+        ax2.set_title('ux')
 
         ax3 = fig.add_subplot(2, 2, 3)
         ax3.plot(aramis_data.i_cut[0, :], aramis_data.dd_ux_avg, color='black')
@@ -97,6 +99,7 @@ class AramisPlot2D(HasTraits):
         y_max_lim = ax3.get_ylim()[-1]
         ax3.vlines(aramis_data.i_cut[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
                  color='magenta', linewidth=1, zorder=10)
+        ax3.set_title('dd_ux, ddd_ux')
 
         ax = fig.add_subplot(2, 2, 4)
         from aramis_data import get_d
@@ -130,22 +133,22 @@ class AramisPlot2D(HasTraits):
         fig.clf()
         ax = fig.add_subplot(111)
 
-        ax.hist(aramis_cdt.crack_arr, bins=40, normed=True)
+        ax.hist(aramis_cdt.crack_arr.flatten(), bins=40, normed=True)
 
         ax.set_xlabel('crack_width [mm]')
         ax.set_ylabel('frequency [-]')
 
         ax2 = ax.twinx()
-        ax2.hist(aramis_cdt.crack_arr, normed=True,
+        ax2.hist(aramis_cdt.crack_arr.flatten(), normed=True,
                  histtype='step', color='black',
                  cumulative=True, bins=40, linewidth=2)
         ax2.set_ylabel('probability [-]')
 
         ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.current_step)
 
-        mu = aramis_cdt.crack_arr.mean()
-        sigma = aramis_cdt.crack_arr.std()
-        skew = stats.skew(aramis_cdt.crack_arr)
+        mu = float(aramis_cdt.crack_arr.flatten().mean())
+        sigma = float(aramis_cdt.crack_arr.flatten().std())
+        skew = float(stats.skew(aramis_cdt.crack_arr.flatten()))
         textstr = '$\mu=%.3g$\n$\sigma=%.3g$\n$\gamma_1=%.3g$' % (mu, sigma, skew)
 
         # these are matplotlib.patch.Patch properties
@@ -462,16 +465,19 @@ class AramisPlot2D(HasTraits):
         ax_area = plt.subplot2grid((2, 3), (0, 1), rowspan=2, colspan=2,
                                    adjustable='box', aspect='equal')
 
-        ax_diag.plot(self.aramis_cdt.control_strain_t, self.aramis_data.stress)
-        ax_diag.plot(aramis_cdt.control_strain_t[self.aramis_data.current_step],
-                 self.aramis_data.stress[self.aramis_data.current_step], 'ro')
+        x = self.aramis_data.step_times  # self.aramis_cdt.control_strain_t
+        stress = self.aramis_data.ad_channels_arr[:, 1]
+        ax_diag.plot(x, stress)
+        ax_diag.plot(x[self.aramis_data.current_step],
+                 stress[self.aramis_data.current_step], 'ro')
+        ax_diag.plot(x[aramis_cdt.init_step_avg_lst], stress[aramis_cdt.init_step_avg_lst], 'go', ms=4)
 
         ax_diag.set_xlabel('control strain [-]')
         ax_diag.set_ylabel('nominal stress [MPa]')
         ax_diag.set_xlim(0, ax_diag.get_xlim()[1])
 
         if aramis_cdt.crack_arr.size != 0:
-            ax_hist.hist(aramis_cdt.crack_arr, bins=40, normed=True)
+            ax_hist.hist(aramis_cdt.crack_arr.flatten(), bins=40, normed=True)
 
         ax_hist.set_xlabel('crack_width [mm]')
         ax_hist.set_ylabel('frequency [-]')
@@ -480,25 +486,30 @@ class AramisPlot2D(HasTraits):
         ax_hist_2 = ax_hist.twinx()
 
         if aramis_cdt.crack_arr.size != 0:
-            ax_hist_2.hist(aramis_cdt.crack_arr, normed=True,
+            ax_hist_2.hist(aramis_cdt.crack_arr.flatten(), normed=True,
                      histtype='step', color='black',
                      cumulative=True, bins=40, linewidth=2)
         ax_hist_2.set_ylabel('probability [-]')
         ax_hist_2.set_ylim(0, 1)
-        ax_hist.set_xlim(0, 0.15)
-        ax_hist.set_ylim(0, 100)
+        # ax_hist.set_xlim(0, 0.15)
+        # ax_hist.set_ylim(0, 50)
 
-        plot3d_var = getattr(aramis_cdt, 'd_ux')
+        plot3d_var = getattr(self.aramis_data, 'd_ux')
 
         CS = ax_area.contourf(self.aramis_data.x_arr_0,
                          self.aramis_data.y_arr_0,
                          plot3d_var, 2, cmap=plt.get_cmap('binary'))
         ax_area.plot(self.aramis_data.x_arr_0, self.aramis_data.y_arr_0, 'ko')
 
-        ax_area.plot(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
-                 self.aramis_data.y_arr_0[aramis_cdt.crack_filter], linestyle='None',
-                 marker='.', color='white')
+        # ax_area.plot(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
+        #         self.aramis_data.y_arr_0[aramis_cdt.crack_filter], linestyle='None',
+        #         marker='.', color='white')
+        ax_area.scatter(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
+                 self.aramis_data.y_arr_0[aramis_cdt.crack_filter], color='white', zorder=10, s=aramis_cdt.crack_arr * 50)
 
+        ax_area.vlines(self.aramis_data.x_arr_0[0, :][aramis_cdt.crack_filter_avg],
+                       [0], np.nanmax(self.aramis_data.y_arr_0[None]),
+                       color='magenta', zorder=100, linewidth=2)
 #         ax_area.vlines(aramis_cdt.x_arr_0[10, :-1][aramis_cdt.crack_filter_avg],
 #                    [0], np.nanmax(aramis_cdt.y_arr_0),
 #                    color='red', zorder=100, linewidth=1)
