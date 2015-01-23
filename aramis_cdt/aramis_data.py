@@ -36,12 +36,12 @@ from aramis_info import AramisInfo
 
 def get_d(u_arr, r_arr, integ_radius):
     '''Get the derivatives
-    
+
     Args:
         u_arr: variable to differentiate
-        
+
         r_arr: spatial coordinates
-        
+
         integ_radius: radius at which the normalization is performed
     '''
     ir = integ_radius
@@ -65,12 +65,12 @@ class AramisRawData(HasTraits):
     aramis_info = Instance(AramisInfo, params_changed=True)
 
     current_step = Int(0, params_changed=True, auto_set=False)
-    r'''Number of current step for evaluation. Can be set manually or calculated 
+    r'''Number of current step for evaluation. Can be set manually or calculated
     from current_time (the closest step number is selected).
     '''
 
     current_time = Float(0, params_changed=True, auto_set=False)
-    r'''Current time for evaluation. Can be set manually or calculated 
+    r'''Current time for evaluation. Can be set manually or calculated
     from current_step.
     '''
 
@@ -87,7 +87,7 @@ class AramisRawData(HasTraits):
 
     X = Property(Array, depends_on='aramis_info.+params_changed')
     r'''Cordinates in the initial state formated as an 3D array
-    
+
     .. image:: figs/X.png
             :width: 200px
     '''
@@ -169,7 +169,7 @@ class AramisFieldData(AramisRawData):
     # Parameters
     #===========================================================================
 
-    transform_data = Bool(True, params_changed=True)
+    transform_data = Bool(False, params_changed=True)
     '''Switch data transformation before analysis
     '''
 
@@ -322,7 +322,7 @@ class AramisFieldData(AramisRawData):
     # Initial state arrays - coordinates
     #===========================================================================
     x_0 = Property(Array, depends_on='aramis_info.+params_changed, +params_changed')
-    '''Array of values for initial state in the first step 
+    '''Array of values for initial state in the first step
     '''
     @cached_property
     def _get_x_0(self):
@@ -557,7 +557,7 @@ class AramisFieldData(AramisRawData):
         return get_d(self.uz_arr, self.z_arr_0, self.integ_radius)
 
     start_time = Float(0.0, params_changed=True)
-    '''Time offset according to real time of experiment start 
+    '''Time offset according to real time of experiment start
     '''
 
     step_times = Property(Array, depends_on='aramis_info.+params_changed, +params_changed')
