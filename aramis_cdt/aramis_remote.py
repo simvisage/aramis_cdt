@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 #
 # Copyright (c) 2013
 # IMB, RWTH Aachen University,
@@ -12,7 +12,7 @@
 #
 # Thanks for using Simvisage open source!
 #
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
 from etsproxy.traits.api import \
     HasTraits, Property, cached_property, \
@@ -32,7 +32,9 @@ if platform.system() == 'Linux':
 elif platform.system() == 'Windows':
     sysclock = time.clock
 
+
 class AramisRemote(HasTraits):
+
     '''Class managing the interaction with the remote server
     containing the processed aramis data.
 
@@ -81,6 +83,7 @@ class AramisRemote(HasTraits):
     experiment_selected = Str
     '''Specification of the current experiment from within the experiment_lst.
     '''
+
     def _experiment_selected_default(self):
         return self.experiment_lst[0]
 
@@ -102,6 +105,7 @@ class AramisRemote(HasTraits):
     aramis_file_selected = Str
     '''Aramis file currently selected for (download, unzip, analyze)
     '''
+
     def _aramis_file_selected_default(self):
         return self.aramis_files[0]
 
@@ -112,30 +116,35 @@ class AramisRemote(HasTraits):
     local_dir = Property(File)
     '''Relative path to the directory containing the selected aramis data
     '''
+
     def _get_local_dir(self):
         return os.path.join(self.simdb_cache_dir, self.experiment_selected, 'aramis')
 
     aramis_file_path = Property(File)
     '''Absolute path to the directory containing the selected aramis data
     '''
+
     def _get_aramis_file_path(self):
         return os.path.join(self.local_dir, self.aramis_file_selected)
 
     server_dir = Property(File)
     '''Remote path to the directory containing selected Aramis data
     '''
+
     def _get_server_dir(self):
         return os.path.join(self.simdb_cache_remote_dir, self.experiment_selected, 'aramis')
 
     zip_filename = Property(Str)
     '''Name of the zip file of the selected item
     '''
+
     def _get_zip_filename(self):
         return self.aramis_file_selected + '.zip'
 
     download = Button
     '''Prepare local data structure and download the zip file from server.
     '''
+
     def _download_fired(self):
         if not os.path.exists(self.local_dir):
             os.makedirs(self.local_dir)
@@ -152,6 +161,7 @@ class AramisRemote(HasTraits):
     decompress = Button
     '''Decompress downloaded file in local directory
     '''
+
     def _decompress_fired(self):
         zip_file = os.path.join(self.local_dir, self.zip_filename)
         zf = zipfile.ZipFile(zip_file, 'r')
@@ -160,21 +170,21 @@ class AramisRemote(HasTraits):
         print 'FILE %s DECOMPRESSED' % self.aramis_file_selected
 
     view = View(
-                Item('simdb_dir', style='readonly'),
-                Item('reload_experiments', show_label=False),
-                Item('experiment_selected', editor=EnumEditor(name='experiment_lst')),
-                # Item('extended_data_dir'),
-                Item('server_username', style='readonly'),
-                Item('server_host', style='readonly'),
-                Item('simdb_cache_remote_dir', style='readonly'),
-                Item('aramis_file_selected', editor=EnumEditor(name='aramis_files'),
-                     label='Available Aramis files'),
-                UItem('download'),
-                UItem('decompress'),
-                # UItem('set_dir')
-                id='aramisCDT.remote',
-                resizable=True
-                )
+        Item('simdb_dir', style='readonly'),
+        Item('reload_experiments', show_label=False),
+        Item('experiment_selected', editor=EnumEditor(name='experiment_lst')),
+        # Item('extended_data_dir'),
+        Item('server_username', style='readonly'),
+        Item('server_host', style='readonly'),
+        Item('simdb_cache_remote_dir', style='readonly'),
+        Item('aramis_file_selected', editor=EnumEditor(name='aramis_files'),
+             label='Available Aramis files'),
+        UItem('download'),
+        UItem('decompress'),
+        # UItem('set_dir')
+        id='aramisCDT.remote',
+        resizable=True
+    )
 
 
 if __name__ == '__main__':
