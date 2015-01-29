@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #
 # Copyright (c) 2013
 # IMB, RWTH Aachen University,
@@ -12,7 +12,7 @@
 #
 # Thanks for using Simvisage open source!
 #
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
 from etsproxy.traits.api import \
     HasTraits, Float, Property, cached_property, Int, Array, Bool, \
@@ -33,7 +33,9 @@ elif platform.system() == 'Windows':
 from aramis_info import AramisInfo
 from aramis_data import AramisFieldData
 
+
 class AramisCDT(HasTraits):
+
     '''Crack Detection Tool for detection of cracks, etc. from Aramis data.
     '''
     aramis_info = Instance(AramisInfo, params_changed=True)
@@ -46,9 +48,9 @@ class AramisCDT(HasTraits):
     '''Index of the step used to determine the crack pattern
     '''
 
-    #===========================================================================
+    #=========================================================================
     # Thresholds
-    #===========================================================================
+    #=========================================================================
     d_ux_threshold = Float(0.0, params_changed=True)
     '''The first derivative of displacement in x-direction threshold
     '''
@@ -73,43 +75,54 @@ class AramisCDT(HasTraits):
     '''Average of the third derivative of displacement in x-direction threshold
     '''
 
-    #===========================================================================
+    #=========================================================================
     # Crack detection
-    #===========================================================================
-    crack_filter = Property(Array, depends_on='aramis_data.+params_changed, +params_changed')
+    #=========================================================================
+    crack_filter = Property(
+        Array, depends_on='aramis_data.+params_changed, +params_changed')
+
     @cached_property
     def _get_crack_filter(self):
         dd_ux = self.aramis_data.dd_ux
         ddd_ux = self.aramis_data.ddd_ux
         crack_filter = ((dd_ux[:, 1:] * dd_ux[:, :-1] < self.dd_ux_threshold) *
                         ((ddd_ux[:, 1:] + ddd_ux[:, :-1]) / 2.0 < self.ddd_ux_threshold))
-        # print "number of cracks determined by 'crack_filter': ", np.sum(crack_filter, axis=1)
+        # print "number of cracks determined by 'crack_filter': ",
+        # np.sum(crack_filter, axis=1)
         return crack_filter
 
-    number_of_subcracks = Property(Int, depends_on='aramis_data.+params_changed, +params_changed')
+    number_of_subcracks = Property(
+        Int, depends_on='aramis_data.+params_changed, +params_changed')
     '''Number of sub-cracks
     '''
+
     def _get_number_of_subcracks(self):
         return np.sum(self.crack_filter)
 
-    crack_filter_avg = Property(Array, depends_on='aramis_data.+params_changed, +params_changed')
+    crack_filter_avg = Property(
+        Array, depends_on='aramis_data.+params_changed, +params_changed')
+
     @cached_property
     def _get_crack_filter_avg(self):
         dd_ux_avg = self.aramis_data.dd_ux_avg
         ddd_ux_avg = self.aramis_data.ddd_ux_avg
         crack_filter_avg = ((dd_ux_avg[1:] * dd_ux_avg[:-1] < self.dd_ux_avg_threshold) *
-                           ((ddd_ux_avg[1:] + ddd_ux_avg[:-1]) / 2.0 < self.ddd_ux_avg_threshold))
+                            ((ddd_ux_avg[1:] + ddd_ux_avg[:-1]) / 2.0 < self.ddd_ux_avg_threshold))
         print 'crack detection step', self.crack_detection_step
         print "number of cracks determined by 'crack_filter_avg': ", np.sum(crack_filter_avg)
         return crack_filter_avg
 
-    number_of_cracks_avg = Property(Int, depends_on='aramis_data.+params_changed, +params_changed')
+    number_of_cracks_avg = Property(
+        Int, depends_on='aramis_data.+params_changed, +params_changed')
     '''Number of cracks using averaging
     '''
+
     def _get_number_of_cracks_avg(self):
         return np.sum(self.crack_filter_avg)
 
-    crack_spacing_avg = Property(Array, depends_on='aramis_data.+params_changed, +params_changed')
+    crack_spacing_avg = Property(
+        Array, depends_on='aramis_data.+params_changed, +params_changed')
+
     @cached_property
     def _get_crack_spacing_avg(self):
         n_cr_avg = np.sum(self.crack_filter_avg)
@@ -118,36 +131,46 @@ class AramisCDT(HasTraits):
             # print "average crack spacing [mm]: %.1f" % (s_cr_avg)
             return s_cr_avg
 
-    crack_arr = Property(Array, depends_on='aramis_data.+params_changed, +params_changed')
+    crack_arr = Property(
+        Array, depends_on='aramis_data.+params_changed, +params_changed')
+
     @cached_property
     def _get_crack_arr(self):
         from aramis_data import get_d2
         return (get_d2(self.aramis_data.ux_arr, self.aramis_data.integ_radius))[np.where(self.crack_filter)]
         return self.aramis_data.d_ux[np.where(self.crack_filter)]
 
-    crack_arr_mean = Property(Float, depends_on='aramis_data.+params_changed, +params_changed')
+    crack_arr_mean = Property(
+        Float, depends_on='aramis_data.+params_changed, +params_changed')
+
     def _get_crack_arr_mean(self):
         return self.crack_arr.mean()
 
-    crack_arr_std = Property(Float, depends_on='aramis_data.+params_changed, +params_changed')
+    crack_arr_std = Property(
+        Float, depends_on='aramis_data.+params_changed, +params_changed')
+
     def _get_crack_arr_std(self):
         return self.crack_arr.std()
 
-    crack_avg_arr = Property(Array, depends_on='aramis_data.+params_changed, +params_changed')
+    crack_avg_arr = Property(
+        Array, depends_on='aramis_data.+params_changed, +params_changed')
+
     @cached_property
     def _get_crack_avg_arr(self):
         return self.aramis_data.d_ux_avg[np.where(self.crack_filter_avg)]
 
-    crack_field_arr = Property(Array, depends_on='aramis_data.+params_changed, +params_changed')
+    crack_field_arr = Property(
+        Array, depends_on='aramis_data.+params_changed, +params_changed')
+
     @cached_property
     def _get_crack_field_arr(self):
         cf_w = np.zeros_like(self.aramis_data.d_ux)
         cf_w[np.where(self.crack_filter)] = self.crack_arr
         return cf_w
 
-    #===========================================================================
+    #=========================================================================
     # Crack detection in time
-    #===========================================================================
+    #=========================================================================
     number_of_cracks_t = Array
     '''Number of cracks in time
     '''
@@ -174,7 +197,7 @@ class AramisCDT(HasTraits):
 
     def __number_of_cracks_t(self):
         self.number_of_cracks_t = np.append(self.number_of_cracks_t,
-                                           self.number_of_cracks_avg)
+                                            self.number_of_cracks_avg)
 
     crack_detect_mask_avg = Property(Array, depends_on='crack_detection_step')
     '''Mask of cracks identified in crack_detection_step and used for backward
@@ -197,7 +220,58 @@ class AramisCDT(HasTraits):
     run_t = Button('Run in time')
     '''Run analysis of all steps in time
     '''
+
     def _run_t_fired(self):
+        import matplotlib.pyplot as plt
+
+        # x = self.aramis_data.step_times  # self.aramis_cdt.control_strain_t
+        force = self.aramis_data.ad_channels_arr[:, 1]
+
+        x = []
+        for step_idx in self.aramis_info.step_list:
+            self.aramis_data.current_step = step_idx
+            x.append((self.aramis_data.ux_arr[:, -5] - self.aramis_data.ux_arr[:, 5]) /
+                     (self.aramis_data.x_arr_0[:, -5] - self.aramis_data.x_arr_0[:, 5]))
+        x = np.array(x)
+        #plt.plot(x, force, color='grey')
+
+        x = []
+        for step_idx in self.aramis_info.step_list:
+            self.aramis_data.current_step = step_idx
+            x.append(np.mean((self.aramis_data.ux_arr[:, -5] - self.aramis_data.ux_arr[:, 5])) /
+                     np.mean((self.aramis_data.x_arr_0[:, -5] - self.aramis_data.x_arr_0[:, 5])))
+        x = np.array(x)
+        #plt.plot(x, force, 'k-', linewidth=3)
+        self.control_strain_t = x
+        self.force = force
+
+        x = []
+        for step_idx in self.aramis_info.step_list:
+            self.aramis_data.current_step = step_idx
+            x.append((self.aramis_data.ux_arr[0, -5] - self.aramis_data.ux_arr[0, 5]) /
+                     (self.aramis_data.x_arr_0[0, -5] - self.aramis_data.x_arr_0[1, 5]))
+        x = np.array(x)
+        #plt.plot(x, force, color='red')
+
+        x = []
+        for step_idx in self.aramis_info.step_list:
+            self.aramis_data.current_step = step_idx
+            x.append((self.aramis_data.ux_arr[-1, -5] - self.aramis_data.ux_arr[-1, 5]) /
+                     (self.aramis_data.x_arr_0[-1, -5] - self.aramis_data.x_arr_0[-1, 5]))
+        x = np.array(x)
+        #plt.plot(x, force, color='red')
+
+        # plt.plot(x[self.init_step_avg_lst], force[
+        #         self.init_step_avg_lst], 'go', ms=6)
+
+        # plt.show()
+
+        #data_to_save = np.vstack((self.aramis_data.step_times, x, force)).T
+
+        # np.savetxt('%s_LD.txt' % self.aramis_info.specimen_name, data_to_save, delimiter=';',
+        #           header='time; strain; force')
+
+        '''
         start_step_idx = self.aramis_data.current_step
         self.number_of_cracks_t = np.array([])
         self.number_of_missing_facets_t = []
@@ -213,10 +287,12 @@ class AramisCDT(HasTraits):
             self.number_of_missing_facets_t.append(np.sum(np.isnan(self.aramis_data.data_array).astype(int)))
 
         self.aramis_data.current_step = start_step_idx
+        '''
 
     run_back = Button('Run back in time')
     '''Run analysis of all steps in time
     '''
+
     def _run_back_fired(self):
         step = self.crack_detection_step
         crack_step_avg = np.zeros_like(self.crack_detect_mask_avg, dtype=int)
@@ -230,7 +306,8 @@ class AramisCDT(HasTraits):
                 break
             print step
             self.aramis_data.current_step = step
-            d_ux_avg_mask = (self.aramis_data.d_ux_avg[1:] + self.aramis_data.d_ux_avg[:-1]) * 0.5 > self.d_ux_avg_threshold
+            d_ux_avg_mask = (self.aramis_data.d_ux_avg[
+                             1:] + self.aramis_data.d_ux_avg[:-1]) * 0.5 > self.d_ux_avg_threshold
             mask = d_ux_avg_mask * m
             crack_step_avg[mask] = step
 
@@ -252,10 +329,11 @@ class AramisCDT(HasTraits):
         force = self.aramis_data.ad_channels_arr[:, 1][self.init_step_avg_lst]
         print 'force', force
 
-        data_to_save = np.vstack((position_index, position, time_of_init, force)).T
+        # data_to_save = np.vstack(
+        #    (position_index, position, time_of_init, force)).T
 
-        np.savetxt('%s.txt' % self.aramis_info.specimen_name, data_to_save, delimiter=';',
-                   header='position_index; position; time_of_init; force')
+        # np.savetxt('%s.txt' % self.aramis_info.specimen_name, data_to_save, delimiter=';',
+        #           header='position_index; position; time_of_init; force')
 
         '''
         # todo: better
@@ -350,17 +428,17 @@ class AramisCDT(HasTraits):
         '''
 
     view = View(
-                Item('crack_detection_step'),
-                Item('d_ux_threshold'),
-                Item('dd_ux_threshold'),
-                Item('ddd_ux_threshold'),
-                Item('d_ux_avg_threshold'),
-                Item('dd_ux_avg_threshold'),
-                Item('ddd_ux_avg_threshold'),
-                Group(
-                      'number_of_cracks_t_analyse',
-                      UItem('run_t'),
-                      UItem('run_back'),
-                      ),
-                id='aramisCDT.cdt',
-                )
+        Item('crack_detection_step'),
+        Item('d_ux_threshold'),
+        Item('dd_ux_threshold'),
+        Item('ddd_ux_threshold'),
+        Item('d_ux_avg_threshold'),
+        Item('dd_ux_avg_threshold'),
+        Item('ddd_ux_avg_threshold'),
+        Group(
+            'number_of_cracks_t_analyse',
+            UItem('run_t'),
+            UItem('run_back'),
+        ),
+        id='aramisCDT.cdt',
+    )

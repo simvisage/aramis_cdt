@@ -162,11 +162,26 @@ if __name__ == '__main__':
     from os.path import expanduser
     home = expanduser("~")
 
+    data_dir = os.path.join(home, '.simdb_cache', 'exdata',
+                            'bending_tests',
+                            'three_point', '2013-07-09_BT-6c-2cm-0-TU_bs4-Aramis3d',
+                            'aramis', 'BT-6c-V4-bs4-Xf19s15-Yf19s15')
+
+    data_dir = os.path.join(home, '.simdb_cache', 'exdata',
+                            'tensile_tests',
+                            'buttstrap_clamping', '2013-07-09_TTb-4c-2cm-0-TU_bs4-Aramis3d',
+                            'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s1-Yf19s4')
+
+    data_dir = os.path.join(home, '.simdb_cache', 'exdata',
+                            'tensile_tests',
+                            'buttstrap_clamping', '2013-12-01_TTb-4c-2cm-0-TU_Aramis2d_RR',
+                            'aramis', 'TTb-4c-2cm-0-TU-V1-Xf15s1-Yf15s4')
+
 #     data_dir = os.path.join(home, '.simdb_cache', 'exdata',
-#                              'bending_tests',
-#                              'three_point', '2013-07-09_BT-6c-2cm-0-TU_bs4-Aramis3d',
-#                               'aramis', 'BT-6c-V4-bs4-Xf19s15-Yf19s15')
-#
+#                              'tensile_tests',
+#                              'buttstrap_clamping', '2013-12-02_TTb-6c-2cm-0-TU_Aramis2d_RR',
+#                               'aramis', 'TTb-6c-2cm-0-TU-V1-Xf15s1-Yf15s4')
+
 #     data_dir = os.path.join(home, '.simdb_cache', 'exdata',
 #                              'tensile_tests',
 #                              'buttstrap_clamping', '2013-07-09_TTb-4c-2cm-0-TU_bs4-Aramis3d',
