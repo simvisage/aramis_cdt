@@ -19,7 +19,7 @@ import os
 
 def report_gen(AUI, animation=False):
     AUI.aramis_view2d.save_plot = True
-    AUI.aramis_view2d.show_plot = True
+    AUI.aramis_view2d.show_plot = False
 
     number_of_cracks_avg = AUI.aramis_cdt.number_of_cracks_avg
     crack_spacing_avg = AUI.aramis_cdt.crack_spacing_avg
@@ -88,15 +88,15 @@ Numerical results
            AUI.aramis_info.n_px_facet_step_x,
            AUI.aramis_info.n_px_facet_step_y,
            AUI.aramis_cdt.integ_radius,
-           AUI.aramis_cdt.crack_detect_idx,
+           AUI.aramis_cdt.crack_detection_step,
            AUI.aramis_cdt.transform_data,
            AUI.aramis_cdt.d_ux_threshold,
            AUI.aramis_cdt.dd_ux_threshold,
            AUI.aramis_cdt.dd_ux_avg_threshold,
            AUI.aramis_cdt.ddd_ux_threshold,
            AUI.aramis_cdt.ddd_ux_avg_threshold,
-           np.nanmax(AUI.aramis_cdt.force_t),
-           np.nanmax(AUI.aramis_cdt.stress_t),
+           np.nanmax(AUI.aramis_data.force),
+           np.nanmax(AUI.aramis_data.stress),
            number_of_cracks_avg,
            crack_spacing_avg,
            np.min(AUI.aramis_cdt.init_step_avg_lst),
