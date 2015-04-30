@@ -170,7 +170,7 @@ if __name__ == '__main__':
     data_dir = os.path.join(home, '.simdb_cache', 'exdata',
                             'tensile_tests',
                             'buttstrap_clamping', '2013-07-09_TTb-4c-2cm-0-TU_bs4-Aramis3d',
-                            'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s1-Yf19s4')
+                           'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s1-Yf19s4')
 
     data_dir = os.path.join(home, '.simdb_cache', 'exdata',
                             'tensile_tests',
@@ -178,9 +178,9 @@ if __name__ == '__main__':
                             'aramis', 'TTb-4c-2cm-0-TU-V1-Xf15s1-Yf15s4')
 
 #     data_dir = os.path.join(home, '.simdb_cache', 'exdata',
-#                              'tensile_tests',
-#                              'buttstrap_clamping', '2013-12-02_TTb-6c-2cm-0-TU_Aramis2d_RR',
-#                               'aramis', 'TTb-6c-2cm-0-TU-V1-Xf15s1-Yf15s4')
+#                             'tensile_tests',
+#                             'buttstrap_clamping', '2013-12-02_TTb-6c-2cm-0-TU_Aramis2d_RR',
+#                             'aramis', 'TTb-6c-2cm-0-TU-V1-Xf15s1-Yf15s4')
 
 #     data_dir = os.path.join(home, '.simdb_cache', 'exdata',
 #                              'tensile_tests',
@@ -192,12 +192,12 @@ if __name__ == '__main__':
 #                              'buttstrap_clamping', '2013-12-01_TTb-4c-2cm-0-TU_Aramis2d_RR',
 #                               'aramis', 'TTb-4c-2cm-0-TU-V1-Xf15s1-Yf15s4')
 
-    data_dir = os.path.join(home, '.simdb_cache', 'exdata',
-                            'tensile_tests',
-                            'buttstrap_clamping', '2013-12-02_TTb-6c-2cm-0-TU_Aramis2d_RR',
-                            'aramis', 'TTb-6c-2cm-0-TU-V5-Xf15s1-Yf15s4')
+#     data_dir = os.path.join(home, '.simdb_cache', 'exdata',
+#                             'tensile_tests',
+#                             'buttstrap_clamping', '2013-12-02_TTb-6c-2cm-0-TU_Aramis2d_RR',
+#                             'aramis', 'TTb-6c-2cm-0-TU-V5-Xf15s1-Yf15s4')
 
-    #AI = AramisInfo(data_dir=data_dir)
-    AI = AramisInfo()
+    AI = AramisInfo(data_dir=data_dir)
+    # AI = AramisInfo()
     AUI = AramisUI(aramis_info=AI)
     AUI.configure_traits()

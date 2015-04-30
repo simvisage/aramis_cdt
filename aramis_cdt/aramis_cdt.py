@@ -245,20 +245,20 @@ class AramisCDT(HasTraits):
         self.control_strain_t = x
         self.force = force
 
-        x = []
-        for step_idx in self.aramis_info.step_list:
-            self.aramis_data.current_step = step_idx
-            x.append((self.aramis_data.ux_arr[0, -5] - self.aramis_data.ux_arr[0, 5]) /
-                     (self.aramis_data.x_arr_0[0, -5] - self.aramis_data.x_arr_0[1, 5]))
-        x = np.array(x)
-        #plt.plot(x, force, color='red')
-
-        x = []
-        for step_idx in self.aramis_info.step_list:
-            self.aramis_data.current_step = step_idx
-            x.append((self.aramis_data.ux_arr[-1, -5] - self.aramis_data.ux_arr[-1, 5]) /
-                     (self.aramis_data.x_arr_0[-1, -5] - self.aramis_data.x_arr_0[-1, 5]))
-        x = np.array(x)
+#         x = []
+#         for step_idx in self.aramis_info.step_list:
+#             self.aramis_data.current_step = step_idx
+#             x.append((self.aramis_data.ux_arr[0, -5] - self.aramis_data.ux_arr[0, 5]) /
+#                      (self.aramis_data.x_arr_0[0, -5] - self.aramis_data.x_arr_0[1, 5]))
+#         x = np.array(x)
+# plt.plot(x, force, color='red')
+#
+#         x = []
+#         for step_idx in self.aramis_info.step_list:
+#             self.aramis_data.current_step = step_idx
+#             x.append((self.aramis_data.ux_arr[-1, -5] - self.aramis_data.ux_arr[-1, 5]) /
+#                      (self.aramis_data.x_arr_0[-1, -5] - self.aramis_data.x_arr_0[-1, 5]))
+#         x = np.array(x)
         #plt.plot(x, force, color='red')
 
         # plt.plot(x[self.init_step_avg_lst], force[
