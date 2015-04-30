@@ -306,8 +306,8 @@ class AramisCDT(HasTraits):
                 break
             print step
             self.aramis_data.current_step = step
-            d_ux_avg_mask = (self.aramis_data.d_ux_avg[
-                             1:] + self.aramis_data.d_ux_avg[:-1]) * 0.5 > self.d_ux_avg_threshold
+            d_ux_avg_mask = (self.aramis_data.d_ux_avg[1:] +
+                             self.aramis_data.d_ux_avg[:-1]) * 0.5 > self.d_ux_avg_threshold
             mask = d_ux_avg_mask * m
             crack_step_avg[mask] = step
 
