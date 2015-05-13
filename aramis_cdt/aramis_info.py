@@ -42,7 +42,7 @@ class AramisInfo(HasTraits):
     '''Basic information of Aramis database obtained from directory name and
     from files placed in the data directory.
     '''
-    data_dir = Directory(auto_set=False, enter_set=True)
+    data_dir = Directory(auto_set=False, enter_set=True, params_changed=True)
     '''Directory containing experiment data files exported by Aramis Software.
     '''
 
