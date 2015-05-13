@@ -15,7 +15,7 @@
 #-------------------------------------------------------------------------------
 
 from etsproxy.traits.api import \
-    HasTraits, Property, cached_property, Int, Array, Instance, Tuple, Button, List
+    HasTraits, Property, cached_property, Int, Array, Instance, Tuple, Button, List, Float
 
 from etsproxy.traits.ui.api import View, UItem
 
@@ -41,14 +41,19 @@ class AramisNPyGen(HasTraits):
 
     aramis_info = Instance(AramisInfo)
 
+    # TODO: add to UI and multiply force
+    force_t_mult_coef = Float(100.0)
+    '''Multiplication coefficient to obtain force_t from AD channel value
+    '''
+
     #===========================================================================
     # Undeformed state data
     #===========================================================================
-    input_array_undeformed = Property(Array, depends_on='aramis_info.data_dir')
+    X = Property(Array, depends_on='aramis_info.data_dir')
     '''Array of values for undeformed state in the first step.
     '''
     @cached_property
-    def _get_input_array_undeformed(self):
+    def _get_X(self):
         '''Load data (undeformed coordinates) for the first step from *.txt and 
         save as *.npy. 
         '''
@@ -65,12 +70,12 @@ class AramisNPyGen(HasTraits):
         data_arr = np.loadtxt(fname_txt,
                            # skiprows=14,  # not necessary
                            usecols=[0, 1, 2, 3, 4])
-        self.x_idx_min_undeformed = int(np.min(data_arr[:, 0]))
-        self.y_idx_min_undeformed = int(np.min(data_arr[:, 1]))
-        self.x_idx_max_undeformed = int(np.max(data_arr[:, 0]))
-        self.y_idx_max_undeformed = int(np.max(data_arr[:, 1]))
-        self.n_x_undeformed = int(self.x_idx_max_undeformed - self.x_idx_min_undeformed + 1)
-        self.n_y_undeformed = int(self.y_idx_max_undeformed - self.y_idx_min_undeformed + 1)
+        self.x_idx_min_0 = int(np.min(data_arr[:, 0]))
+        self.y_idx_min_0 = int(np.min(data_arr[:, 1]))
+        self.x_idx_max_0 = int(np.max(data_arr[:, 0]))
+        self.y_idx_max_0 = int(np.max(data_arr[:, 1]))
+        self.ni = int(self.x_idx_max_0 - self.x_idx_min_0 + 1)
+        self.nj = int(self.y_idx_max_0 - self.y_idx_min_0 + 1)
         data_arr = self._prepare_data_structure(data_arr)
 
         np.save(fname_npy, data_arr)
@@ -78,27 +83,27 @@ class AramisNPyGen(HasTraits):
         print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
         return data_arr
 
-    x_idx_min_undeformed = Int
+    x_idx_min_0 = Int
     '''Minimum value of the indices in the first column of the undeformed state.
     '''
 
-    y_idx_min_undeformed = Int
+    y_idx_min_0 = Int
     '''Minimum value of the indices in the second column of the undeformed state.
     '''
 
-    x_idx_max_undeformed = Int
+    x_idx_max_0 = Int
     '''Maximum value of the indices in the first column of the undeformed state.
     '''
 
-    y_idx_max_undeformed = Int
+    y_idx_max_0 = Int
     '''Maximum value of the indices in the second column of the undeformed state.
     '''
 
-    n_x_undeformed = Int
+    ni = Int
     '''Number of facets in x-direction
     '''
 
-    n_y_undeformed = Int
+    nj = Int
     '''Number of facets in y-direction
     '''
 
@@ -107,28 +112,28 @@ class AramisNPyGen(HasTraits):
     aramis file header
     '''
 
-    data_array_undeformed_shape = Property(Tuple, depends_on='input_array_undeformed')
+    x_0_shape = Property(Tuple, depends_on='X')
     '''Shape of undeformed data array.
     '''
     @cached_property
-    def _get_data_array_undeformed_shape(self):
-        return (3, self.n_y_undeformed, self.n_x_undeformed)
+    def _get_x_0_shape(self):
+        return (3, self.nj, self.ni)
 
-    x_idx_undeformed = Property(Int, depends_on='input_array_undeformed')
+    i = Property(Int, depends_on='X')
     '''Indices in the first column of the undeformed state starting with zero.
     '''
     @cached_property
-    def _get_x_idx_undeformed(self):
-        return (np.arange(self.n_x_undeformed)[np.newaxis, :] *
-                np.ones(self.n_y_undeformed)[:, np.newaxis]).astype(int)
+    def _get_i(self):
+        return (np.arange(self.ni)[np.newaxis, :] *
+                np.ones(self.nj)[:, np.newaxis]).astype(int)
 
-    y_idx_undeformed = Property(Int, depends_on='input_array_undeformed')
+    j = Property(Int, depends_on='X')
     '''Indices in the first column of the undeformed state starting with zero.
     '''
     @cached_property
-    def _get_y_idx_undeformed(self):
-        return (np.arange(self.n_y_undeformed)[np.newaxis, :] *
-                np.ones(self.n_x_undeformed)[:, np.newaxis]).T
+    def _get_j(self):
+        return (np.arange(self.nj)[np.newaxis, :] *
+                np.ones(self.ni)[:, np.newaxis]).T
 
     ad_channels_arr = Property(Array)
     def _get_ad_channels_arr(self):
@@ -141,7 +146,7 @@ class AramisNPyGen(HasTraits):
     '''
     def _generate_npy_fired(self):
         self.ad_channels_lst = []
-        for step_idx in self.aramis_info.step_idx_list:
+        for step_idx in self.aramis_info.step_list:
             self._load_step_data(step_idx)
             self.__decompile_ad_channels(step_idx)
         np.save(os.path.join(self.aramis_info.npy_dir, 'ad_channels.npy'),
@@ -157,7 +162,7 @@ class AramisNPyGen(HasTraits):
         (improve speed of loading)
         '''
         fname = '%s%d' % (self.aramis_info.displacements_basename,
-                         self.aramis_info.step_list[step_idx])
+                         self.aramis_info.aramis_stage_list[step_idx])
         print 'loading', fname, '...'
 
         start_t = sysclock()
@@ -180,21 +185,21 @@ class AramisNPyGen(HasTraits):
         return data_arr
 
     def _prepare_data_structure(self, input_arr):
-        if self.n_x_undeformed == 0:
-            self.input_array_undeformed
-        data_arr = np.empty((self.n_x_undeformed * self.n_y_undeformed,
+        if self.ni == 0:
+            self.X
+        data_arr = np.empty((self.ni * self.nj,
                                  input_arr.shape[1] - 2), dtype=float)
         data_arr.fill(np.nan)
 
         # input indices (columns 1 and 2)
         in_indices = input_arr[:, :2].astype(int)
-        in_indices[:, 0] -= self.x_idx_min_undeformed
-        in_indices[:, 1] -= self.y_idx_min_undeformed
+        in_indices[:, 0] -= self.x_idx_min_0
+        in_indices[:, 1] -= self.y_idx_min_0
         in_indices = in_indices.view([('', in_indices.dtype)] * in_indices.shape[1])
 
         # undeformed state indices
-        un_indices = np.hstack((self.x_idx_undeformed.ravel()[:, np.newaxis],
-                               self.y_idx_undeformed.ravel()[:, np.newaxis])).astype(int)
+        un_indices = np.hstack((self.i.ravel()[:, np.newaxis],
+                               self.j.ravel()[:, np.newaxis])).astype(int)
         un_indices = un_indices.view([('', un_indices.dtype)] * un_indices.shape[1])
 
         # data for higher steps have the same order of rows as
@@ -202,13 +207,13 @@ class AramisNPyGen(HasTraits):
         mask = np.in1d(un_indices, in_indices, assume_unique=True)
         data_arr[mask] = input_arr[:, 2:]
 
-        print data_arr.shape, self.data_array_undeformed_shape
-        data_arr = data_arr.T.reshape(self.data_array_undeformed_shape)
+        print data_arr.shape, self.x_0_shape
+        data_arr = data_arr.T.reshape(self.x_0_shape)
         return data_arr
 
     def __decompile_ad_channels(self, step_idx):
         fname = '%s%d' % (self.aramis_info.displacements_basename,
-                         self.aramis_info.step_list[step_idx])
+                         self.aramis_info.aramis_stage_list[step_idx])
         with open(os.path.join(self.aramis_info.data_dir, fname + '.txt')) as infile:
             for i in range(30):
                 line = infile.readline()

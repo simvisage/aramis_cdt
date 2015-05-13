@@ -2,11 +2,11 @@
 AramisCDT User Manual
 =====================
 
-Author: 	Rostislav Chudoba
+Author: 	Václav Sadílek, Rostislav Chudoba
             
 Version: 	Document Version 1
 
-Copyright: 	2013 Simvisage
+Copyright: 	2013, 2014 Simvisage
 
 Redistribution and use of this document in source and derived forms, with or without modification, are permitted provided that the following conditions are met:
 

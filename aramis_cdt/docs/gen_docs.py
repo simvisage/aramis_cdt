@@ -15,7 +15,7 @@
 #-------------------------------------------------------------------------------
 
 from etsproxy.traits.api import \
-    HasTraits, Str, Property, cached_property, \
+    HasTraits, Property, \
     Enum
 
 import os.path
@@ -24,7 +24,7 @@ from os.path import expanduser
 
 HOME_DIR = expanduser("~")
 # build directory
-BUILD_DIR = os.path.join(HOME_DIR, '.doc_build', 'aramis_cdt', 'docs')
+BUILD_DIR = os.path.join(HOME_DIR, '.aramis_cdt', 'docs')
 # output directory for the documentation
 DOCS_DIR = os.path.join('..', 'docs',)
 # output directory for the example documentation
@@ -44,7 +44,7 @@ class GenDoc(HasTraits):
                      'global' : BUILD_DIR }
         return build_dir[self.build_mode]
 
-    html_server = 'kelidas@ws_cheetah.stm.fce.vutbr.cz:/var/www/aramis_cdt'  # 'root@mordred.imb.rwth-aachen.de:/var/www/docs/aramis_cdt'
+    html_server = 'root@mordred.imb.rwth-aachen.de:/var/www/docs/aramis_cdt'
 
     method_dispatcher = {'all' : 'generate_examples' }
 
@@ -65,4 +65,4 @@ if __name__ == '__main__':
     gd = GenDoc(build_mode='global')
     # gd.generate_examples() # kind = 'sampling_efficiency')
     gd.generate_html()
-    gd.push_html()
+    # gd.push_html()

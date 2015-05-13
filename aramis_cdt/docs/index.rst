@@ -22,18 +22,20 @@ Tutorial
    intro
    aramis/aramis
    aramis_cdt/aramis_cdt
-   examples/examples
 
+Class reference
+---------------
+
+.. toctree::
+   :maxdepth: 1
+
+   class_reference
 
 Todo list
 ---------
 	
-	1. download data from http (prepared) 
-	2. average crack number from sub-crack information (number of sub-crack * grid size y (cca 2 mm) / specimen width) and spacing
-	3. read info from exp_db
-	4. default directory for data - ~/.aramis_simdb
-	5. merge run in time and run back in time
-	6. fix rotation in transform_data
+	1. a
+	2. a
 
 .. todolist::
 

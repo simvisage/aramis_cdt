@@ -28,6 +28,8 @@ import sys, os
 extensions = ['matplotlib.sphinxext.mathmpl',
               'matplotlib.sphinxext.only_directives',
               'matplotlib.sphinxext.plot_directive',
+              'sphinx.ext.inheritance_diagram',
+              'sphinx.ext.graphviz',
               'sphinx.ext.autodoc',
               'sphinx.ext.doctest',
               'sphinx.ext.todo',
@@ -37,6 +39,9 @@ extensions = ['matplotlib.sphinxext.mathmpl',
               'sphinx.ext.viewcode']
 
 [extensions]
+
+autodoc_member_order = 'bysource'
+
 todo_include_todos = True
 
 # Add any paths that contain templates here, relative to this directory.

@@ -5,7 +5,6 @@ Thanks to Tony Yu <tsyu80@gmail.com> for the logo design
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
 
 mpl.rcParams['text.usetex'] = True
 mpl.rcParams['xtick.labelsize'] = 10
