@@ -132,7 +132,9 @@ class AramisNPyGen(HasTraits):
 
     ad_channels_arr = Property(Array)
     def _get_ad_channels_arr(self):
-        return np.array(self.ad_channels_lst, dtype=float)
+        data= np.array(self.ad_channels_lst, dtype=float)
+        data[:,1] = data[:,1] * 100
+        return data
 
     generate_npy = Button
     '''Generate npy files from Aramis *.txt data 
@@ -210,9 +212,11 @@ class AramisNPyGen(HasTraits):
         with open(os.path.join(self.aramis_info.data_dir, fname + '.txt')) as infile:
             for i in range(30):
                 line = infile.readline()
-                m = re.match(r'#\s+AD-0:\s+([-+]?\d+\.\d+)\s+(?P<force>[-+]?\d+\.\d+)', line)
+                m = re.match(r'#\s+AD-0:\s+[-+]?\d+\.\d+\s+(?P<force>[-+]?\d+\.\d+)', line)
                 if m:
                     force = float(m.groups('force')[0])
+		else:
+		    force = 0
                 m = re.match(r'#\s+deformt:\s+(?P<time>[-+]?\d+\.\d+)', line)
                 if m:
                     time = float(m.groups('time')[0])
@@ -224,7 +228,21 @@ class AramisNPyGen(HasTraits):
 
 
 if __name__ == '__main__':
-    data_dir = '/media/data/_linux_data/aachen/Aramis_07_2013/TTb-4c-2cm-0-TU-V1_bs4-Xf19s15-Yf19s15'
-    AI = AramisInfo(data_dir=data_dir)
-    AG = AramisNPyGen(aramis_info=AI)
-    AG.configure_traits()
+    ns=[#'TTb-2C-1cm-0-800SBR-V1_cyc-Aramis2d-Xf15s13-Yf15s13',
+#'TTb-2C-1cm-0-800SBR-V1_cyc-Aramis2d-Xf15s1-Yf15s4',
+'TTb-2C-1cm-0-800SBR-V2_cyc-Aramis2d-Xf15s13-Yf15s13',
+'TTb-2C-1cm-0-800SBR-V2_cyc-Aramis2d-Xf15s1-Yf15s4',
+'TTb-2C-1cm-0-800SBR-V3_cyc-Aramis2d-Xf15s13-Yf15s13',
+'TTb-2C-1cm-0-800SBR-V3_cyc-Aramis2d-Xf15s1-Yf15s4',
+'TTb-2C-1cm-0-800SBR-V4_cyc-Aramis2d-Xf15s13-Yf15s13',
+'TTb-2C-1cm-0-800SBR-V4_cyc-Aramis2d-Xf15s1-Yf15s4',
+'TTb-2C-1cm-0-800SBR-V5_cyc-Aramis2d-Xf15s13-Yf15s13',
+'TTb-2C-1cm-0-800SBR-V5_cyc-Aramis2d-Xf15s1-Yf15s4'
+]
+    data_dir = '/media/raid/Aachen/simdb_large_txt/'
+    for n in ns:
+        AI = AramisInfo(data_dir=data_dir+n)
+        AG = AramisNPyGen(aramis_info=AI)
+    #AG.configure_traits()
+        AG.generate_npy = True
+    
