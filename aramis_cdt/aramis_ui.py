@@ -17,7 +17,7 @@
 # ETSConfig.toolkit = 'qt4'
 
 from etsproxy.traits.api import \
-    HasTraits, Instance, on_trait_change, Button, Directory, Event
+    HasTraits, Instance, on_trait_change, Button, Directory, Event, Float
 
 from etsproxy.traits.ui.api import UItem, View, Tabbed, Group, Item, RangeEditor, VGroup, HSplit
 from util.traits.editors.mpl_figure_editor import MPLFigureEditor
@@ -43,7 +43,6 @@ from aramis_view2d import AramisPlot2D
 from aramis_view3d import AramisView3D
 from aramis_remote import AramisRemote
 
-
 class AramisUI(HasTraits):
 
     '''This class is managing all the parts of the CDT and enable to create
@@ -53,6 +52,15 @@ class AramisUI(HasTraits):
     data_dir = Directory(auto_set=False, enter_set=True)
     '''Directory of data files (*.txt) exported by Aramis Software.
     '''
+    warp_factor = Float
+
+    glyph_x_length = Float
+    glyph_y_length = Float
+    glyph_z_length = Float
+
+    glyph_x_length_cr = Float
+    glyph_y_length_cr = Float
+    glyph_z_length_cr = Float
 
     def _data_dir_default(self):
         return os.path.join(self.aramis_remote.simdb_cache_dir)
@@ -88,7 +96,14 @@ class AramisUI(HasTraits):
     def _aramis_view3d_default(self):
         return AramisView3D(aramis_data=self.aramis_data,
                             aramis_cdt=self.aramis_cdt,
-                            scene=self.scene)
+                            scene=self.scene,
+                            glyph_x_length=self.glyph_x_length,
+                            glyph_y_length=self.glyph_y_length,
+                            glyph_z_length=self.glyph_z_length,
+                            glyph_x_length_cr=self.glyph_x_length_cr,
+                            glyph_y_length_cr=self.glyph_y_length_cr,
+                            glyph_z_length_cr=self.glyph_z_length_cr,
+                            warp_factor=self.warp_factor)
 
     figure = Instance(Figure)
 
@@ -153,7 +168,7 @@ class AramisUI(HasTraits):
         title='Aramis CDT',
         id='aramis_CDT.main_window',
         resizable=True,
-        # width=0.2,
+        width=0.2,
     )
 
 
