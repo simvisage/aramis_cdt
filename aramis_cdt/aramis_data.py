@@ -49,20 +49,18 @@ def get_d(u_arr, r_arr, integ_radius):
     du_arr[:, ir:-ir] = (u_arr[:, 2 * ir:] - u_arr[:, :-2 * ir]) / (r_arr[:, 2 * ir:] - r_arr[:, :-2 * ir])
     return du_arr
 
-def get_d2(u_arr, integ_radius):
-    '''Get the derivatives
-    
+def get_delta(u_arr, integ_radius):
+    '''Get the absolute displacement jumps in x-direction
+
     Args:
-        u_arr: variable to differentiate
-        
-        r_arr: spatial coordinates
-        
-        integ_radius: radius at which the normalization is performed
+        u_arr: variable of absolute displacements
+
+        integ_radius: radius at which the substraction is performed
     '''
     ir = integ_radius
-    du_arr = np.zeros_like(u_arr)
-    du_arr[:, ir:-ir] = (u_arr[:, 2 * ir:] - u_arr[:, :-2 * ir])
-    return du_arr
+    delta_u_arr = np.zeros_like(u_arr)
+    delta_u_arr[:, ir:-ir] = u_arr[:, 2 * ir:] - u_arr[:, :-2 * ir]
+    return delta_u_arr
 
 class InfoViewer(HasTraits):
     text = Str()
@@ -95,8 +93,13 @@ class AramisRawData(HasTraits):
     # the value should correspond to
 #    def _integ_radius_default(self):
 #        return ceil( float( self.n_px_f / self.n_px_a )
-    integ_radius = Int(2, params_changed=True)
+    integ_radius = Int(3, params_changed=True)
     '''Integration radius for non-local average of the measured strain defined
+    as integer value of number of facets.
+    '''
+
+    integ_radius_crack = Int(5, params_changed=True)
+    '''Integration radius for non-local average of the measured displacement jumps (=crack width) defined
     as integer value of number of facets.
     '''
 
@@ -124,6 +127,7 @@ class AramisRawData(HasTraits):
         if verbose:
             print 'loading time =', sysclock() - start_t
             print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
+
         return data_arr
 
     current_step_filename = Property(Str, depends_on='+params_changed')
@@ -187,6 +191,8 @@ class AramisFieldData(AramisRawData):
     transform_data = Bool(False, params_changed=True)
     '''Switch data transformation before analysis
     '''
+
+    scale_data_factor = Float(1.0, params_changed=True)
 
     #===========================================================================
     #
@@ -342,7 +348,12 @@ class AramisFieldData(AramisRawData):
     @cached_property
     def _get_x_0(self):
         X = self.X[:, self.top_j:self.bottom_j, self.left_i:self.right_i].copy()
+
+        # scale data in order to match real scale of the specimen
+        X *= self.scale_data_factor
+
         if self.transform_data:
+            print 'data transformed (measuring field starts at origin)'
             # move to 0,0
             X[0, :, :] = X[0, :, :] - np.nanmin(X[0, :, :])
             X[1, :, :] = X[1, :, :] - np.nanmin(X[1, :, :])
@@ -473,6 +484,8 @@ class AramisFieldData(AramisRawData):
     @cached_property
     def _get_u(self):
         U = self.U[:, self.top_j:self.bottom_j, self.left_i:self.right_i]
+        # scale data in order to match real scale of the specimen
+        U *= self.scale_data_factor
         if self.transform_data:
             return U
         else:
@@ -520,6 +533,18 @@ class AramisFieldData(AramisRawData):
     #===========================================================================
     #
     #===========================================================================
+
+    delta_ux_arr = Property(Array, depends_on='+params_changed')
+    '''Displacement jumps 1D in x-direction
+    '''
+    @cached_property
+    def _get_delta_ux_arr(self):
+        return get_delta(self.ux_arr, self.integ_radius_crack)
+
+    delta_ux_arr_avg = Property(Array, depends_on='+params_changed')
+    @cached_property
+    def _get_delta_ux_arr_avg(self):
+        return np.average(self.delta_ux_arr, axis=0)
 
     d_ux = Property(Array, depends_on='+params_changed')
     '''Strain 1D in x-direction
