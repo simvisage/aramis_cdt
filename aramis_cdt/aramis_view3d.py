@@ -36,6 +36,7 @@ from aramis_info import AramisInfo
 from aramis_data import AramisFieldData
 from aramis_cdt import AramisCDT
 
+
 class AramisView3D(HasTraits):
     '''This class manages 3D views for AramisCDT variables
     '''
@@ -54,8 +55,10 @@ class AramisView3D(HasTraits):
                                             '04 ux_arr [mm]':['aramis_data', 'ux_arr'],
                                             '05 uy_arr [mm]':['aramis_data', 'uy_arr'],
                                             '06 uz_arr [mm]':['aramis_data', 'uz_arr'],
-                                            '07 d_ux [mm]':['aramis_data', 'd_ux'],
-                                            '08 crack_filed_arr [mm]': ['aramis_cdt', 'crack_field_arr']})
+                                            '07 d_ux [-]':['aramis_data', 'd_ux'],
+                                            '08 crack_filed_arr [mm]': ['aramis_cdt', 'crack_field_arr'],
+                                            '09 delta_ux_arr [mm]': ['aramis_data', 'delta_ux']
+                                            })
 
     plot3d_points_flat = Button
     def _plot3d_points_flat_fired(self):
@@ -100,6 +103,8 @@ class AramisView3D(HasTraits):
     glyph_x_length_cr = Float(3.000)
     glyph_y_length_cr = Float(0.120)
     glyph_z_length_cr = Float(0.120)
+
+    warp_factor = Float(0.0)
 
     plot3d_points = Button
     def _plot3d_points_fired(self):
@@ -197,9 +202,12 @@ class AramisView3D(HasTraits):
         z_arr = np.zeros_like(self.aramis_data.z_arr_0)
 
         plot3d_var = aramis_cdt.crack_field_arr
-#        plot3d_var = getattr(self, 'crack_field_w')
-        m.points3d(z_arr, self.aramis_data.x_arr_0, self.aramis_data.y_arr_0, plot3d_var,
-                   mode='cube', colormap="blue-red", scale_mode='scalar')
+
+        m.points3d(z_arr,
+                   self.aramis_data.x_arr_0 + self.aramis_data.ux_arr * self.warp_factor,
+                   self.aramis_data.y_arr_0 + self.aramis_data.uy_arr * self.warp_factor,
+                   plot3d_var,
+                   mode='cube', colormap="blue-red", scale_mode='scalar', scale_factor=1.0)
 
         # scale glyphs
         #
@@ -210,13 +218,14 @@ class AramisView3D(HasTraits):
         glyph.glyph.glyph_source.glyph_source.z_length = self.glyph_z_length_cr
 
         #-----------------------------------
-        # plot displacement jumps ('d_ux_w')
+        # plot crack_field_arr
         #-----------------------------------
 
-#        plot3d_var = getattr(self, 'd_ux_w')
-        plot3d_var = getattr(aramis_cdt, 'crack_field_arr')
-        m.points3d(z_arr, self.aramis_data.x_arr_0, self.aramis_data.y_arr_0, plot3d_var, mode='cube',
-                   colormap="blue-red", scale_mode='none')
+        m.points3d(z_arr,
+                   self.aramis_data.x_arr_0 + self.aramis_data.ux_arr * self.warp_factor,
+                   self.aramis_data.y_arr_0 + self.aramis_data.uy_arr * self.warp_factor,
+                   plot3d_var,
+                   mode='cube', colormap="blue-red", scale_mode='none', scale_factor=1)
 
         glyph1 = self.scene.engine.scenes[0].children[1].children[0].children[0]
 #       # switch order of the scale_factor corresponding to the order of the
@@ -229,7 +238,6 @@ class AramisView3D(HasTraits):
         scene = self.scene.engine.scenes[0]
         scene.scene.parallel_projection = True
         m.view(0, 90)
-
         glyph.glyph.glyph_source.glyph_position = 'head'
         glyph.glyph.glyph_source.glyph_position = 'tail'
 
@@ -237,19 +245,129 @@ class AramisView3D(HasTraits):
         module_manager.scalar_lut_manager.show_scalar_bar = True
         module_manager.scalar_lut_manager.show_legend = True
         module_manager.scalar_lut_manager.scalar_bar.orientation = 'horizontal'
-        module_manager.scalar_lut_manager.scalar_bar.title = 'crack_field'
+        module_manager.scalar_lut_manager.scalar_bar.title = 'delta_ux [mm]'
         module_manager.scalar_lut_manager.scalar_bar_representation.position = (0.10, 0.05)
         module_manager.scalar_lut_manager.scalar_bar_representation.position2 = (0.8, 0.15)
         scene.scene.disable_render = False
 
         if self.plot_title:
-            m.title('step no. %d' % self.aramis_data.current_step, size=0.3)
+            m.title('step no. %d' % self.aramis_data.current_step, size=0.2)
+
+        # format scalar bar in font style 'times'
+        module_manager.scalar_lut_manager.label_text_property.font_family = 'times'
+        module_manager.scalar_lut_manager.label_text_property.italic = False
+        module_manager.scalar_lut_manager.label_text_property.bold = False
+
+        # title font of scalar bar
+        module_manager.scalar_lut_manager.title_text_property.font_family = 'times'
+        module_manager.scalar_lut_manager.title_text_property.bold = True
+        module_manager.scalar_lut_manager.title_text_property.italic = False
+
+        # title font of plot (step no)
+        text = scene.children[1].children[0].children[1]
+        text.property.font_size = 25
+        text.property.font_family = 'times'
+        text.property.bold = True
+        text.property.italic = True
 
         # m.scalarbar(orientation='horizontal', title='crack_field')
 
         # plot axes
         #
         # m.axes()
+
+    plot3d_delta_ux = Button
+    def _plot3d_delta_ux_fired(self):
+        '''Plot displacement jumps in 3D
+        '''
+        aramis_cdt = self.aramis_cdt
+
+        self.scene.mlab.clf()
+        m = self.scene.mlab
+        m.fgcolor = (0, 0, 0)
+        m.bgcolor = (1, 1, 1)
+        self.scene.scene.disable_render = True
+
+        #-----------------------------------
+        # plot displacement jumps)
+        #-----------------------------------
+
+        z_arr = np.zeros_like(self.aramis_data.z_arr_0)
+
+        plot3d_var = aramis_cdt.aramis_data.delta_ux_arr
+
+        m.points3d(z_arr,
+                   self.aramis_data.x_arr_0 + self.aramis_data.ux_arr * self.warp_factor,
+                   self.aramis_data.y_arr_0 + self.aramis_data.uy_arr * self.warp_factor,
+                   plot3d_var,
+                   mode='cube', colormap="blue-red", scale_mode='scalar', scale_factor=1.0)
+
+        # scale glyphs
+        #
+        glyph = self.scene.engine.scenes[0].children[0].children[0].children[0]
+        glyph.glyph.glyph_source.glyph_position = 'tail'
+        glyph.glyph.glyph_source.glyph_source.x_length = self.glyph_x_length_cr
+        glyph.glyph.glyph_source.glyph_source.y_length = self.glyph_y_length_cr
+        glyph.glyph.glyph_source.glyph_source.z_length = self.glyph_z_length_cr
+
+        #-----------------------------------
+        # plot displacement jumps ('delta_ux_arr')
+        #-----------------------------------
+
+        m.points3d(z_arr,
+                   self.aramis_data.x_arr_0 + self.aramis_data.ux_arr * self.warp_factor,
+                   self.aramis_data.y_arr_0 + self.aramis_data.uy_arr * self.warp_factor,
+                   plot3d_var,
+                   mode='cube', colormap="blue-red", scale_mode='none', scale_factor=1)
+
+        glyph1 = self.scene.engine.scenes[0].children[1].children[0].children[0]
+#       # switch order of the scale_factor corresponding to the order of the
+        glyph1.glyph.glyph_source.glyph_source.x_length = self.glyph_z_length
+        glyph1.glyph.glyph_source.glyph_source.y_length = self.glyph_x_length
+        glyph1.glyph.glyph_source.glyph_source.z_length = self.glyph_y_length
+
+        # rotate scene
+        #
+        scene = self.scene.engine.scenes[0]
+        scene.scene.parallel_projection = True
+        m.view(0, 90)
+        glyph.glyph.glyph_source.glyph_position = 'head'
+        glyph.glyph.glyph_source.glyph_position = 'tail'
+
+        module_manager = self.scene.engine.scenes[0].children[1].children[0]
+        module_manager.scalar_lut_manager.show_scalar_bar = True
+        module_manager.scalar_lut_manager.show_legend = True
+        module_manager.scalar_lut_manager.scalar_bar.orientation = 'horizontal'
+        module_manager.scalar_lut_manager.scalar_bar.title = 'delta_ux [mm]'
+        scene.scene.disable_render = False
+
+        module_manager.scalar_lut_manager.scalar_bar_representation.position2 = np.array([ 0.7, 0.15])
+        module_manager.scalar_lut_manager.scalar_bar_representation.position = np.array([ 0.2, 0.1])
+
+        if self.plot_title:
+            m.title('step no. %d' % self.aramis_data.current_step, size=0.2)
+
+        # set scalar bar to start at zero and format values in font style 'times'
+        print 'np.max(plot3d_var)', np.max(plot3d_var)
+        wr_max = module_manager.scalar_lut_manager.data_range[1]
+#         wr_max = 6.90  # [mm] set fixed ranges
+        module_manager.scalar_lut_manager.data_range = np.array([0., wr_max])
+        module_manager.scalar_lut_manager.label_text_property.font_family = 'times'
+        module_manager.scalar_lut_manager.label_text_property.italic = False
+        module_manager.scalar_lut_manager.label_text_property.bold = False
+
+        # title font of scalar bar
+        module_manager.scalar_lut_manager.title_text_property.font_family = 'times'
+        module_manager.scalar_lut_manager.title_text_property.bold = True
+        module_manager.scalar_lut_manager.title_text_property.italic = False
+
+        # title font of plot (step no)
+        text = scene.children[1].children[0].children[1]
+        text.property.font_size = 25
+        text.property.font_family = 'times'
+        text.property.bold = True
+        text.property.italic = True
+
 
     clean_scene = Button
     def _clean_scene_fired(self):
@@ -261,7 +379,9 @@ class AramisView3D(HasTraits):
                 UItem('plot3d_points_flat'),
                 UItem('plot3d_points'),
                 UItem('plot3d_cracks'),
+                UItem('plot3d_delta_ux'),
                 Item('_'),
+                Item('warp_factor'),
                 UItem('clean_scene'),
                 id='aramisCDT.view3d',
                )
