@@ -49,7 +49,7 @@ class AramisView3D(HasTraits):
 
     plot_title = Bool(True)
 
-    plot3d_var = Trait('07 d_ux [mm]', {'01 x_arr [mm]':['aramis_data', 'x_arr_0'],
+    plot3d_var = Trait('07 d_ux [-]', {'01 x_arr [mm]':['aramis_data', 'x_arr_0'],
                                             '02 y_arr [mm]':['aramis_data', 'y_arr_0'],
                                             '03 z_arr [mm]':['aramis_data', 'z_arr_0'],
                                             '04 ux_arr [mm]':['aramis_data', 'ux_arr'],
