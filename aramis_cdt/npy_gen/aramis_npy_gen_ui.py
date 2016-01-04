@@ -19,8 +19,8 @@ import time
 
 from aramis_cdt.aramis_info import AramisInfo
 from aramis_npy_gen import AramisNPyGen
-from etsproxy.traits.api import HasTraits, Instance
-from etsproxy.traits.ui.api import View, UItem
+from traits.api import HasTraits, Instance
+from traitsui.api import View, UItem
 
 
 if platform.system() == 'Linux':

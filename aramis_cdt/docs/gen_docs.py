@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #
 # Copyright (c) 2013
 # IMB, RWTH Aachen University,
@@ -12,15 +12,14 @@
 #
 # Thanks for using Simvisage open source!
 #
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
-from etsproxy.traits.api import \
+from os.path import expanduser
+import os.path
+from traits.api import \
     HasTraits, Property, \
     Enum
 
-import os.path
-
-from os.path import expanduser
 
 HOME_DIR = expanduser("~")
 # build directory
@@ -29,6 +28,7 @@ BUILD_DIR = os.path.join(HOME_DIR, '.aramis_cdt', 'docs')
 DOCS_DIR = os.path.join('..', 'docs',)
 # output directory for the example documentation
 EX_OUTPUT_DIR = os.path.join(DOCS_DIR, '_component_modules')
+
 
 class GenDoc(HasTraits):
     '''
@@ -39,14 +39,15 @@ class GenDoc(HasTraits):
     build_mode = Enum('local', 'global')
 
     build_dir = Property(depends_on='build_mode')
+
     def _get_build_dir(self):
-        build_dir = {'local' : '.',
-                     'global' : BUILD_DIR }
+        build_dir = {'local': '.',
+                     'global': BUILD_DIR}
         return build_dir[self.build_mode]
 
     html_server = 'root@mordred.imb.rwth-aachen.de:/var/www/docs/aramis_cdt'
 
-    method_dispatcher = {'all' : 'generate_examples' }
+    method_dispatcher = {'all': 'generate_examples'}
 
     def generate_html(self):
         os.chdir(DOCS_DIR)
@@ -57,7 +58,8 @@ class GenDoc(HasTraits):
         '''
         Push the documentation to the server.
         '''
-        rsync_cmd = 'rsync -av --delete %s/ %s' % (self.build_dir, self.html_server)
+        rsync_cmd = 'rsync -av --delete %s/ %s' % (
+            self.build_dir, self.html_server)
         os.system(rsync_cmd)
 
 if __name__ == '__main__':

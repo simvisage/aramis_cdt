@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #
 # Copyright (c) 2013
 # IMB, RWTH Aachen University,
@@ -12,14 +12,14 @@
 #
 # Thanks for using Simvisage open source!
 #
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
-from etsproxy.traits.api import \
+from traits.api import \
     HasTraits, Instance, Button, Bool, Directory
 
 from scipy import stats
 
-from etsproxy.traits.ui.api import UItem, View, Item, RangeEditor, VGroup, Group
+from traitsui.api import UItem, View, Item, RangeEditor, VGroup, Group
 from matplotlib.figure import Figure
 
 import platform
@@ -44,6 +44,7 @@ matplotlib.use('WxAgg')
 
 
 class AramisPlot2D(HasTraits):
+
     '''This class manages 2D views for AramisCDT variables
     '''
 
@@ -60,37 +61,41 @@ class AramisPlot2D(HasTraits):
     show_plot = Bool(True)
 
     save_dir = Directory
+
     def _save_dir_default(self):
         return os.getcwd()
 
     temp_dir = Directory
+
     def _temp_dir_default(self):
         return tempfile.mkdtemp()
 
     plot2d = Button
+
     def _plot2d_fired(self):
         aramis_data = self.aramis_data
         aramis_cdt = self.aramis_cdt
         fig = self.figure
         fig.clf()
-        ax = fig.add_subplot(2, 2, 1)
 
+        ax = fig.add_subplot(2, 2, 1)
         ax.plot(aramis_data.i_cut.T, aramis_data.d_ux.T, color='black')
+        ax.plot(aramis_data.i_cut[0, :], aramis_data.d_ux_avg, color='red', linewidth=2)
         # for x in aramis_data.d_ux:
         #    ax.plot(aramis_data.i_cut.T, np.convolve(x, np.ones(10) / 10., 'same'), color='green', linewidth=0.3)
-        ax.plot(aramis_data.i_cut[0, :], aramis_data.d_ux_avg, color='red', linewidth=2)
         y_max_lim = ax.get_ylim()[-1]
         ax.vlines(aramis_data.i_cut[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
-                 color='magenta', linewidth=1, zorder=10)
+                  color='magenta', linewidth=1, zorder=10)
         ax.set_title('d_ux')
 
         ax2 = fig.add_subplot(2, 2, 2)
         ax2.plot(aramis_data.i_cut.T, aramis_data.ux_arr.T, color='green')
-        ax2.plot(aramis_data.i_cut[0, :], aramis_data.ux_arr_avg, color='red', linewidth=2)
+        ax2.plot(
+            aramis_data.i_cut[0, :], aramis_data.ux_arr_avg, color='red', linewidth=2)
         y_min_lim = np.min(ax2.get_ylim())
         y_max_lim = np.max(ax2.get_ylim())
         ax2.vlines(aramis_data.i_cut[0, :-1], y_min_lim, aramis_cdt.crack_filter_avg * y_max_lim + ~aramis_cdt.crack_filter_avg * y_min_lim,
-                 color='magenta', linewidth=1, zorder=10)
+                   color='magenta', linewidth=1, zorder=10)
         ax2.set_title('ux')
 
         ax3 = fig.add_subplot(2, 2, 3)
@@ -98,12 +103,21 @@ class AramisPlot2D(HasTraits):
         ax3.plot(aramis_data.i_cut[0, :], aramis_data.ddd_ux_avg, color='blue')
         y_max_lim = ax3.get_ylim()[-1]
         ax3.vlines(aramis_data.i_cut[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
-                 color='magenta', linewidth=1, zorder=10)
+                   color='magenta', linewidth=1, zorder=10)
         ax3.set_title('dd_ux, ddd_ux')
 
         ax = fig.add_subplot(2, 2, 4)
-        from aramis_data import get_d
-        ir = aramis_data.integ_radius
+        ax.plot(aramis_data.i_cut.T, aramis_data.delta_ux_arr.T, color='black')
+        ax.plot(aramis_data.i_cut[0, :], aramis_data.delta_ux_arr_avg, color='red', linewidth=2)
+        y_max_lim = ax.get_ylim()[-1]
+        ax.vlines(aramis_data.i_cut[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
+                 color='magenta', linewidth=1, zorder=10)
+        ax.set_title('delta_ux')
+
+
+#         ax = fig.add_subplot(2, 2, 4)
+#         from aramis_data import get_d
+#         ir = aramis_data.integ_radius
 #         ax.plot(aramis_data.x_arr_0.T[ir:-ir, :],
 #                 (get_d(aramis_data.x_arr_0 + aramis_data.ux_arr, ir).T - get_d(aramis_data.x_arr_0, ir).T)[ir:-ir, :], color='black')
 #        ax.plot(aramis_data.x_arr_0.T[ir:-ir, :],
@@ -114,7 +128,8 @@ class AramisPlot2D(HasTraits):
 #         ax.plot(aramis_data.x_arr_0.T[ir:-ir, :],
 #                 (xx - xx[:, ir][:, None] * np.ones(xx.shape[1])[None, :]).T[ir:-ir, :] * 1000, color='black')
 
-        plt.suptitle(self.aramis_info.specimen_name + ' - %d' % aramis_data.current_step)
+        plt.suptitle(self.aramis_info.specimen_name + ' - %d' %
+                     aramis_data.current_step)
 
         aramis_cdt.crack_spacing_avg
 
@@ -124,8 +139,8 @@ class AramisPlot2D(HasTraits):
         if self.show_plot:
             fig.canvas.draw()
 
-
     plot_crack_hist = Button
+
     def _plot_crack_hist_fired(self):
 
         aramis_cdt = self.aramis_cdt
@@ -144,12 +159,14 @@ class AramisPlot2D(HasTraits):
                  cumulative=True, bins=40, linewidth=2)
         ax2.set_ylabel('probability [-]')
 
-        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.current_step)
+        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' %
+                     self.aramis_data.current_step)
 
         mu = float(aramis_cdt.crack_arr.flatten().mean())
         sigma = float(aramis_cdt.crack_arr.flatten().std())
         skew = float(stats.skew(aramis_cdt.crack_arr.flatten()))
-        textstr = '$\mu=%.3g$\n$\sigma=%.3g$\n$\gamma_1=%.3g$' % (mu, sigma, skew)
+        textstr = '$\mu=%.3g$\n$\sigma=%.3g$\n$\gamma_1=%.3g$' % (
+            mu, sigma, skew)
 
         # these are matplotlib.patch.Patch properties
         props = dict(boxstyle='round', facecolor='wheat', alpha=1)
@@ -165,6 +182,7 @@ class AramisPlot2D(HasTraits):
             fig.canvas.draw()
 
     plot_number_of_cracks_t = Button
+
     def _plot_number_of_cracks_t_fired(self):
 
         aramis_cdt = self.aramis_cdt
@@ -181,6 +199,7 @@ class AramisPlot2D(HasTraits):
             fig.canvas.draw()
 
     plot_force_step = Button
+
     def _plot_force_step_fired(self):
 
         aramis_cdt = self.aramis_cdt
@@ -201,6 +220,7 @@ class AramisPlot2D(HasTraits):
             fig.canvas.draw()
 
     plot_stress_strain = Button
+
     def _plot_stress_strain_fired(self):
 
         aramis_cdt = self.aramis_cdt
@@ -221,6 +241,7 @@ class AramisPlot2D(HasTraits):
             fig.canvas.draw()
 
     plot_w_strain = Button
+
     def _plot_w_strain_fired(self):
 
         aramis_cdt = self.aramis_cdt
@@ -242,6 +263,7 @@ class AramisPlot2D(HasTraits):
             fig.canvas.draw()
 
     plot_subw_strain = Button
+
     def _plot_subw_strain_fired(self):
 
         aramis_cdt = self.aramis_cdt
@@ -251,7 +273,7 @@ class AramisPlot2D(HasTraits):
 
         ax.set_title('')
         ax.plot(aramis_cdt.control_strain_t,
-                 aramis_cdt.crack_width_t.T)
+                aramis_cdt.crack_width_t.T)
 
         ax.set_xlabel('control strain [-]')
         ax.set_ylabel('subcrack width [mm]')
@@ -263,6 +285,7 @@ class AramisPlot2D(HasTraits):
             fig.canvas.draw()
 
     plot_stress_strain_init = Button
+
     def _plot_stress_strain_init_fired(self):
 
         aramis_cdt = self.aramis_cdt
@@ -273,11 +296,11 @@ class AramisPlot2D(HasTraits):
         ax.set_title('')
         ax.plot(aramis_cdt.control_strain_t, self.aramis_data.stress)
         ax.plot(aramis_cdt.control_strain_t[aramis_cdt.init_step_avg_lst],
-                 self.aramis_data.stress[aramis_cdt.init_step_avg_lst],
-                 'ro', linewidth=4)
+                self.aramis_data.stress[aramis_cdt.init_step_avg_lst],
+                'ro', linewidth=4)
         ax.plot(aramis_cdt.control_strain_t[aramis_cdt.init_step_lst],
-                 self.aramis_data.stress[aramis_cdt.init_step_lst],
-                 'kx', linewidth=4)
+                self.aramis_data.stress[aramis_cdt.init_step_lst],
+                'kx', linewidth=4)
 
         ax.set_xlabel('control strain [-]')
         ax.set_ylabel('nominal stress [MPa]')
@@ -289,6 +312,7 @@ class AramisPlot2D(HasTraits):
             fig.canvas.draw()
 
     plot_crack_init = Button
+
     def _plot_crack_init_fired(self):
 
         aramis_cdt = self.aramis_cdt
@@ -297,7 +321,8 @@ class AramisPlot2D(HasTraits):
         fig.clf()
         ax = fig.add_subplot(111)
         ax.set_title('')
-        ax.vlines(np.arange(len(aramis_cdt.init_step_avg_lst)) + 0.5, [0], aramis_cdt.init_step_avg_lst)
+        ax.vlines(np.arange(len(aramis_cdt.init_step_avg_lst)) + 0.5,
+                  [0], aramis_cdt.init_step_avg_lst)
         ax.set_xlabel('crack number')
         ax.set_ylabel('initiation step')
 
@@ -308,6 +333,7 @@ class AramisPlot2D(HasTraits):
             fig.canvas.draw()
 
     plot_force_time = Button
+
     def _plot_force_time_fired(self):
         fig = self.figure
         fig.clf()
@@ -322,6 +348,7 @@ class AramisPlot2D(HasTraits):
             fig.canvas.draw()
 
     plot_number_of_missing_facets = Button
+
     def _plot_number_of_missing_facets_fired(self):
 
         aramis_cdt = self.aramis_cdt
@@ -337,12 +364,14 @@ class AramisPlot2D(HasTraits):
         ax.set_title('missing facets in time')
 
         if self.save_plot:
-            fig.savefig(os.path.join(self.save_dir, 'number_of_missing_facets.png'))
+            fig.savefig(
+                os.path.join(self.save_dir, 'number_of_missing_facets.png'))
 
         if self.show_plot:
             fig.canvas.draw()
 
     plot_strain_crack_avg = Button
+
     def _plot_strain_crack_avg_fired(self):
 
         aramis_cdt = self.aramis_cdt
@@ -351,7 +380,8 @@ class AramisPlot2D(HasTraits):
         fig = self.figure
         fig.clf()
         ax = fig.add_subplot(111, aspect='equal')
-        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.current_step)
+        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' %
+                     self.aramis_data.current_step)
 
         plot3d_var = getattr(aramis_data, 'd_ux')
 
@@ -373,8 +403,8 @@ class AramisPlot2D(HasTraits):
                          plot3d_var, 256, cmap=plt.get_cmap('jet'))
 
         ax.vlines(self.aramis_data.x_arr_0[0, :][self.aramis_cdt.crack_filter_avg],
-                   [0], np.nanmax(self.aramis_data.y_arr_0),
-                   color='white', zorder=10, linewidth=2)
+                  [0], np.nanmax(self.aramis_data.y_arr_0),
+                  color='white', zorder=10, linewidth=2)
 
         ax.set_xlabel('x [mm]')
         ax.set_ylabel('y [mm]')
@@ -388,6 +418,7 @@ class AramisPlot2D(HasTraits):
             fig.canvas.draw()
 
     plot_crack_filter_crack_avg = Button
+
     def _plot_crack_filter_crack_avg_fired(self):
         aramis_cdt = self.aramis_cdt
         aramis_data = self.aramis_data
@@ -395,7 +426,8 @@ class AramisPlot2D(HasTraits):
         fig = self.figure
         fig.clf()
         ax = fig.add_subplot(111, aspect='equal')
-        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.current_step)
+        ax.set_title(aramis_cdt.aramis_info.specimen_name + ' - %d' %
+                     self.aramis_data.current_step)
 
         plot3d_var = getattr(aramis_data, 'd_ux')
 
@@ -418,8 +450,9 @@ class AramisPlot2D(HasTraits):
         ax.plot(self.aramis_data.x_arr_0, self.aramis_data.y_arr_0, 'ko')
 
         ax.plot(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
-                 self.aramis_data.y_arr_0[aramis_cdt.crack_filter], linestyle='None',
-                 marker='.', color='white')
+                self.aramis_data.y_arr_0[
+                    aramis_cdt.crack_filter], linestyle='None',
+                marker='.', color='white')
 #         CS = ax.contourf(aramis_cdt.x_arr_0,
 #                          aramis_cdt.y_arr_0,
 #                          plot3d_var, 256, cmap=plt.get_cmap('jet'))
@@ -429,8 +462,8 @@ class AramisPlot2D(HasTraits):
 #                  'k.')
 
         ax.vlines(self.aramis_data.x_arr_0[0, :][aramis_cdt.crack_filter_avg],
-                   [0], np.nanmax(self.aramis_data.y_arr_0[mask]),
-                   color='magenta', zorder=100, linewidth=2)
+                  [0], np.nanmax(self.aramis_data.y_arr_0[mask]),
+                  color='magenta', zorder=100, linewidth=2)
 
         ax.set_xlabel('x [mm]')
         ax.set_ylabel('y [mm]')
@@ -440,7 +473,8 @@ class AramisPlot2D(HasTraits):
         # plt.axis('equal')
 
         if self.save_plot:
-            fig.savefig(os.path.join(self.save_dir, 'crack_filter_crack_avg.png'))
+            fig.savefig(
+                os.path.join(self.save_dir, 'crack_filter_crack_avg.png'))
 
         if self.show_plot:
             fig.canvas.draw()
@@ -448,15 +482,18 @@ class AramisPlot2D(HasTraits):
     test_figure = Instance(plt.Figure)
 
     plot_test = Button
+
     def _plot_test_fired(self):
         aramis_cdt = self.aramis_cdt
         if self.test_figure == None:
             self.test_figure = plt.figure(figsize=(12, 6), dpi=100)
-            self.test_figure.canvas.mpl_connect('close_event', self.handle_close)
+            self.test_figure.canvas.mpl_connect(
+                'close_event', self.handle_close)
         fig = self.test_figure
         fig.clf()
 
-        fig.suptitle(aramis_cdt.aramis_info.specimen_name + ' - %d' % self.aramis_data.current_step, y=1)
+        fig.suptitle(aramis_cdt.aramis_info.specimen_name + ' - %d' %
+                     self.aramis_data.current_step, y=1)
 
         ax_diag = plt.subplot2grid((2, 3), (0, 0))
         ax_diag.locator_params(nbins=4)
@@ -469,10 +506,11 @@ class AramisPlot2D(HasTraits):
         stress = self.aramis_data.ad_channels_arr[:, 1]
         ax_diag.plot(x, stress)
         ax_diag.plot(x[self.aramis_data.current_step],
-                 stress[self.aramis_data.current_step], 'ro')
-        ax_diag.plot(x[aramis_cdt.init_step_avg_lst], stress[aramis_cdt.init_step_avg_lst], 'go', ms=4)
+                     stress[self.aramis_data.current_step], 'ro')
+        ax_diag.plot(x[aramis_cdt.init_step_avg_lst], stress[
+                     aramis_cdt.init_step_avg_lst], 'go', ms=4)
 
-        ax_diag.set_xlabel('control strain [-]')
+        ax_diag.set_xlabel('step number [-]')
         ax_diag.set_ylabel('nominal stress [MPa]')
         ax_diag.set_xlim(0, ax_diag.get_xlim()[1])
 
@@ -482,13 +520,12 @@ class AramisPlot2D(HasTraits):
         ax_hist.set_xlabel('crack_width [mm]')
         ax_hist.set_ylabel('frequency [-]')
 
-
         ax_hist_2 = ax_hist.twinx()
 
         if aramis_cdt.crack_arr.size != 0:
             ax_hist_2.hist(aramis_cdt.crack_arr.flatten(), normed=True,
-                     histtype='step', color='black',
-                     cumulative=True, bins=40, linewidth=2)
+                           histtype='step', color='black',
+                           cumulative=True, bins=40, linewidth=2)
         ax_hist_2.set_ylabel('probability [-]')
         ax_hist_2.set_ylim(0, 1)
         # ax_hist.set_xlim(0, 0.15)
@@ -497,19 +534,19 @@ class AramisPlot2D(HasTraits):
         plot3d_var = getattr(self.aramis_data, 'd_ux')
 
         CS = ax_area.contourf(self.aramis_data.x_arr_0,
-                         self.aramis_data.y_arr_0,
-                         plot3d_var, 2, cmap=plt.get_cmap('binary'))
+                              self.aramis_data.y_arr_0,
+                              plot3d_var, 2, cmap=plt.get_cmap('binary'))
         ax_area.plot(self.aramis_data.x_arr_0, self.aramis_data.y_arr_0, 'ko')
 
         # ax_area.plot(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
         #         self.aramis_data.y_arr_0[aramis_cdt.crack_filter], linestyle='None',
         #         marker='.', color='white')
         ax_area.scatter(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
-                 self.aramis_data.y_arr_0[aramis_cdt.crack_filter], color='white', zorder=10, s=aramis_cdt.crack_arr * 50)
+                        self.aramis_data.y_arr_0[aramis_cdt.crack_filter], color='white', zorder=10, s=aramis_cdt.crack_arr * 50)
 
-        ax_area.vlines(self.aramis_data.x_arr_0[0, :][aramis_cdt.crack_filter_avg],
-                       [0], np.nanmax(self.aramis_data.y_arr_0[None]),
-                       color='magenta', zorder=100, linewidth=2)
+#         ax_area.vlines(self.aramis_data.x_arr_0[0, :][aramis_cdt.crack_filter_avg],
+#                        [0], np.nanmax(self.aramis_data.y_arr_0[None]),
+#                        color='magenta', zorder=100, linewidth=2)
 #         ax_area.vlines(aramis_cdt.x_arr_0[10, :-1][aramis_cdt.crack_filter_avg],
 #                    [0], np.nanmax(aramis_cdt.y_arr_0),
 #                    color='red', zorder=100, linewidth=1)
@@ -539,6 +576,7 @@ class AramisPlot2D(HasTraits):
         self.test_figure = None
 
     create_animation = Button
+
     def _create_animation_fired(self):
         aramis_cdt = self.aramis_cdt
         save_plot, show_plot = self.save_plot, self.show_plot
@@ -550,7 +588,7 @@ class AramisPlot2D(HasTraits):
             self.aramis_data.current_step = step_idx
             self.plot_test = True
             self.test_figure.savefig(os.path.join(self.temp_dir, fname_pattern
-                                     % (aramis_cdt.aramis_info.specimen_name, self.aramis_data.current_step)))
+                                                  % (aramis_cdt.aramis_info.specimen_name, self.aramis_data.current_step)))
 
         try:
             os.system('ffmpeg -framerate 3 -i %s.png -vcodec ffv1 -sameq %s.avi' %
@@ -571,29 +609,28 @@ class AramisPlot2D(HasTraits):
         self.aramis_data.current_step = start_step_idx
 
     view = View(
-                Group(
-                    UItem('plot2d'),
-                    UItem('plot_crack_hist'),
-                    UItem('plot_number_of_cracks_t'),
-                    UItem('plot_stress_strain_init'),
-                    UItem('plot_stress_strain'),
-                    UItem('plot_w_strain'),
-                    UItem('plot_subw_strain'),
-                    UItem('plot_strain_crack_avg'),
-                    UItem('plot_crack_filter_crack_avg'),
-                    UItem('plot_crack_init'),
-                    UItem('plot_test'),
-                    '_',
-                    '_',
-                    UItem('create_animation'),
-                    label='Plot results',
-                    ),
-                Group(
-                    UItem('plot_force_time'),
-                    UItem('plot_force_step'),
-                    UItem('plot_number_of_missing_facets'),
-                    label='Check data',
-                    ),
-                id='aramisCDT.view2d',
-                )
-
+        Group(
+            UItem('plot2d'),
+            UItem('plot_crack_hist'),
+            UItem('plot_number_of_cracks_t'),
+            UItem('plot_stress_strain_init'),
+            UItem('plot_stress_strain'),
+            UItem('plot_w_strain'),
+            UItem('plot_subw_strain'),
+            UItem('plot_strain_crack_avg'),
+            UItem('plot_crack_filter_crack_avg'),
+            UItem('plot_crack_init'),
+            UItem('plot_test'),
+            '_',
+            '_',
+            UItem('create_animation'),
+            label='Plot results',
+        ),
+        Group(
+            UItem('plot_force_time'),
+            UItem('plot_force_step'),
+            UItem('plot_number_of_missing_facets'),
+            label='Check data',
+        ),
+        id='aramisCDT.view2d',
+    )

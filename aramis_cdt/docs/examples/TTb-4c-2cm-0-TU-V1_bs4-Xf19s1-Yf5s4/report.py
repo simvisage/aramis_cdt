@@ -14,10 +14,10 @@
 #
 #-------------------------------------------------------------------------------
 
-from etsproxy.traits.api import \
+from traits.api import \
     HasTraits, Instance
 
-from etsproxy.traits.ui.api import UItem, View
+from traitsui.api import UItem, View
 
 import os
 

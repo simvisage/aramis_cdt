@@ -14,11 +14,11 @@
 #
 # -------------------------------------------------------------------------------
 
-from etsproxy.traits.api import \
+from traits.api import \
     HasTraits, Property, cached_property, \
     Instance, DelegatesTo, Button, List, Str, File, on_trait_change
 
-from etsproxy.traits.ui.api import View, Item, EnumEditor, UItem
+from traitsui.api import View, Item, EnumEditor, UItem
 
 import os
 import ConfigParser

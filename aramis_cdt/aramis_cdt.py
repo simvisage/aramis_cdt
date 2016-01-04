@@ -14,11 +14,11 @@
 #
 #-------------------------------------------------------------------------
 
-from etsproxy.traits.api import \
+from traits.api import \
     HasTraits, Float, Property, cached_property, Int, Array, Bool, \
     Instance, DelegatesTo, Button, List, Event, on_trait_change
 
-from etsproxy.traits.ui.api import View, Item, Group, UItem
+from traitsui.api import View, Item, Group, UItem
 
 import numpy as np
 import os
@@ -32,7 +32,6 @@ elif platform.system() == 'Windows':
 
 from aramis_info import AramisInfo
 from aramis_data import AramisFieldData
-
 
 class AramisCDT(HasTraits):
 
@@ -87,8 +86,7 @@ class AramisCDT(HasTraits):
         ddd_ux = self.aramis_data.ddd_ux
         crack_filter = ((dd_ux[:, 1:] * dd_ux[:, :-1] < self.dd_ux_threshold) *
                         ((ddd_ux[:, 1:] + ddd_ux[:, :-1]) / 2.0 < self.ddd_ux_threshold))
-        # print "number of cracks determined by 'crack_filter': ",
-        # np.sum(crack_filter, axis=1)
+#         print "number of cracks determined by 'crack_filter': ", np.sum(crack_filter, axis=1)
         return crack_filter
 
     number_of_subcracks = Property(
@@ -136,9 +134,8 @@ class AramisCDT(HasTraits):
 
     @cached_property
     def _get_crack_arr(self):
-        from aramis_data import get_d2
-        return (get_d2(self.aramis_data.ux_arr, self.aramis_data.integ_radius))[np.where(self.crack_filter)]
-        return self.aramis_data.d_ux[np.where(self.crack_filter)]
+        crack_arr = self.aramis_data.delta_ux_arr[np.where(self.crack_filter)]
+        return crack_arr
 
     crack_arr_mean = Property(
         Float, depends_on='aramis_data.+params_changed, +params_changed')
@@ -233,7 +230,7 @@ class AramisCDT(HasTraits):
             x.append((self.aramis_data.ux_arr[:, -5] - self.aramis_data.ux_arr[:, 5]) /
                      (self.aramis_data.x_arr_0[:, -5] - self.aramis_data.x_arr_0[:, 5]))
         x = np.array(x)
-        #plt.plot(x, force, color='grey')
+        # plt.plot(x, force, color='grey')
 
         x = []
         for step_idx in self.aramis_info.step_list:
@@ -241,7 +238,7 @@ class AramisCDT(HasTraits):
             x.append(np.mean((self.aramis_data.ux_arr[:, -5] - self.aramis_data.ux_arr[:, 5])) /
                      np.mean((self.aramis_data.x_arr_0[:, -5] - self.aramis_data.x_arr_0[:, 5])))
         x = np.array(x)
-        #plt.plot(x, force, 'k-', linewidth=3)
+        # plt.plot(x, force, 'k-', linewidth=3)
         self.control_strain_t = x
         self.force = force
 
@@ -259,14 +256,14 @@ class AramisCDT(HasTraits):
 #             x.append((self.aramis_data.ux_arr[-1, -5] - self.aramis_data.ux_arr[-1, 5]) /
 #                      (self.aramis_data.x_arr_0[-1, -5] - self.aramis_data.x_arr_0[-1, 5]))
 #         x = np.array(x)
-        #plt.plot(x, force, color='red')
+        # plt.plot(x, force, color='red')
 
         # plt.plot(x[self.init_step_avg_lst], force[
         #         self.init_step_avg_lst], 'go', ms=6)
 
         # plt.show()
 
-        #data_to_save = np.vstack((self.aramis_data.step_times, x, force)).T
+        # data_to_save = np.vstack((self.aramis_data.step_times, x, force)).T
 
         # np.savetxt('%s_LD.txt' % self.aramis_info.specimen_name, data_to_save, delimiter=';',
         #           header='time; strain; force')
