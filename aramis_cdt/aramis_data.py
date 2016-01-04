@@ -361,16 +361,11 @@ class AramisFieldData(AramisRawData):
     '''
     @cached_property
     def _get_x_0(self):
-<<<<<<< HEAD
         X = self.X[:, self.top_j:self.bottom_j, self.left_i:self.right_i].copy()
 
         # scale data in order to match real scale of the specimen
         X *= self.scale_data_factor
 
-=======
-        X = self.X[
-            :, self.top_j:self.bottom_j, self.left_i:self.right_i].copy()
->>>>>>> branch 'master' of https://github.com/simvisage/aramis_cdt.git
         if self.transform_data:
             print 'data transformed (measuring field starts at origin)'
             # move to 0,0
@@ -696,6 +691,7 @@ class AramisFieldData(AramisRawData):
              springy=True),
         Item('current_time', label='Current time exact', style='readonly'),
         Item('integ_radius'),
+        Item('scale_data_factor'),
         HGroup(Group(Item('left_i',
                           editor=RangeEditor(low_name='i_min',
                                              high_name='i_max',
