@@ -16,10 +16,10 @@
 # from traits.etsconfig.api import ETSConfig
 # ETSConfig.toolkit = 'qt4'
 
-from etsproxy.traits.api import \
+from traits.api import \
     HasTraits, Instance, on_trait_change, Button, Directory, Event, Float
 
-from etsproxy.traits.ui.api import UItem, View, Tabbed, Group, Item, RangeEditor, VGroup, HSplit
+from traitsui.api import UItem, View, Tabbed, Group, Item, RangeEditor, VGroup, HSplit
 from util.traits.editors.mpl_figure_editor import MPLFigureEditor
 from matplotlib.figure import Figure
 import os

@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #
 # Copyright (c) 2013
 # IMB, RWTH Aachen University,
@@ -12,13 +12,15 @@
 #
 # Thanks for using Simvisage open source!
 #
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
 import os
 import platform
-import numpy as np
-import sys
 from pyface.api import ProgressDialog
+import sys
+
+import numpy as np
+
 
 def downloadProgress(count, blockSize, totalSize):
 
@@ -27,16 +29,14 @@ def downloadProgress(count, blockSize, totalSize):
     sys.stdout.flush()
 
 
-
-
 if not os.path.exists('mri_data.tar.gz'):
     # Download the data
     import urllib
 
     site = 'http://www-graphics.stanford.edu/data/voldata/MRbrain.tar.gz'
-    (file, headers) = urllib.urlretrieve(site, 'mri_data.tar.gz', downloadProgress)
+    (file_, headers) = urllib.urlretrieve(
+        site, 'mri_data.tar.gz', downloadProgress)
     print headers
-
 
 
 # import zipfile

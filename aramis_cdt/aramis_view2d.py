@@ -14,12 +14,12 @@
 #
 #-------------------------------------------------------------------------
 
-from etsproxy.traits.api import \
+from traits.api import \
     HasTraits, Instance, Button, Bool, Directory
 
 from scipy import stats
 
-from etsproxy.traits.ui.api import UItem, View, Item, RangeEditor, VGroup, Group
+from traitsui.api import UItem, View, Item, RangeEditor, VGroup, Group
 from matplotlib.figure import Figure
 
 import platform

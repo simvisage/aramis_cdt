@@ -14,26 +14,22 @@
 #
 #-------------------------------------------------------------------------
 
-from etsproxy.traits.api import \
-    HasTraits, Float, Property, cached_property, Int, Array, Bool, \
-    Instance, DelegatesTo, Tuple, Button, List, Str, Event, on_trait_change
-
-from etsproxy.traits.ui.api import View, Item, HGroup, EnumEditor, Group, UItem, RangeEditor, TextEditor, HTMLEditor
-
-import numpy as np
-from scipy import stats
-
 import os
-import re
-
 import platform
 import time
+from traits.api import \
+    HasTraits, Float, Property, cached_property, Int, Array, Bool, \
+    Instance, Tuple, Button, Str
+from traitsui.api import View, Item, HGroup, Group, RangeEditor, HTMLEditor
+
+from aramis_info import AramisInfo
+import numpy as np
+
+
 if platform.system() == 'Linux':
     sysclock = time.time
 elif platform.system() == 'Windows':
     sysclock = time.clock
-
-from aramis_info import AramisInfo
 
 
 def get_d(u_arr, r_arr, integ_radius):
@@ -66,6 +62,7 @@ def get_delta(u_arr, integ_radius):
     delta_u_arr[:, ir:-ir] = u_arr[:, 2 * ir:] - u_arr[:, :-2 * ir]
     return delta_u_arr
 
+
 class InfoViewer(HasTraits):
     text = Str()
 
@@ -76,7 +73,6 @@ class InfoViewer(HasTraits):
 
 
 class AramisRawData(HasTraits):
-
     r'''Basic array structure containing the measured
     aramis data prepred for further elaboration in subclasses
     load data from *.npy files
@@ -202,7 +198,8 @@ class AramisFieldData(AramisRawData):
     '''
 
     scale_data_factor = Float(1.0, params_changed=True)
-
+    ''' ..todo: Missing docstring.
+    '''
     #=========================================================================
     #
     #=========================================================================
@@ -362,7 +359,8 @@ class AramisFieldData(AramisRawData):
     '''
     @cached_property
     def _get_x_0(self):
-        X = self.X[:, self.top_j:self.bottom_j, self.left_i:self.right_i].copy()
+        X = self.X[
+            :, self.top_j:self.bottom_j, self.left_i:self.right_i].copy()
 
         # scale data in order to match real scale of the specimen
         X *= self.scale_data_factor
@@ -601,6 +599,7 @@ class AramisFieldData(AramisRawData):
         return get_delta(self.ux_arr, self.integ_radius_crack)
 
     delta_ux_arr_avg = Property(Array, depends_on='+params_changed')
+
     @cached_property
     def _get_delta_ux_arr_avg(self):
         return np.average(self.delta_ux_arr, axis=0)

@@ -14,10 +14,10 @@
 #
 #-------------------------------------------------------------------------------
 
-from etsproxy.traits.api import \
+from traits.api import \
     HasTraits, Float, Bool, Trait, Instance, Button, WeakRef
 
-from etsproxy.traits.ui.api import  UItem, View, Item
+from traitsui.api import  UItem, View, Item
 
 import numpy as np
 # import etsproxy.mayavi.mlab as m
