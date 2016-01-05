@@ -600,6 +600,15 @@ class AramisFieldData(AramisRawData):
 
     delta_ux_arr_avg = Property(Array, depends_on='+params_changed')
 
+    delta_uy_arr = Property(Array, depends_on='+params_changed')
+    '''Displacement jumps 1D in x-direction
+    '''
+    @cached_property
+    def _get_delta_uy_arr(self):
+        return get_delta(self.uy_arr, self.integ_radius_crack)
+
+    delta_ux_arr_avg = Property(Array, depends_on='+params_changed')
+
     @cached_property
     def _get_delta_ux_arr_avg(self):
         return np.average(self.delta_ux_arr, axis=0)
