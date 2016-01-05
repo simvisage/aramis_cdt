@@ -253,6 +253,12 @@ class AramisView3D(HasTraits):
         if self.plot_title:
             m.title('step no. %d' % self.aramis_data.current_step, size=0.2)
 
+        # set scalar bar to start at zero and format values in font style 'times'
+        print 'np.max(plot3d_var)', np.max(plot3d_var)
+        wr_max = module_manager.scalar_lut_manager.data_range[1]
+#         wr_max = 6.90  # [mm] set fixed ranges
+        module_manager.scalar_lut_manager.data_range = np.array([0., wr_max])
+
         # format scalar bar in font style 'times'
         module_manager.scalar_lut_manager.label_text_property.font_family = 'times'
         module_manager.scalar_lut_manager.label_text_property.italic = False
