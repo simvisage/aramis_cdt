@@ -22,6 +22,7 @@ from etsproxy.traits.ui.api import View, Item, HGroup, EnumEditor, Group, UItem,
 
 import numpy as np
 from scipy import stats
+
 import os
 import re
 
@@ -529,8 +530,37 @@ class AramisFieldData(AramisRawData):
 
         y_idx_zeros, x_idx_zeros = np.where(np.isnan(ux_arr))
         ux_arr[y_idx_zeros, x_idx_zeros] = ux_avg[x_idx_zeros]
-        # ux_arr[ux_arr < 0.01] = 0
         return ux_arr
+
+    uy_arr = Property(
+        Array, depends_on='aramis_info.+params_changed, +params_changed')
+    '''Array of displacements in x-direction
+    '''
+    @cached_property
+    def _get_uy_arr(self):
+        # missing values replaced by averaged values in y-direction
+        uy_arr = self.u[1, :, :]
+        uy_masked = np.ma.masked_array(uy_arr, mask=np.isnan(uy_arr))
+        uy_avg = np.ma.average(uy_masked, axis=0)
+
+        y_idx_zeros, x_idx_zeros = np.where(np.isnan(uy_arr))
+        uy_arr[y_idx_zeros, x_idx_zeros] = uy_avg[x_idx_zeros]
+        return uy_arr
+
+    uz_arr = Property(
+        Array, depends_on='aramis_info.+params_changed, +params_changed')
+    '''Array of displacements in x-direction
+    '''
+    @cached_property
+    def _get_uz_arr(self):
+        # missing values replaced by averaged values in y-direction
+        uz_arr = self.u[2, :, :]
+        uz_masked = np.ma.masked_array(uz_arr, mask=np.isnan(uz_arr))
+        uz_avg = np.ma.average(uz_masked, axis=0)
+
+        y_idx_zeros, x_idx_zeros = np.where(np.isnan(uz_arr))
+        uz_arr[y_idx_zeros, x_idx_zeros] = uz_avg[x_idx_zeros]
+        return uz_arr
 
     ux_arr_avg = Property(
         Array, depends_on='aramis_info.+params_changed, +params_changed')
@@ -543,21 +573,21 @@ class AramisFieldData(AramisRawData):
         ux_avg = np.average(ux_arr, axis=0)
         return ux_avg
 
-    uy_arr = Property(
-        Array, depends_on='aramis_info.+params_changed, +params_changed')
-    '''Array of displacements in y-direction
-    '''
-    @cached_property
-    def _get_uy_arr(self):
-        return self.u[1, :, :]
-
-    uz_arr = Property(
-        Array, depends_on='aramis_info.+params_changed, +params_changed')
-    '''Array of displacements in z-direction
-    '''
-    @cached_property
-    def _get_uz_arr(self):
-        return self.u[2, :, :]
+#     uy_arr = Property(
+#         Array, depends_on='aramis_info.+params_changed, +params_changed')
+#     '''Array of displacements in y-direction
+#     '''
+#     @cached_property
+#     def _get_uy_arr(self):
+#         return self.u[1, :, :]
+#
+#     uz_arr = Property(
+#         Array, depends_on='aramis_info.+params_changed, +params_changed')
+#     '''Array of displacements in z-direction
+#     '''
+#     @cached_property
+#     def _get_uz_arr(self):
+#         return self.u[2, :, :]
 
     #=========================================================================
     #
@@ -691,6 +721,7 @@ class AramisFieldData(AramisRawData):
              springy=True),
         Item('current_time', label='Current time exact', style='readonly'),
         Item('integ_radius'),
+        Item('integ_radius_crack'),
         Item('scale_data_factor'),
         HGroup(Group(Item('left_i',
                           editor=RangeEditor(low_name='i_min',
