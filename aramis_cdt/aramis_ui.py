@@ -17,13 +17,12 @@
 # ETSConfig.toolkit = 'qt4'
 
 from traits.api import \
-    HasTraits, Instance, on_trait_change, Button, Directory, Event, Float
+    HasTraits, Instance, Button, Directory, Float
 
-from traitsui.api import UItem, View, Tabbed, Group, Item, RangeEditor, VGroup, HSplit
+from traitsui.api import UItem, View, Tabbed, Group, Item, HSplit
 from util.traits.editors.mpl_figure_editor import MPLFigureEditor
 from matplotlib.figure import Figure
 import os
-import sys
 
 from mayavi.tools.mlab_scene_model import MlabSceneModel
 from mayavi.core.ui.mayavi_scene import MayaviScene
