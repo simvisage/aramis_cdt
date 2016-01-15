@@ -1,17 +1,17 @@
 
-Aramis
-============
+Data representation
+===================
 
 .. todo::
-    describe Aramis
+    This section seems to desribe the data management, 
     
 Conventions
---------------------
+-----------
 
 .. todo::
     describe naming and data convention
     
-Facet field can be ``rectangular`` or ``quadrangle``. These options are available
+Facet field can cover a ``rectangle`` or ``quadrangle``. These options are available
 in ``Project Mode`` in ``Project >> Project Parameter``.
     
 +-----------------------------------------+----------------------------------------------+------------------------------------------+
@@ -26,7 +26,7 @@ Add (Edit) AD channel values additionally
 -----------------------------------------
 
 AD channels can be added or edited after experiment. The following information
-are usable for the case when Aramis and testing machine were synchronized on request 
+can be used usable for the case when Aramis and testing machine were synchronized on request 
 (turned on at the "same" time). The code below prepare data to be added in the 
 Aramis project. 
 
@@ -65,6 +65,3 @@ name ``displ_ProjectName-AutomaticPart.txt`` (e.g. displ-Stage-0-i.txt).
 .. toctree::
    displ_export_settings
 
-    
-    
-    

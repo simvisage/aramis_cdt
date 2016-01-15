@@ -14,25 +14,22 @@
 #
 #-------------------------------------------------------------------------
 
-from etsproxy.traits.api import \
-    HasTraits, Float, Property, cached_property, Int, Array, Bool, \
-    Instance, DelegatesTo, Tuple, Button, List, Str, Event, on_trait_change
-
-from etsproxy.traits.ui.api import View, Item, HGroup, EnumEditor, Group, UItem, RangeEditor, TextEditor, HTMLEditor
-
-import numpy as np
-from scipy import stats
 import os
-import re
-
 import platform
 import time
+from traits.api import \
+    HasTraits, Float, Property, cached_property, Int, Array, Bool, \
+    Instance, Tuple, Button, Str
+from traitsui.api import View, Item, HGroup, Group, RangeEditor, HTMLEditor
+
+from aramis_info import AramisInfo
+import numpy as np
+
+
 if platform.system() == 'Linux':
     sysclock = time.time
 elif platform.system() == 'Windows':
     sysclock = time.clock
-
-from aramis_info import AramisInfo
 
 
 def get_d(u_arr, r_arr, integ_radius):
@@ -52,20 +49,18 @@ def get_d(u_arr, r_arr, integ_radius):
     return du_arr
 
 
-def get_d2(u_arr, integ_radius):
-    '''Get the derivatives
+def get_delta(u_arr, integ_radius):
+    '''Get the absolute displacement jumps in x-direction
 
     Args:
-        u_arr: variable to differentiate
+        u_arr: variable of absolute displacements
 
-        r_arr: spatial coordinates
-
-        integ_radius: radius at which the normalization is performed
+        integ_radius: radius at which the substraction is performed
     '''
     ir = integ_radius
-    du_arr = np.zeros_like(u_arr)
-    du_arr[:, ir:-ir] = (u_arr[:, 2 * ir:] - u_arr[:, :-2 * ir])
-    return du_arr
+    delta_u_arr = np.zeros_like(u_arr)
+    delta_u_arr[:, ir:-ir] = u_arr[:, 2 * ir:] - u_arr[:, :-2 * ir]
+    return delta_u_arr
 
 
 class InfoViewer(HasTraits):
@@ -78,7 +73,6 @@ class InfoViewer(HasTraits):
 
 
 class AramisRawData(HasTraits):
-
     r'''Basic array structure containing the measured
     aramis data prepred for further elaboration in subclasses
     load data from *.npy files
@@ -101,8 +95,13 @@ class AramisRawData(HasTraits):
     # the value should correspond to
 #    def _integ_radius_default(self):
 #        return ceil( float( self.n_px_f / self.n_px_a )
-    integ_radius = Int(2, params_changed=True)
+    integ_radius = Int(3, params_changed=True)
     '''Integration radius for non-local average of the measured strain defined
+    as integer value of number of facets.
+    '''
+
+    integ_radius_crack = Int(5, params_changed=True)
+    '''Integration radius for non-local average of the measured displacement jumps (=crack width) defined
     as integer value of number of facets.
     '''
 
@@ -130,6 +129,7 @@ class AramisRawData(HasTraits):
         if verbose:
             print 'loading time =', sysclock() - start_t
             print 'number of missing facets is', np.sum(np.isnan(data_arr).astype(int))
+
         return data_arr
 
     current_step_filename = Property(Str, depends_on='+params_changed')
@@ -197,6 +197,9 @@ class AramisFieldData(AramisRawData):
     '''Switch data transformation before analysis
     '''
 
+    scale_data_factor = Float(1.0, params_changed=True)
+    ''' ..todo: Missing docstring.
+    '''
     #=========================================================================
     #
     #=========================================================================
@@ -358,7 +361,12 @@ class AramisFieldData(AramisRawData):
     def _get_x_0(self):
         X = self.X[
             :, self.top_j:self.bottom_j, self.left_i:self.right_i].copy()
+
+        # scale data in order to match real scale of the specimen
+        X *= self.scale_data_factor
+
         if self.transform_data:
+            print 'data transformed (measuring field starts at origin)'
             # move to 0,0
             X[0, :, :] = X[0, :, :] - np.nanmin(X[0, :, :])
             X[1, :, :] = X[1, :, :] - np.nanmin(X[1, :, :])
@@ -500,6 +508,8 @@ class AramisFieldData(AramisRawData):
     @cached_property
     def _get_u(self):
         U = self.U[:, self.top_j:self.bottom_j, self.left_i:self.right_i]
+        # scale data in order to match real scale of the specimen
+        U *= self.scale_data_factor
         if self.transform_data:
             return U
         else:
@@ -518,8 +528,37 @@ class AramisFieldData(AramisRawData):
 
         y_idx_zeros, x_idx_zeros = np.where(np.isnan(ux_arr))
         ux_arr[y_idx_zeros, x_idx_zeros] = ux_avg[x_idx_zeros]
-        # ux_arr[ux_arr < 0.01] = 0
         return ux_arr
+
+    uy_arr = Property(
+        Array, depends_on='aramis_info.+params_changed, +params_changed')
+    '''Array of displacements in x-direction
+    '''
+    @cached_property
+    def _get_uy_arr(self):
+        # missing values replaced by averaged values in y-direction
+        uy_arr = self.u[1, :, :]
+        uy_masked = np.ma.masked_array(uy_arr, mask=np.isnan(uy_arr))
+        uy_avg = np.ma.average(uy_masked, axis=0)
+
+        y_idx_zeros, x_idx_zeros = np.where(np.isnan(uy_arr))
+        uy_arr[y_idx_zeros, x_idx_zeros] = uy_avg[x_idx_zeros]
+        return uy_arr
+
+    uz_arr = Property(
+        Array, depends_on='aramis_info.+params_changed, +params_changed')
+    '''Array of displacements in x-direction
+    '''
+    @cached_property
+    def _get_uz_arr(self):
+        # missing values replaced by averaged values in y-direction
+        uz_arr = self.u[2, :, :]
+        uz_masked = np.ma.masked_array(uz_arr, mask=np.isnan(uz_arr))
+        uz_avg = np.ma.average(uz_masked, axis=0)
+
+        y_idx_zeros, x_idx_zeros = np.where(np.isnan(uz_arr))
+        uz_arr[y_idx_zeros, x_idx_zeros] = uz_avg[x_idx_zeros]
+        return uz_arr
 
     ux_arr_avg = Property(
         Array, depends_on='aramis_info.+params_changed, +params_changed')
@@ -532,25 +571,47 @@ class AramisFieldData(AramisRawData):
         ux_avg = np.average(ux_arr, axis=0)
         return ux_avg
 
-    uy_arr = Property(
-        Array, depends_on='aramis_info.+params_changed, +params_changed')
-    '''Array of displacements in y-direction
-    '''
-    @cached_property
-    def _get_uy_arr(self):
-        return self.u[1, :, :]
-
-    uz_arr = Property(
-        Array, depends_on='aramis_info.+params_changed, +params_changed')
-    '''Array of displacements in z-direction
-    '''
-    @cached_property
-    def _get_uz_arr(self):
-        return self.u[2, :, :]
+#     uy_arr = Property(
+#         Array, depends_on='aramis_info.+params_changed, +params_changed')
+#     '''Array of displacements in y-direction
+#     '''
+#     @cached_property
+#     def _get_uy_arr(self):
+#         return self.u[1, :, :]
+#
+#     uz_arr = Property(
+#         Array, depends_on='aramis_info.+params_changed, +params_changed')
+#     '''Array of displacements in z-direction
+#     '''
+#     @cached_property
+#     def _get_uz_arr(self):
+#         return self.u[2, :, :]
 
     #=========================================================================
     #
     #=========================================================================
+
+    delta_ux_arr = Property(Array, depends_on='+params_changed')
+    '''Displacement jumps 1D in x-direction
+    '''
+    @cached_property
+    def _get_delta_ux_arr(self):
+        return get_delta(self.ux_arr, self.integ_radius_crack)
+
+    delta_ux_arr_avg = Property(Array, depends_on='+params_changed')
+
+    delta_uy_arr = Property(Array, depends_on='+params_changed')
+    '''Displacement jumps 1D in x-direction
+    '''
+    @cached_property
+    def _get_delta_uy_arr(self):
+        return get_delta(self.uy_arr, self.integ_radius_crack)
+
+    delta_ux_arr_avg = Property(Array, depends_on='+params_changed')
+
+    @cached_property
+    def _get_delta_ux_arr_avg(self):
+        return np.average(self.delta_ux_arr, axis=0)
 
     d_ux = Property(Array, depends_on='+params_changed')
     '''Strain 1D in x-direction
@@ -668,6 +729,8 @@ class AramisFieldData(AramisRawData):
              springy=True),
         Item('current_time', label='Current time exact', style='readonly'),
         Item('integ_radius'),
+        Item('integ_radius_crack'),
+        Item('scale_data_factor'),
         HGroup(Group(Item('left_i',
                           editor=RangeEditor(low_name='i_min',
                                              high_name='i_max',

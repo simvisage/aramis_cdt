@@ -14,10 +14,10 @@
 #
 #-------------------------------------------------------------------------------
 
-from etsproxy.traits.api import \
+from traits.api import \
     HasTraits, Property, cached_property, Int, Array, Instance, Tuple, Button, List, Float
 
-from etsproxy.traits.ui.api import View, UItem
+from traitsui.api import View, UItem
 
 import numpy as np
 import os
