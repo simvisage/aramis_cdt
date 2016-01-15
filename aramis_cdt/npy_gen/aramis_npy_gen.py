@@ -138,7 +138,6 @@ class AramisNPyGen(HasTraits):
     ad_channels_arr = Property(Array)
     def _get_ad_channels_arr(self):
         data= np.array(self.ad_channels_lst, dtype=float)
-        data[:,1] = data[:,1] * 100
         return data
 
     generate_npy = Button
@@ -151,7 +150,6 @@ class AramisNPyGen(HasTraits):
             self.__decompile_ad_channels(step_idx)
         np.save(os.path.join(self.aramis_info.npy_dir, 'ad_channels.npy'),
                 self.ad_channels_arr)
-        print self.ad_channels_arr
 
     #===========================================================================
     # Data preparation methods
@@ -215,13 +213,13 @@ class AramisNPyGen(HasTraits):
         fname = '%s%d' % (self.aramis_info.displacements_basename,
                          self.aramis_info.aramis_stage_list[step_idx])
         with open(os.path.join(self.aramis_info.data_dir, fname + '.txt')) as infile:
-            for i in range(30):
+            for i in range(20):
                 line = infile.readline()
                 m = re.match(r'#\s+AD-0:\s+[-+]?\d+\.\d+\s+(?P<force>[-+]?\d+\.\d+)', line)
                 if m:
                     force = float(m.groups('force')[0])
-		else:
-		    force = 0
+                else:
+                    force = 0
                 m = re.match(r'#\s+deformt:\s+(?P<time>[-+]?\d+\.\d+)', line)
                 if m:
                     time = float(m.groups('time')[0])
@@ -233,20 +231,11 @@ class AramisNPyGen(HasTraits):
 
 
 if __name__ == '__main__':
-    ns=[#'TTb-2C-1cm-0-800SBR-V1_cyc-Aramis2d-Xf15s13-Yf15s13',
-#'TTb-2C-1cm-0-800SBR-V1_cyc-Aramis2d-Xf15s1-Yf15s4',
-'TTb-2C-1cm-0-800SBR-V2_cyc-Aramis2d-Xf15s13-Yf15s13',
-'TTb-2C-1cm-0-800SBR-V2_cyc-Aramis2d-Xf15s1-Yf15s4',
-'TTb-2C-1cm-0-800SBR-V3_cyc-Aramis2d-Xf15s13-Yf15s13',
-'TTb-2C-1cm-0-800SBR-V3_cyc-Aramis2d-Xf15s1-Yf15s4',
-'TTb-2C-1cm-0-800SBR-V4_cyc-Aramis2d-Xf15s13-Yf15s13',
-'TTb-2C-1cm-0-800SBR-V4_cyc-Aramis2d-Xf15s1-Yf15s4',
-'TTb-2C-1cm-0-800SBR-V5_cyc-Aramis2d-Xf15s13-Yf15s13',
-'TTb-2C-1cm-0-800SBR-V5_cyc-Aramis2d-Xf15s1-Yf15s4'
-]
+    ns=['TTb-1C-3cm-0-3300EP-V3_B1-Aramis2d-sideview-Xf15s13-Yf15s13']
     data_dir = '/media/raid/Aachen/simdb_large_txt/'
     for n in ns:
         AI = AramisInfo(data_dir=data_dir+n)
+        print AI.step_list
         AG = AramisNPyGen(aramis_info=AI)
     #AG.configure_traits()
         AG.generate_npy = True
