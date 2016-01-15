@@ -137,8 +137,9 @@ class AramisCDT(HasTraits):
     @cached_property
     def _get_crack_arr(self):
         from aramis_data import get_d2
+        print '#'*50, np.nanmax(get_d2(self.aramis_data.ux_arr, self.aramis_data.integ_radius))
         return (get_d2(self.aramis_data.ux_arr, self.aramis_data.integ_radius))[np.where(self.crack_filter)]
-        return self.aramis_data.d_ux[np.where(self.crack_filter)]
+        #return self.aramis_data.d_ux[np.where(self.crack_filter)]
 
     crack_arr_mean = Property(
         Float, depends_on='aramis_data.+params_changed, +params_changed')
