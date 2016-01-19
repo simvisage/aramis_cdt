@@ -17,13 +17,12 @@
 # ETSConfig.toolkit = 'qt4'
 
 from traits.api import \
-    HasTraits, Instance, on_trait_change, Button, Directory, Event, Float
+    HasTraits, Instance, Button, Directory, Float
 
-from traitsui.api import UItem, View, Tabbed, Group, Item, RangeEditor, VGroup, HSplit
+from traitsui.api import UItem, View, Tabbed, Group, Item, HSplit
 from util.traits.editors.mpl_figure_editor import MPLFigureEditor
 from matplotlib.figure import Figure
 import os
-import sys
 
 from mayavi.tools.mlab_scene_model import MlabSceneModel
 from mayavi.core.ui.mayavi_scene import MayaviScene
@@ -190,8 +189,8 @@ if __name__ == '__main__':
     data_dir = os.path.join(home, '.simdb_cache', 'exdata',
                             'tensile_tests',
                             'buttstrap_clamping',
-                            '2013-12-01_TTb-4c-2cm-0-TU_Aramis2d_RR',
-                            'aramis', 'TTb-4c-2cm-0-TU-V1-Xf15s13-Yf15s13')
+                            '2013-12-02_TTb-6c-2cm-0-TU_Aramis2d_RR',
+                            'aramis', 'TTb-6c-2cm-0-TU-V2-Xf15s1-Yf15s4')
 
     data_dir = os.path.join(home, '.simdb_cache', 'exdata',
                             'tensile_tests',
@@ -211,6 +210,11 @@ if __name__ == '__main__':
 #                              'tensile_tests',
 #                              'buttstrap_clamping', '2013-07-09_TTb-4c-2cm-0-TU_bs4-Aramis3d',
 #                               'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s1-Yf19s4')
+#     
+#     data_dir = os.path.join(home, '.simdb_cache', 'exdata',
+#                          'tensile_tests',
+#                          'buttstrap_clamping', '2013-07-09_TTb-4g-2cm-0-TU_bs4-Aramis3d',
+#                           'aramis', 'TTb-4g-2cm-0-TU-V2_bs4-Xf19s1-Yf19s4')
 #
 #     data_dir = os.path.join(home, '.simdb_cache', 'exdata',
 #                              'tensile_tests',
