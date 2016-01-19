@@ -528,6 +528,23 @@ class AramisFieldData(AramisRawData):
 
         y_idx_zeros, x_idx_zeros = np.where(np.isnan(ux_arr))
         ux_arr[y_idx_zeros, x_idx_zeros] = ux_avg[x_idx_zeros]
+
+#         mask = np.isnan(ux_arr)
+#         ux_arr_max = ux_masked[np.where(mask)]
+#         y_idx, x_idx = np.where(np.isnan(ux_arr))
+#         x_idx = np.where(ux_arr)[1]
+#         y_idx = np.where(ux_arr)[0]
+#         for i in range(self.aramis_data.integ_radius_crack + 1):
+#             x_idx_ = np.minimum(x_idx + i, self.aramis_data.right_i - self.aramis_data.left_i - 1)
+#             ux_arr_max = np.maximum(ux_arr_max, self.aramis_data.delta_ux_arr[(y_idx, x_idx_)])
+#         for i in range(self.aramis_data.integ_radius_crack + 1):
+#             x_idx_ = np.maximum(x_idx - i, self.aramis_data.left_i)
+#             delta_ux_arr_max_ = np.maximum(delta_ux_arr_max, self.aramis_data.delta_ux_arr[(y_idx, x_idx_)])
+#         cf_w[np.where(self.crack_filter)] = delta_ux_arr_max_
+#
+#
+
+
         return ux_arr
 
     uy_arr = Property(

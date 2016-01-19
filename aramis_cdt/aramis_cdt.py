@@ -163,6 +163,19 @@ class AramisCDT(HasTraits):
     def _get_crack_field_arr(self):
         cf_w = np.zeros_like(self.aramis_data.d_ux)
         cf_w[np.where(self.crack_filter)] = self.crack_arr
+
+        # look at neighboring entries of crack_filter indices for higher displacement jumps
+        # (=local maximum of 'delta_ux_arr' around indices detected by 'crack_filter')
+        #
+#         delta_ux_arr_max = self.aramis_data.delta_ux_arr[np.where(self.crack_filter)]
+#         y_idx, x_idx = np.where(self.crack_filter)
+#         for i in range(self.aramis_data.integ_radius_crack + 1):
+#             x_idx_ = np.minimum(x_idx + i, self.aramis_data.right_i - self.aramis_data.left_i - 1)
+#             delta_ux_arr_max_ = np.maximum(delta_ux_arr_max, self.aramis_data.delta_ux_arr[(y_idx, x_idx_)])
+#         for i in range(self.aramis_data.integ_radius_crack + 1):
+#             x_idx_ = np.maximum(x_idx - i, self.aramis_data.left_i)
+#             delta_ux_arr_max_ = np.maximum(delta_ux_arr_max, self.aramis_data.delta_ux_arr[(y_idx, x_idx_)])
+#         cf_w[np.where(self.crack_filter)] = delta_ux_arr_max_
         return cf_w
 
     #=========================================================================
