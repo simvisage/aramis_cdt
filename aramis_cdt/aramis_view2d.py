@@ -14,33 +14,32 @@
 #
 #-------------------------------------------------------------------------
 
+import matplotlib
+
+# matplotlib.use('Qt4Agg')
+matplotlib.use('WxAgg')
+
+from matplotlib.figure import Figure
+import os
+import platform
+from scipy import stats
+import tempfile
+import time
 from traits.api import \
     HasTraits, Instance, Button, Bool, Directory
+from traitsui.api import UItem, View, Group
 
-from scipy import stats
+from aramis_cdt import AramisCDT
+from aramis_data import AramisFieldData
+from aramis_info import AramisInfo
+import matplotlib.pyplot as plt
+import numpy as np
 
-from traitsui.api import UItem, View, Item, RangeEditor, VGroup, Group
-from matplotlib.figure import Figure
 
-import platform
-import time
 if platform.system() == 'Linux':
     sysclock = time.time
 elif platform.system() == 'Windows':
     sysclock = time.clock
-
-import os
-import tempfile
-import numpy as np
-
-from aramis_cdt import AramisCDT
-from aramis_info import AramisInfo
-from aramis_data import AramisFieldData
-
-import matplotlib
-# matplotlib.use('Qt4Agg')
-import matplotlib.pyplot as plt
-matplotlib.use('WxAgg')
 
 
 class AramisPlot2D(HasTraits):
@@ -80,7 +79,8 @@ class AramisPlot2D(HasTraits):
 
         ax = fig.add_subplot(2, 2, 1)
         ax.plot(aramis_data.i_cut.T, aramis_data.d_ux.T, color='black')
-        ax.plot(aramis_data.i_cut[0, :], aramis_data.d_ux_avg, color='red', linewidth=2)
+        ax.plot(
+            aramis_data.i_cut[0, :], aramis_data.d_ux_avg, color='red', linewidth=2)
         # for x in aramis_data.d_ux:
         #    ax.plot(aramis_data.i_cut.T, np.convolve(x, np.ones(10) / 10., 'same'), color='green', linewidth=0.3)
         y_max_lim = ax.get_ylim()[-1]
@@ -108,10 +108,11 @@ class AramisPlot2D(HasTraits):
 
         ax = fig.add_subplot(2, 2, 4)
         ax.plot(aramis_data.i_cut.T, aramis_data.delta_ux_arr.T, color='black')
-        ax.plot(aramis_data.i_cut[0, :], aramis_data.delta_ux_arr_avg, color='red', linewidth=2)
+        ax.plot(aramis_data.i_cut[
+                0, :], aramis_data.delta_ux_arr_avg, color='red', linewidth=2)
         y_max_lim = ax.get_ylim()[-1]
         ax.vlines(aramis_data.i_cut[0, :-1], [0], aramis_cdt.crack_filter_avg * y_max_lim,
-                 color='magenta', linewidth=1, zorder=10)
+                  color='magenta', linewidth=1, zorder=10)
         ax.set_title('delta_ux')
 
 
@@ -495,12 +496,12 @@ class AramisPlot2D(HasTraits):
         fig.suptitle(aramis_cdt.aramis_info.specimen_name + ' - %d' %
                      self.aramis_data.current_step, y=1)
 
-        ax_diag = plt.subplot2grid((3, 3), (0, 0)) # no colorbar (2, 3)
+        ax_diag = plt.subplot2grid((3, 3), (0, 0))  # no colorbar (2, 3)
         ax_diag.locator_params(nbins=4)
-        ax_hist = plt.subplot2grid((3, 3), (1, 0)) # no colorbar (2, 3)
+        ax_hist = plt.subplot2grid((3, 3), (1, 0))  # no colorbar (2, 3)
         ax_hist.locator_params(nbins=4)
         ax_area = plt.subplot2grid((3, 3), (0, 1), rowspan=2, colspan=2,
-                                   adjustable='box', aspect='equal') # no colorbar (2, 3)
+                                   adjustable='box', aspect='equal')  # no colorbar (2, 3)
 
         x = self.aramis_data.step_times  # self.aramis_cdt.control_strain_t
         stress = self.aramis_data.ad_channels_arr[:, 1]
@@ -541,15 +542,17 @@ class AramisPlot2D(HasTraits):
         # ax_area.plot(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
         #         self.aramis_data.y_arr_0[aramis_cdt.crack_filter], linestyle='None',
         #         marker='.', color='white')
-        
-        #ax_area.scatter(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
-        #                self.aramis_data.y_arr_0[aramis_cdt.crack_filter], color='white', zorder=10, s=aramis_cdt.crack_arr * 50)
+
+        # ax_area.scatter(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
+        # self.aramis_data.y_arr_0[aramis_cdt.crack_filter], color='white',
+        # zorder=10, s=aramis_cdt.crack_arr * 50)
         sc = ax_area.scatter(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
-                        self.aramis_data.y_arr_0[aramis_cdt.crack_filter], cmap=plt.cm.get_cmap('jet'),#color='white', 
-                        zorder=100, s=aramis_cdt.crack_arr * 300, c=aramis_cdt.crack_arr, edgecolors='none')
-        
+                             self.aramis_data.y_arr_0[aramis_cdt.crack_filter], cmap=plt.cm.get_cmap(
+                                 'jet'),  # color='white',
+                             zorder=100, s=aramis_cdt.crack_arr * 300, c=aramis_cdt.crack_arr, edgecolors='none')
+
         ax_col = plt.subplot2grid((3, 3), (2, 1), rowspan=1, colspan=2,
-                                   adjustable='box')
+                                  adjustable='box')
         fig.colorbar(sc, cax=ax_col, orientation='horizontal')
 
 #         ax_area.vlines(self.aramis_data.x_arr_0[0, :][aramis_cdt.crack_filter_avg],

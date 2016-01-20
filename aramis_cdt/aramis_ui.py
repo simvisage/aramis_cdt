@@ -16,31 +16,31 @@
 # from traits.etsconfig.api import ETSConfig
 # ETSConfig.toolkit = 'qt4'
 
-from traits.api import \
-    HasTraits, Instance, Button, Directory, Float
-
-from traitsui.api import UItem, View, Tabbed, Group, Item, HSplit
-from util.traits.editors.mpl_figure_editor import MPLFigureEditor
 from matplotlib.figure import Figure
-import os
-
-from mayavi.tools.mlab_scene_model import MlabSceneModel
 from mayavi.core.ui.mayavi_scene import MayaviScene
-from tvtk.pyface.scene_editor import SceneEditor
-
+from mayavi.tools.mlab_scene_model import MlabSceneModel
+import os
 import platform
 import time
+from traits.api import \
+    HasTraits, Instance, Button, Directory, Float
+from traitsui.api import UItem, View, Tabbed, Group, Item, HSplit
+from tvtk.pyface.scene_editor import SceneEditor
+
+from aramis_cdt import AramisCDT
+from aramis_data import AramisFieldData
+from aramis_info import AramisInfo
+from aramis_remote import AramisRemote
+from aramis_view2d import AramisPlot2D
+from aramis_view3d import AramisView3D
+from util.traits.editors.mpl_figure_editor import MPLFigureEditor
+
+
 if platform.system() == 'Linux':
     sysclock = time.time
 elif platform.system() == 'Windows':
     sysclock = time.clock
 
-from aramis_info import AramisInfo
-from aramis_data import AramisFieldData
-from aramis_cdt import AramisCDT
-from aramis_view2d import AramisPlot2D
-from aramis_view3d import AramisView3D
-from aramis_remote import AramisRemote
 
 class AramisUI(HasTraits):
 
@@ -210,7 +210,7 @@ if __name__ == '__main__':
 #                              'tensile_tests',
 #                              'buttstrap_clamping', '2013-07-09_TTb-4c-2cm-0-TU_bs4-Aramis3d',
 #                               'aramis', 'TTb-4c-2cm-0-TU-V1_bs4-Xf19s1-Yf19s4')
-#     
+#
 #     data_dir = os.path.join(home, '.simdb_cache', 'exdata',
 #                          'tensile_tests',
 #                          'buttstrap_clamping', '2013-07-09_TTb-4g-2cm-0-TU_bs4-Aramis3d',

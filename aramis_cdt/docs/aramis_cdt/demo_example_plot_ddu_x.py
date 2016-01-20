@@ -15,8 +15,9 @@
 #-------------------------------------------------------------------------
 
 from demo_example import x, dic_ui
-
 import matplotlib.pyplot as plt
+
+
 # begin_plot
 dd_ux = dic_ui.aramis_data.dd_ux[10, :]
 plt.plot(x, dd_ux)

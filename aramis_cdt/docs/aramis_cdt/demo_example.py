@@ -18,7 +18,6 @@
 import os
 from aramis_cdt.api import \
     AramisCDT, AramisInfo, AramisUI
-import matplotlib.pyplot as plt
 
 aramis_dir = '.'
 specimen_name = os.path.split(os.getcwd())[-1]
