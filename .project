@@ -3,7 +3,6 @@
 	<name>aramis_cdt</name>
 	<comment></comment>
 	<projects>
-		<project>etsproxy</project>
 		<project>matresdev</project>
 		<project>util</project>
 	</projects>
