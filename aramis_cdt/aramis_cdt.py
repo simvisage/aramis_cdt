@@ -134,6 +134,11 @@ class AramisCDT(HasTraits):
 
     @cached_property
     def _get_crack_arr(self):
+        # TODO: why
+        #from aramis_data import get_d2
+        #print '#'*50, np.nanmax(get_d2(self.aramis_data.ux_arr, self.aramis_data.integ_radius))
+        #return (get_d2(self.aramis_data.ux_arr, self.aramis_data.integ_radius))[np.where(self.crack_filter)]
+        #return self.aramis_data.d_ux[np.where(self.crack_filter)]
         crack_arr = self.aramis_data.delta_ux_arr[np.where(self.crack_filter)]
         return crack_arr
 

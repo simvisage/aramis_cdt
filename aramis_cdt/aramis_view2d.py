@@ -495,12 +495,12 @@ class AramisPlot2D(HasTraits):
         fig.suptitle(aramis_cdt.aramis_info.specimen_name + ' - %d' %
                      self.aramis_data.current_step, y=1)
 
-        ax_diag = plt.subplot2grid((2, 3), (0, 0))
+        ax_diag = plt.subplot2grid((3, 3), (0, 0)) # no colorbar (2, 3)
         ax_diag.locator_params(nbins=4)
-        ax_hist = plt.subplot2grid((2, 3), (1, 0))
+        ax_hist = plt.subplot2grid((3, 3), (1, 0)) # no colorbar (2, 3)
         ax_hist.locator_params(nbins=4)
-        ax_area = plt.subplot2grid((2, 3), (0, 1), rowspan=2, colspan=2,
-                                   adjustable='box', aspect='equal')
+        ax_area = plt.subplot2grid((3, 3), (0, 1), rowspan=2, colspan=2,
+                                   adjustable='box', aspect='equal') # no colorbar (2, 3)
 
         x = self.aramis_data.step_times  # self.aramis_cdt.control_strain_t
         stress = self.aramis_data.ad_channels_arr[:, 1]
@@ -541,8 +541,16 @@ class AramisPlot2D(HasTraits):
         # ax_area.plot(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
         #         self.aramis_data.y_arr_0[aramis_cdt.crack_filter], linestyle='None',
         #         marker='.', color='white')
-        ax_area.scatter(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
-                        self.aramis_data.y_arr_0[aramis_cdt.crack_filter], color='white', zorder=10, s=aramis_cdt.crack_arr * 50)
+        
+        #ax_area.scatter(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
+        #                self.aramis_data.y_arr_0[aramis_cdt.crack_filter], color='white', zorder=10, s=aramis_cdt.crack_arr * 50)
+        sc = ax_area.scatter(self.aramis_data.x_arr_0[aramis_cdt.crack_filter],
+                        self.aramis_data.y_arr_0[aramis_cdt.crack_filter], cmap=plt.cm.get_cmap('jet'),#color='white', 
+                        zorder=100, s=aramis_cdt.crack_arr * 300, c=aramis_cdt.crack_arr, edgecolors='none')
+        
+        ax_col = plt.subplot2grid((3, 3), (2, 1), rowspan=1, colspan=2,
+                                   adjustable='box')
+        fig.colorbar(sc, cax=ax_col, orientation='horizontal')
 
 #         ax_area.vlines(self.aramis_data.x_arr_0[0, :][aramis_cdt.crack_filter_avg],
 #                        [0], np.nanmax(self.aramis_data.y_arr_0[None]),

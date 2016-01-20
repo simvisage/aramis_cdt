@@ -57,7 +57,8 @@ class AramisView3D(HasTraits):
                                             '06 uz_arr [mm]':['aramis_data', 'uz_arr'],
                                             '07 d_ux [-]':['aramis_data', 'd_ux'],
                                             '08 crack_filed_arr [mm]': ['aramis_cdt', 'crack_field_arr'],
-                                            '09 delta_ux_arr [mm]': ['aramis_data', 'delta_ux']
+                                            '09 delta_ux_arr [mm]': ['aramis_data', 'delta_ux_arr'],
+                                            '10 delta_uy_arr [mm]': ['aramis_data', 'delta_uy_arr']
                                             })
 
     plot3d_points_flat = Button
@@ -253,22 +254,35 @@ class AramisView3D(HasTraits):
         if self.plot_title:
             m.title('step no. %d' % self.aramis_data.current_step, size=0.2)
 
+        # set scalar bar to start at zero and format values in font style 'times'
+        print 'np.max(plot3d_var)', np.max(plot3d_var)
+        wr_max = module_manager.scalar_lut_manager.data_range[1]
+#         wr_max = 6.90  # [mm] set fixed ranges
+        module_manager.scalar_lut_manager.data_range = np.array([0., wr_max])
+
         # format scalar bar in font style 'times'
         module_manager.scalar_lut_manager.label_text_property.font_family = 'times'
         module_manager.scalar_lut_manager.label_text_property.italic = False
         module_manager.scalar_lut_manager.label_text_property.bold = False
+        module_manager.scalar_lut_manager.label_text_property.font_size = 25
 
         # title font of scalar bar
         module_manager.scalar_lut_manager.title_text_property.font_family = 'times'
         module_manager.scalar_lut_manager.title_text_property.bold = True
         module_manager.scalar_lut_manager.title_text_property.italic = False
+        module_manager.scalar_lut_manager.title_text_property.font_size = 25
+
 
         # title font of plot (step no)
         text = scene.children[1].children[0].children[1]
         text.property.font_size = 25
         text.property.font_family = 'times'
         text.property.bold = True
-        text.property.italic = True
+        text.property.italic = False
+
+        # use white background for plots
+#         scene.scene.foreground = (0.0, 0.0, 0.0)
+#         scene.scene.background = (1.0, 1.0, 1.0)
 
         # m.scalarbar(orientation='horizontal', title='crack_field')
 
@@ -276,16 +290,20 @@ class AramisView3D(HasTraits):
         #
         # m.axes()
 
-    plot3d_delta_ux = Button
-    def _plot3d_delta_ux_fired(self):
-        '''Plot displacement jumps in 3D
+
+
+    plot3d_var_deformed = Button
+    def _plot3d_var_deformed_fired(self):
+        '''Plot 3D variable in deformed configuration
         '''
         aramis_cdt = self.aramis_cdt
 
         self.scene.mlab.clf()
         m = self.scene.mlab
-        m.fgcolor = (0, 0, 0)
-        m.bgcolor = (1, 1, 1)
+#         m.fgcolor = (0, 0, 0)
+#         m.bgcolor = (1, 1, 1)
+        m.fgcolor = (1, 1, 1)
+        m.bgcolor = (0, 0, 0)
         self.scene.scene.disable_render = True
 
         #-----------------------------------
@@ -294,7 +312,8 @@ class AramisView3D(HasTraits):
 
         z_arr = np.zeros_like(self.aramis_data.z_arr_0)
 
-        plot3d_var = aramis_cdt.aramis_data.delta_ux_arr
+        plot3d_var = getattr(getattr(self, self.plot3d_var_[0]), self.plot3d_var_[1])
+#         plot3d_var = aramis_cdt.aramis_data.delta_ux_arr
 
         m.points3d(z_arr,
                    self.aramis_data.x_arr_0 + self.aramis_data.ux_arr * self.warp_factor,
@@ -338,7 +357,7 @@ class AramisView3D(HasTraits):
         module_manager.scalar_lut_manager.show_scalar_bar = True
         module_manager.scalar_lut_manager.show_legend = True
         module_manager.scalar_lut_manager.scalar_bar.orientation = 'horizontal'
-        module_manager.scalar_lut_manager.scalar_bar.title = 'delta_ux [mm]'
+        module_manager.scalar_lut_manager.scalar_bar.title = self.plot3d_var_[1]
         scene.scene.disable_render = False
 
         module_manager.scalar_lut_manager.scalar_bar_representation.position2 = np.array([ 0.7, 0.15])
@@ -347,11 +366,7 @@ class AramisView3D(HasTraits):
         if self.plot_title:
             m.title('step no. %d' % self.aramis_data.current_step, size=0.2)
 
-        # set scalar bar to start at zero and format values in font style 'times'
-        print 'np.max(plot3d_var)', np.max(plot3d_var)
-        wr_max = module_manager.scalar_lut_manager.data_range[1]
-#         wr_max = 6.90  # [mm] set fixed ranges
-        module_manager.scalar_lut_manager.data_range = np.array([0., wr_max])
+        # for scalar bar format values in font style 'times'
         module_manager.scalar_lut_manager.label_text_property.font_family = 'times'
         module_manager.scalar_lut_manager.label_text_property.italic = False
         module_manager.scalar_lut_manager.label_text_property.bold = False
@@ -379,7 +394,7 @@ class AramisView3D(HasTraits):
                 UItem('plot3d_points_flat'),
                 UItem('plot3d_points'),
                 UItem('plot3d_cracks'),
-                UItem('plot3d_delta_ux'),
+                UItem('plot3d_var_deformed'),
                 Item('_'),
                 Item('warp_factor'),
                 UItem('clean_scene'),
