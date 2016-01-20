@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------
 #
 # Copyright (c) 2013
-# IMB, RWTH Adic_cdthen University,
+# IMB, RWTH Aachen University,
 # ISM, Brno University of Technology
 # All rights reserved.
 #
