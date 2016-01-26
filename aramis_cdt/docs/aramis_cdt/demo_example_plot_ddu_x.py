@@ -14,18 +14,12 @@
 #
 #-------------------------------------------------------------------------
 
-# begin_read
-import os
-from aramis_cdt.api import \
-    AramisCDT, AramisInfo, AramisUI
+from demo_example import x, dic_ui
+import matplotlib.pyplot as plt
 
-aramis_dir = '.'
-specimen_name = os.path.split(os.getcwd())[-1]
-data_dir = os.path.join(aramis_dir, 'sample_data-Xf19s15-Yf19s15')
-dic_info = AramisInfo(data_dir=data_dir)
-dic_cdt = AramisCDT(aramis_info=dic_info,
-                    integ_radius=1,
-                    crack_detection_step=0)
-dic_ui = AramisUI(aramis_info=dic_info)
-x = dic_ui.aramis_data.x_arr_0[10, :]
-# end_read
+
+# begin_plot
+dd_ux = dic_ui.aramis_data.dd_ux[10, :]
+plt.plot(x, dd_ux)
+# end_plot
+plt.show()

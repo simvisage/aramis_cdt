@@ -2,8 +2,8 @@
 Crack detection
 =============== 
   
-Data representation
--------------------
+Field data structure
+--------------------
 
 .. image:: data_structure.png
 	:width: 400px
