@@ -23,8 +23,8 @@ from traitsui.api import \
 
 import numpy as np
 
-from matresdev.db.simdb import \
-    SimDB
+from matresdev.db.simdb.simdb import simdb
+
 
 import os.path
 import re
@@ -35,8 +35,6 @@ if platform.system() == 'Linux':
     sysclock = time.time
 elif platform.system() == 'Windows':
     sysclock = time.clock
-
-simdb = SimDB()
 
 class AramisInfo(HasTraits):
     '''Basic information of Aramis database obtained from directory name and

@@ -16,13 +16,14 @@
 
 from traits.api import \
     HasTraits, Property, cached_property, \
-    Instance, DelegatesTo, Button, List, Str, File, on_trait_change
+    DelegatesTo, Button, List, Str, File, on_trait_change
 
 from traitsui.api import View, Item, EnumEditor, UItem
 
 import os
 import ConfigParser
-from matresdev.db.simdb import SimDB, SFTPServer
+from matresdev.db.simdb import SFTPServer
+
 import zipfile
 
 import platform
@@ -39,10 +40,6 @@ class AramisRemote(HasTraits):
     containing the processed aramis data.
 
     This class provides the source information for AramisData class.
-    '''
-
-    simdb = Instance(SimDB, ())
-    '''Access to simdb used to derive the access to the remote server.
     '''
 
     server_username = DelegatesTo('simdb')
